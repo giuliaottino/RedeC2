@@ -5,6 +5,10 @@ project:
 website:
   title: "Rede C2"
   site-url: https://giuliaottino.github.io/RedeC2/
+  page-navigation: true
+  reader-mode: true
+  favicon: "figures/redec2_hex_sticker.png"
+
   navbar:
     left:
       - text: "Overview"
