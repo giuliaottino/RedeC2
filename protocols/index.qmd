@@ -1,18 +1,17 @@
 ---
-
 title: "Protocols"
 subtitle: "Field methods, manuals and compatible monitoring workflows for Rede C2 and partner networks"
 format:
-html:
-toc: false
-page-layout: full
+  html:
+    toc: false
+    page-layout: full
 execute:
-echo: false
-eval: false
-freeze: auto
-warning: false
-message: false
---------------
+  echo: false
+  eval: false
+  freeze: auto
+  warning: false
+  message: false
+---
 
 ```{=html}
 <style>
@@ -454,4 +453,5 @@ main.content {
   </div>
 
 </div>
+
 ```
