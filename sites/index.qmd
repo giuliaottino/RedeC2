@@ -314,11 +314,11 @@ find_up <- function(rel_path, start = getwd(), max_levels = 8) {
 <div class="floating-logos">
   <img src="/figures/c2.png" alt="logo RedeC2">
 </div>
-````
+```
 ::: {.column-screen}
 ::: {.content-card}
 ::: {.inner}
-::: column-screen
+::: {.column-screen}
 ```{=html}
 <div class="carousel-fullbleed">
   <div class="carousel">
@@ -356,6 +356,7 @@ find_up <- function(rel_path, start = getwd(), max_levels = 8) {
   </div>
 </div>
 ```
+:::
 :::
 :::
 :::
