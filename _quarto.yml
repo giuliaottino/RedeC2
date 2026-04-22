@@ -10,6 +10,7 @@ website:
   favicon: "figures/redec2_hex_sticker.png"
 
   navbar:
+    logo: "figures/redec2_hex_sticker.png"
     left:
       - text: "Overview"
         href: index.qmd
@@ -36,3 +37,4 @@ format:
     theme:
       light: [spacelab, theme.scss]
       dark: [spacelab, theme-dark.scss]
+      

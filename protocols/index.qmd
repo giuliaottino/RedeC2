@@ -13,7 +13,6 @@ execute:
   message: false
 ---
 
-```{=html}
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
 
@@ -454,4 +453,3 @@ main.content {
 
 </div>
 
-```
