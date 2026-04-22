@@ -9,8 +9,6 @@ website:
     left:
       - text: "Overview"
         href: index.qmd
-      - text: "About"
-        href: about.qmd
       - text: "Sites"
         href: sites/index.qmd
       - text: "Protocols"
@@ -23,9 +21,6 @@ website:
         aria-label: Rede C2 GitHub
 
   page-footer:
-    center:
-      - text: "About"
-        href: about.qmd
     right:
       - icon: github
         href: https://github.com/giuliaottino/RedeC2
