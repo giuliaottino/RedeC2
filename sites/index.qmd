@@ -438,7 +438,7 @@ map <- leaflet(
   addControl(
     html = paste0(
       "<a href='https://redec2.github.io/redeC2-website/' target='_blank' rel='noopener'>",
-      "<img src='/figures/c2.png' style='width:150px; height:auto;'>",
+      "<img src='/figures/logoc2.png' style='width:150px; height:auto;'>",
       "</a>"
     ),
     position  = "topleft",
