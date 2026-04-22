@@ -1,0 +1,354 @@
+---
+title: "Team - Rede C2"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+execute:
+  echo: false
+  eval: true
+  freeze: auto
+  cache: false
+  warning: false
+  message: false
+  include: true
+  inline: true
+resources:
+  - ../_input_data/C2_team_images/
+  - ../_input_data/icons/
+---
+
+
+```{r setup, include=FALSE}
+# Load required libraries
+library(dplyr)
+library(stringr)
+library(htmltools)
+library(openxlsx)
+
+# Read team data from Excel
+team_data <- openxlsx::read.xlsx("../_input_data/C2_team.xlsx")
+
+# Clean column names (Excel might have spaces or special characters)
+names(team_data) <- make.names(names(team_data))  # Convert to valid R names
+
+# Create photo filenames WITHOUT accents
+team_data <- team_data %>%
+  mutate(
+    # Extract first letter for alphabetical grouping
+    first_letter = str_sub(Member, 1, 1),
+    
+    # Create standardized photo filename
+    photo_file = tolower(Member) %>%
+      # Remove Portuguese accents
+      str_replace_all("á|ã|â|à|Á|À|Ã|Â", "a") %>%
+      str_replace_all("é|ê|è|É|È|Ê", "e") %>%
+      str_replace_all("í|î|ì|Í|Ì|Î", "i") %>%
+      str_replace_all("ó|õ|ô|ò|Ó|Ò|Õ|Ô", "o") %>%
+      str_replace_all("ú|û|ù|Ú|Ù|Û", "u") %>%
+      str_replace_all("ç|Ç", "c") %>%
+      str_replace_all("ñ|Ñ", "n") %>%
+      # Replace non-alphanumeric with underscores
+      str_replace_all("[^a-z0-9]+", "_") %>%
+      str_replace_all("_+", "_") %>%
+      str_replace_all("^_|_$", "") %>%
+      paste0(".jpg"),
+    
+    
+    ifelse(file.exists(file.path("../_input_data/C2_team_images", photo_file)),
+                       file.copy("../_input_data/C2_team_images/default.jpg", 
+                                 paste0("_input_data/C2_team_images/", photo_file), overwrite = TRUE),
+                       NA),
+    
+     # Create full photo path
+photo_path = ifelse(file.exists(file.path("../_input_data/C2_team_images", photo_file)),
+                    paste0("../_input_data/C2_team_images/", photo_file),
+                    "../_input_data/C2_team_images/default.jpg") # fallback image
+    
+  )
+
+
+
+# DEBUG: Show generated filenames
+cat("\nGenerated photo filenames (first 5):\n")
+print(head(team_data$photo_file, 5))
+cat("\nPhoto paths (first 5):\n")
+print(head(team_data$photo_path, 5))
+
+# Check if files actually exist
+cat("\nChecking if files exist:\n")
+existing_files <- sapply(team_data$photo_file, 
+                        function(f) file.exists(file.path("../_input_data/C2_team_images", f)))
+cat("Found", sum(existing_files), "out of", nrow(team_data), "photo files\n")
+if(any(!existing_files)) {
+  cat("Missing files:\n")
+  print(team_data$photo_file[!existing_files])
+}
+```
+
+
+<style>
+  body {
+    background-image: url('/figures/c2_bg.png');
+    background-repeat: repeat-y;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: top center;
+    position: relative;
+    z-index: 0;
+  }
+
+  .background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: -1;
+  }
+
+  .icon-link {
+    display: inline-block;
+    margin: 0 6px;
+  }
+
+  .icon-link img {
+    width: 18px;
+    height: 18px;
+    vertical-align: text-bottom;
+  }
+
+  /* 3 colunas responsivas */
+  .team-group {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 2rem;
+  }
+
+  .team-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 1rem;
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+
+  .team-card:hover {
+    transform: scale(1.05);
+    z-index: 2;
+  }
+
+  .team-photo {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .team-info {
+    text-align: center;
+  }
+
+  .team-info p a {
+    margin: 0 6px;
+    color: #007bff;
+    font-size: 1.1rem;
+  }
+
+  .team-name {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .team-controls {
+    max-width: 960px;
+    margin: 0 auto 1.5rem auto;
+    text-align: center;
+  }
+
+  .team-search {
+    padding: 0.4rem 0.6rem;
+    width: 260px;
+    max-width: 80%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+  }
+
+  .team-index {
+    font-size: 0.95rem;
+  }
+
+  .team-index a {
+    text-decoration: none;
+    margin: 0 2px;
+  }
+
+  .team-index a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .team-group {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .team-group {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+
+## The RedeC2 Team
+
+```{r generate-team-cards, echo=FALSE}
+# Function to generate HTML for each team member
+generate_member_card <- function(member) {
+  
+  # SAFELY extract values - handle different column name possibilities
+  get_value <- function(member, possible_names, default = "") {
+    for(name in possible_names) {
+      if(name %in% names(member) && !is.na(member[[name]]) && member[[name]] != "") {
+        return(as.character(member[[name]]))
+      }
+    }
+    return(default)
+  }
+  
+  # Try different possible column names
+  email <- get_value(member, c("Email", "email", "E.mail", "E.mail."))
+  institution <- get_value(member, c("Institution", "Instittution", "Institution.", "Affiliation"))
+  lattes <- get_value(member, c("Lattes", "Lattes.", "lattes"))
+  orcid <- get_value(member, c("ORCID", "Orcid", "orcid", "ORCID."))
+  scholar <- get_value(member, c("Google.Scholar", "Google.Scholar.", "GoogleScholar", "Scholar"))
+  website <- get_value(member, c("Personal.Website", "Personal.Website.", "Website", "PersonalWebsite"))
+  
+  # Default for missing institution
+  if(institution == "") institution <- "Affiliation not specified"
+  
+  # Start building icon links - USE CORRECT ICON PATHS
+  icon_html <- ""
+  
+  # Email icon - USING _input_data/icons/
+  if(email != "") {
+    icon_html <- paste0(icon_html, 
+      '<a class="icon-link" href="mailto:', email, '">
+        <img src="../_input_data/icons/_email.png" alt="Email"/>
+      </a>')
+  }
+  
+  # Lattes icon
+  if(lattes != "") {
+    icon_html <- paste0(icon_html,
+      '<a class="icon-link" href="', lattes, '" target="_blank">
+        <img src="../_input_data/icons/_lattes.png" alt="Lattes"/>
+      </a>')
+  }
+  
+  # ORCID icon
+  if(orcid != "") {
+    icon_html <- paste0(icon_html,
+      '<a class="icon-link" href="', orcid, '" target="_blank">
+        <img src="../_input_data/icons/_orcid.png" alt="ORCID"/>
+      </a>')
+  }
+  
+  # Google Scholar icon
+  if(scholar != "") {
+    icon_html <- paste0(icon_html,
+      '<a class="icon-link" href="', scholar, '" target="_blank">
+        <img src="../_input_data/icons/_scholar.png" alt="Google Scholar"/>
+      </a>')
+  }
+  
+  # Personal Website icon
+  if(website != "") {
+    icon_html <- paste0(icon_html,
+      '<a class="icon-link" href="', website, '" target="_blank">
+        <img src="../_input_data/icons/website.png" alt="Personal Website"/>
+      </a>')
+  }
+  
+  # Generate the HTML card with CORRECT PHOTO PATH
+  card_html <- paste0('
+  <div class="team-card" id="letter-', member$first_letter, '">
+    <img src="', member$photo_path, '" alt="', htmlEscape(member$Member), '" class="team-photo" />
+    <div class="team-info">
+      <h3 class="team-name">', htmlEscape(member$Member), '</h3>
+      <p>', icon_html, '</p>
+      <p>RedeC2 member at ', htmlEscape(institution), '</p>
+    </div>
+  </div>')
+  
+  return(card_html)
+}
+
+# Sort team data alphabetically by Member name
+team_data <- team_data[order(team_data$Member), ]
+
+# Generate all team cards
+all_cards <- ""
+for(i in 1:nrow(team_data)) {
+  all_cards <- paste0(all_cards, generate_member_card(team_data[i, ]))
+}
+
+# Generate alphabetical index with only letters that have members
+letters_present <- unique(toupper(team_data$first_letter))
+letter_links <- sapply(LETTERS, function(letter) {
+  if(letter %in% letters_present) {
+    paste0('<a href="#letter-', letter, '">', letter, '</a>')
+  } else {
+    paste0('<span style="color:#ccc; cursor:default;">', letter, '</span>')
+  }
+})
+
+# Create the complete team HTML structure
+team_html <- HTML(paste0('
+<div class="team-controls">
+  <input type="text" id="team-search" class="team-search" placeholder="Search by name..." />
+  <div class="team-index">
+    ', paste(letter_links, collapse = " | "), '
+  </div>
+</div>
+
+<div class="team-group">
+', all_cards, '
+</div>'))
+```
+
+```{=html}
+`r team_html`
+```
+
+```{=html}
+<script>
+  // Search functionality
+  document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById("team-search");
+    if (!searchInput) return;
+
+    searchInput.addEventListener("input", function() {
+      const term = this.value.toLowerCase();
+      const cards = document.querySelectorAll(".team-card");
+
+      cards.forEach(function(card) {
+        const nameEl = card.querySelector(".team-name");
+        const name = nameEl ? nameEl.textContent.toLowerCase() : "";
+        const institutionEl = card.querySelector(".team-info p:last-child");
+        const institution = institutionEl ? institutionEl.textContent.toLowerCase() : "";
+        
+        // Show card if name OR institution contains search term
+        card.style.display = (name.includes(term) || institution.includes(term)) ? "" : "none";
+      });
+    });
+  });
+</script>
+```

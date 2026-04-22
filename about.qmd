@@ -1,0 +1,160 @@
+---
+title: "RedeC2"
+subtitle: "Permanent plots network for understanding Caatinga and Cerrado dynamics"
+format:
+  html:
+    toc: true
+    page-layout: full
+---
+
+<style>
+  /* FUNDO FIXO */
+  body{
+    background-image: url("figures/c2_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center top;
+  }
+
+  /* Evita “fundo” do container principal escondendo o background */
+  main.content{
+    background: transparent;
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+  }
+
+  /* CARTÃO: largura de tela (via column-screen), opaco */
+  .content-card{
+    width: 100%;
+    margin: 0;
+    padding: 2rem 2.25rem;
+
+    background: #ffffff; /* opaco: fundo só aparece nas janelas */
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  }
+
+  /* Conteúdo interno com largura confortável */
+  .content-card .inner{
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* JANELA: faixa transparente entre cartões */
+  .bg-window{
+    width: 100%;
+    height: 5.5rem;
+  }
+
+  /* Títulos */
+  .content-card h2{
+    margin-top: 0;
+  }
+
+  /* Responsivo */
+  @media (max-width: 992px){
+    .content-card{ padding: 1.4rem 1.2rem; border-radius: 14px; }
+    .bg-window{ height: 3.5rem; }
+  }
+  
+/* Centraliza título e subtítulo */
+.quarto-title-block .quarto-title-banner,
+.quarto-title-block .quarto-title{
+  text-align: center;
+}
+/* Retângulo flutuante APENAS ao redor do título/subtítulo */
+.quarto-title-block .quarto-title{
+  display: inline-block;              /* não ocupa a largura toda */
+  text-align: center;
+  padding: 1.0rem 1.0rem;
+  margin: 1.0rem 0 1.0rem 0;
+
+  background: rgba(0, 0, 0, 0.18);    /* preto com opacidade */
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  max-width: min(1100px, 92vw);       /* limita e respeita mobile */
+}
+
+/* Título em terracota */
+.quarto-title-block .title{
+  color: #B8860B;   
+  font-weight: 2000;
+}
+
+/* Subtítulo: branco e negrito */
+.quarto-title-block .subtitle{
+  color: #F0E68C;
+  font-weight: 500;
+}
+
+/* Opcional: melhora a leitura do subtítulo sobre o background */
+.quarto-title-block{
+  text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+
+</style>
+
+::: {.column-screen}
+::: {.content-card}
+::: {.inner}
+## Overview
+
+RedeC2 is a research network dedicated to the long-term monitoring of Brazilian dry ecosystems...
+:::
+:::
+:::
+
+::: {.column-screen}
+::: {.bg-window}
+:::
+:::
+
+::: {.column-screen}
+::: {.content-card}
+::: {.inner}
+## What we do
+
+RedeC2 integrates forest inventories, phenology, functional traits, and biomass data...
+- Installing and maintaining permanent plots...
+- Long-term monitoring...
+:::
+:::
+:::
+
+::: {.column-screen}
+::: {.bg-window}
+:::
+:::
+
+::: {.column-screen}
+::: {.content-card}
+::: {.inner}
+## Contribute
+
+You can contribute to RedeC2 by:
+- Opening issues...
+- Submitting pull requests...
+- Suggesting or developing new features (please open an issue for discussion first)
+:::
+:::
+:::
+
+::: {.column-screen}
+::: {.bg-window}
+:::
+:::
+
+::: {.column-screen}
+::: {.content-card}
+::: {.inner}
+## Acknowledgements
+
+RedeC2 is supported by national and international collaborations...
+Early partners included [**SECO**](https://blogs.ed.ac.uk/seco-project/network-connections/), [**ForestPlots.net**](https://forestplots.net/).
+:::
+:::
+:::

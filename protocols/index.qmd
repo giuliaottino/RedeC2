@@ -1,0 +1,478 @@
+---
+title: "Protocols"
+subtitle: "Field methods, manuals and compatible monitoring workflows for Rede C2 and partner networks"
+format:
+  html:
+    toc: false
+    page-layout: full
+execute:
+  echo: false
+  eval: false
+  freeze: auto
+  warning: false
+  message: false
+---
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
+
+body {
+  background-image: url("../figures/c2_bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center top;
+  font-family: 'Lora', Georgia, serif;
+}
+
+main.content {
+  background: transparent;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.quarto-title-block {
+  margin-bottom: 1.5rem;
+}
+
+.quarto-title-block .quarto-title {
+  background: rgba(250, 246, 238, 0.94);
+  border-top: 4px solid #5C7A3E;
+  border-bottom: 1px solid rgba(200,90,58,0.22);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  padding: 1.1rem 1.2rem;
+}
+
+.quarto-title-block .title {
+  color: #C85A3A;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.quarto-title-block .subtitle {
+  color: #4A3A22;
+  font-style: italic;
+  margin: 0;
+}
+
+.protocols-wrap {
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+.logo-box {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.logo-box img {
+  width: 180px;
+  max-width: 32vw;
+}
+
+.carousel-shell {
+  overflow: hidden;
+  width: 100%;
+  margin: 1rem 0 1.5rem 0;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: scroll-carousel 55s linear infinite;
+}
+
+.carousel-track:hover {
+  animation-play-state: paused;
+}
+
+.carousel-img {
+  height: 180px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  transition: transform 0.35s ease;
+}
+
+.carousel-img:hover {
+  transform: scale(1.08);
+}
+
+@keyframes scroll-carousel {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333%); }
+}
+
+.card-box {
+  background: rgba(250, 246, 238, 0.96);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.16);
+  border-top: 3px solid #C85A3A;
+  padding: 1.6rem 1.4rem;
+  margin: 0 0 1.4rem 0;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.34rem 0.8rem;
+  border-radius: 999px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.badge-caatinga {
+  background: rgba(200,90,58,0.10);
+  color: #C85A3A;
+  border: 1px solid rgba(200,90,58,0.30);
+}
+
+.badge-cerrado {
+  background: rgba(92,122,62,0.10);
+  color: #4A7030;
+  border: 1px solid rgba(92,122,62,0.30);
+}
+
+.badge-network {
+  background: rgba(139,105,20,0.10);
+  color: #7A5A18;
+  border: 1px solid rgba(139,105,20,0.30);
+}
+
+.intro-lead {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #2A1F10;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  border-left: 3px solid #5C7A3E;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  color: #C85A3A;
+  font-size: 1.7rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid #DDD0B3;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.proto-card {
+  background: rgba(221,208,179,0.22);
+  border: 1px solid #DDD0B3;
+  border-radius: 14px;
+  padding: 1rem 1rem 0.95rem 1rem;
+}
+
+.proto-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.12rem;
+  color: #2A1F10;
+  margin: 0 0 0.35rem 0;
+}
+
+.proto-subtitle {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7A5A18;
+  margin-bottom: 0.65rem;
+}
+
+.proto-card p {
+  color: #4A3A22;
+  line-height: 1.7;
+  margin-bottom: 0.8rem;
+}
+
+.proto-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.32rem 0.72rem;
+  border-radius: 999px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(200,90,58,0.25);
+  background: rgba(200,90,58,0.08);
+  color: #C85A3A;
+}
+
+.pill:hover {
+  transform: translateY(-1px);
+}
+
+.pill-green {
+  border-color: rgba(92,122,62,0.28);
+  background: rgba(92,122,62,0.10);
+  color: #4A7030;
+}
+
+.pill-amber {
+  border-color: rgba(139,105,20,0.28);
+  background: rgba(139,105,20,0.10);
+  color: #7A5A18;
+}
+
+.note-box {
+  background: rgba(92,122,62,0.08);
+  border-left: 4px solid #5C7A3E;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  color: #364426;
+  margin-top: 1rem;
+}
+
+.spacer {
+  height: 1.2rem;
+}
+
+@media (max-width: 900px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carousel-img {
+    height: 145px;
+  }
+
+  .logo-box {
+    justify-content: center;
+  }
+
+  .logo-box img {
+    width: 140px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    animation: none;
+  }
+}
+</style>
+
+<div class="protocols-wrap">
+
+<div class="logo-box">
+  <img src="../figures/logoc2.png" alt="Rede C2 logo">
+</div>
+
+<div class="carousel-shell">
+  <div class="carousel-track">
+    <img src="../figures/canudos_dc.jpg" class="carousel-img" alt="Canudos">
+    <img src="../figures/gruta_brejoes_dc.jpg" class="carousel-img" alt="Gruta dos Brejões">
+    <img src="../figures/s_francisco_dc.jpg" class="carousel-img" alt="São Francisco">
+    <img src="../figures/agua_limpa.jpg" class="carousel-img" alt="Água Limpa">
+    <img src="../figures/itirapina.jpg" class="carousel-img" alt="Itirapina">
+    <img src="../figures/itirapina_.jpg" class="carousel-img" alt="Itirapina 2">
+    <img src="../figures/agua_limpa_.jpg" class="carousel-img" alt="Água Limpa 2">
+    <img src="../figures/agua_limpa_1.jpg" class="carousel-img" alt="Água Limpa 3">
+
+    <img src="../figures/canudos_dc.jpg" class="carousel-img" alt="Canudos 2">
+    <img src="../figures/gruta_brejoes_dc.jpg" class="carousel-img" alt="Gruta dos Brejões 2">
+    <img src="../figures/s_francisco_dc.jpg" class="carousel-img" alt="São Francisco 2">
+    <img src="../figures/agua_limpa.jpg" class="carousel-img" alt="Água Limpa 2">
+    <img src="../figures/itirapina.jpg" class="carousel-img" alt="Itirapina 2b">
+    <img src="../figures/itirapina_.jpg" class="carousel-img" alt="Itirapina 2c">
+    <img src="../figures/agua_limpa_.jpg" class="carousel-img" alt="Água Limpa 2b">
+    <img src="../figures/agua_limpa_1.jpg" class="carousel-img" alt="Água Limpa 3b">
+
+    <img src="../figures/canudos_dc.jpg" class="carousel-img" alt="Canudos 3">
+    <img src="../figures/gruta_brejoes_dc.jpg" class="carousel-img" alt="Gruta dos Brejões 3">
+    <img src="../figures/s_francisco_dc.jpg" class="carousel-img" alt="São Francisco 3">
+    <img src="../figures/agua_limpa.jpg" class="carousel-img" alt="Água Limpa 3">
+    <img src="../figures/itirapina.jpg" class="carousel-img" alt="Itirapina 3">
+    <img src="../figures/itirapina_.jpg" class="carousel-img" alt="Itirapina 3b">
+    <img src="../figures/agua_limpa_.jpg" class="carousel-img" alt="Água Limpa 3b">
+    <img src="../figures/agua_limpa_1.jpg" class="carousel-img" alt="Água Limpa 3c">
+  </div>
+</div>
+
+<div class="card-box">
+  <div class="badges">
+    <span class="badge badge-caatinga">Caatinga</span>
+    <span class="badge badge-cerrado">Cerrado</span>
+    <span class="badge badge-network">Protocols</span>
+  </div>
+
+  <p class="intro-lead">
+    Standardized protocols are the backbone of long-term monitoring: they keep data comparable across sites, teams and years.
+  </p>
+
+  <p>
+    Rede C2 works with permanent plots in dry ecosystems and connects with broader monitoring initiatives. This page gathers core protocol references that can support plot establishment, remeasurement, field standardization, data harmonization and cross-network comparability.
+  </p>
+
+  <div class="note-box">
+    The DRYFLOR field manual is especially relevant for Rede C2 because it offers a standardized workflow for permanent plots in seasonally dry tropical forests, including plot layout, tagging, remeasurement and woody stem monitoring.
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="card-box">
+  <h2 class="section-title">Core protocol references</h2>
+
+  <div class="cards-grid">
+
+    <div class="proto-card">
+      <div class="proto-title">Rede C2</div>
+      <div class="proto-subtitle">Network base</div>
+      <p>
+        Space for Rede C2’s own protocols, field sheets and coding standards for plot installation, recensus, disturbance records, traits and soils.
+      </p>
+      <div class="proto-links">
+        <a class="pill" href="plot-establishment.html">Plot protocol</a>
+        <a class="pill pill-green" href="datasheets.html">Datasheets</a>
+        <a class="pill pill-amber" href="field-codes.html">Field codes</a>
+      </div>
+    </div>
+
+    <div class="proto-card">
+      <div class="proto-title">DRYFLOR field manual</div>
+      <div class="proto-subtitle">Dry forest permanent plots</div>
+      <p>
+        A key manual for establishing and remeasuring permanent plots in seasonally dry tropical forests. It is especially useful for woody stems, tagging rules and long-term comparability.
+      </p>
+      <div class="proto-links">
+        <a class="pill" href="https://www.dryflor.info/files/Protocol_v1.2_English.pdf" target="_blank" rel="noopener">English</a>
+        <a class="pill pill-green" href="https://doi.org/10.5521/forestplots.net/2020_4c" target="_blank" rel="noopener">Português DOI</a>
+        <a class="pill" href="https://www.dryflor.info/files/Protocol_v1.2_Spanish.pdf" target="_blank" rel="noopener">Español</a>
+      </div>
+    </div>
+
+    <div class="proto-card">
+      <div class="proto-title">ForestPlots.net</div>
+      <div class="proto-subtitle">Field resources and manuals</div>
+      <p>
+        ForestPlots.net provides field resources, publications and practical material that support tropical plot monitoring and interoperability across networks.
+      </p>
+      <div class="proto-links">
+        <a class="pill" href="https://forestplots.net/en/using-forestplots/in-the-field" target="_blank" rel="noopener">In the field</a>
+        <a class="pill pill-green" href="https://forestplots.net/en/publications" target="_blank" rel="noopener">Publications</a>
+      </div>
+    </div>
+
+    <div class="proto-card">
+      <div class="proto-title">SECO</div>
+      <div class="proto-subtitle">Dry tropics compatibility</div>
+      <p>
+        SECO connects dry tropics monitoring initiatives and provides protocol pages and modules that align with DryFlor, ForestPlots and related networks.
+      </p>
+      <div class="proto-links">
+        <a class="pill" href="https://blogs.ed.ac.uk/seco-project/science/protocols/" target="_blank" rel="noopener">Protocols page</a>
+        <a class="pill pill-green" href="https://bitbucket.org/miombo/seosaw/raw/master/doc/manuals/soil_manual/versions/SECO_soil_protocol_latest_pt.pdf" target="_blank" rel="noopener">Soils PT</a>
+        <a class="pill" href="https://blogs.ed.ac.uk/seco-project/wp-content/uploads/sites/2074/2022/08/seco_leaf_traits.pdf" target="_blank" rel="noopener">Leaf traits</a>
+      </div>
+    </div>
+
+    <div class="proto-card">
+      <div class="proto-title">SEOSAW</div>
+      <div class="proto-subtitle">Linked woodland modules</div>
+      <p>
+        SEOSAW offers interoperable protocols and datasheets for woodland monitoring, useful as a methodological reference for compatible modules and workflow design.
+      </p>
+      <div class="proto-links">
+        <a class="pill" href="https://seosaw.github.io/manuals.html" target="_blank" rel="noopener">Protocols</a>
+      </div>
+    </div>
+
+    <div class="proto-card">
+      <div class="proto-title">Recommended citation anchor</div>
+      <div class="proto-subtitle">DRYFLOR Portuguese manual</div>
+      <p>
+        This DOI can be used as a stable citation anchor when referring to the Portuguese DRYFLOR field manual in Rede C2 methods and protocol references.
+      </p>
+      <div class="proto-links">
+        <a class="pill pill-amber" href="https://doi.org/10.5521/forestplots.net/2020_4c" target="_blank" rel="noopener">DOI</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="card-box">
+  <h2 class="section-title">Suggested Rede C2 sections</h2>
+
+  <div class="cards-grid">
+
+    <div class="proto-card">
+      <div class="proto-title">Plot establishment and remeasurement</div>
+      <p>
+        Plot geometry, subplot layout, coordinates, tagging, recensus intervals and replacement rules.
+      </p>
+      <div class="proto-links">
+        <a class="pill" href="plot-establishment.html">Open</a>
+      </div>
+    </div>
+
+    <div class="proto-card">
+      <div class="proto-title">Woody stems census</div>
+      <p>
+        Diameter standards, multiple stems, damage codes, recruits, mortality and field note structure.
+      </p>
+      <div class="proto-links">
+        <a class="pill" href="woody-census.html">Open</a>
+      </div>
+    </div>
+
+    <div class="proto-card">
+      <div class="proto-title">Herb layer and regeneration</div>
+      <p>
+        Modules for herbs, seedlings and regeneration tracking compatible with dry-forest and savanna workflows.
+      </p>
+      <div class="proto-links">
+        <a class="pill" href="herb-layer.html">Open</a>
+      </div>
+    </div>
+
+    <div class="proto-card">
+      <div class="proto-title">Soils, traits and disturbance</div>
+      <p>
+        Optional compatible modules inspired by partner networks to maximize interoperability and ecological interpretation.
+      </p>
+      <div class="proto-links">
+        <a class="pill" href="soils.html">Soils</a>
+        <a class="pill pill-green" href="traits.html">Traits</a>
+        <a class="pill pill-amber" href="disturbance.html">Disturbance</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>

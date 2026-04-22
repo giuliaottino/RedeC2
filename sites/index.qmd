@@ -1,0 +1,493 @@
+---
+title: "Sites - Rede C2"
+subtitle: "Permanent plots for understanding Caatinga and Cerrado dynamics"
+format:
+  html:
+    toc: true
+    page-layout: full
+execute:
+  echo: false
+  eval: true
+  freeze: auto
+  cache: false
+  warning: false
+  message: false
+resources:
+  - figures/
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+# Helper: find a file by walking up parent directories (robust to where Quarto renders from)
+find_up <- function(rel_path, start = getwd(), max_levels = 8) {
+  d <- normalizePath(start, winslash = "/", mustWork = FALSE)
+  for (i in 0:max_levels) {
+    cand <- file.path(d, rel_path)
+    if (file.exists(cand)) return(cand)
+    parent <- dirname(d)
+    if (identical(parent, d)) break
+    d <- parent
+  }
+  NA_character_
+}
+```
+```{=html}
+<style>
+  /* FUNDO FIXO */
+  body{
+    background-image: url("figures/c2_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center top;
+  }
+
+  main.content{
+    background: transparent;
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Retângulo flutuante só para título/subtítulo */
+/* === TITLE (paper strip, left aligned, sem blur) === */
+.quarto-title-block{
+  display: block !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.quarto-title-block .quarto-title{
+  width: 100%;
+  padding: 1.05rem 0;
+  margin: 0.4rem 0 1.2rem 0;
+  background: rgba(250, 246, 238, 0.94);
+  border-top: 4px solid #5C7A3E;
+  border-bottom: 1px solid rgba(200,90,58,0.22);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  border-radius: 0;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.quarto-title-block .title,
+.quarto-title-block .subtitle{
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1.2rem;
+  text-align: left !important;
+}
+.quarto-title-block .title{
+  color: #C85A3A;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.25rem 0;
+}
+.quarto-title-block .subtitle{
+  color: #4A3A22;
+  opacity: 0.95;
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  margin: 0;
+}
+
+  /* CARTÕES full-bleed e opacos */
+.content-card{
+  width: 100%;
+  margin: 0;
+  padding: 2rem 2.25rem;
+  background: rgba(250, 246, 238, 0.96);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  position: relative;
+  z-index: 2;
+  border-top: 3px solid #C85A3A;
+}
+.content-card .inner{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.content-card h2{
+  font-family: 'Playfair Display', serif;
+  color: #C85A3A;
+  font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid #DDD0B3;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.content-card p{
+  font-family: 'Lora', serif;
+  line-height: 1.85;
+  color: #4A3A22;
+}
+  .content-card h2{ margin-top: 0; }
+
+  /* JANELA entre cartões (deixa o background aparecer) */
+  .bg-window{
+    width: 100%;
+    height: 5.5rem;
+  }
+
+  /* Logos flutuantes */
+  .floating-logos {
+    position: fixed;
+    top: 60px;
+    right: 40px;
+    width: 165px;
+    opacity: 0.85;
+    z-index: 50;
+  }
+  .floating-logos img {
+    display: block;
+    width: 100%;
+    margin-bottom: 16px;
+    border-radius: 6px;
+  }
+
+  /* --------------------------
+     CARROSSEL (faixa em card)
+     - começa já preenchendo a largura
+     - loop contínuo (conteúdo duplicado)
+  --------------------------- */
+  .sel-viewport{
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .carousel-track{
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    will-change: transform;
+    animation: carousel-marquee 55s linear infinite;
+  }
+
+  .carousel-viewport:hover .carousel-track{
+    animation-play-state: paused;
+  }
+
+  .carousel-img{
+    width: clamp(260px, 28vw, 460px);
+    height: 220px;
+    object-fit: cover;
+
+    border-radius: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.16);
+
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    cursor: pointer;
+  }
+
+  .carousel-img:hover{
+    transform: scale(1.06);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+  }
+
+  @keyframes carousel-marquee{
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .carousel-track{ animation: none; }
+  }
+
+  @media (max-width: 992px){
+    .content-card{ padding: 1.4rem 1.2rem; border-radius: 14px; }
+    .bg-window{ height: 3.5rem; }
+    .floating-logos{ right: 14px; width: 120px; }
+    .quarto-title-block .quarto-title{
+      padding: 1rem 1.1rem;
+      border-radius: 14px;
+    }
+    .carousel-img{
+      width: clamp(220px, 70vw, 420px);
+      height: 200px;
+    }
+  }
+  /* === Leaflet: estética RedeC2 === */
+.leaflet-container{
+  border-radius: 16px;
+  overflow: hidden;              /* evita controles/popup “vazarem” */
+  box-shadow: 0 12px 26px rgba(0,0,0,0.14);
+  font-family: 'Lora', Georgia, serif;
+}
+
+.leaflet-control, .leaflet-bar, .leaflet-control-layers{
+  border-radius: 12px !important;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.12) !important;
+  border: 1px solid rgba(221,208,179,0.85) !important;
+  background: rgba(250,246,238,0.96) !important;
+}
+
+.leaflet-bar a{
+  border-radius: 10px !important;
+}
+
+.leaflet-popup-content-wrapper{
+  border-radius: 14px !important;
+  background: rgba(250,246,238,0.98) !important;
+  border: 1px solid rgba(221,208,179,0.85) !important;
+  box-shadow: 0 14px 26px rgba(0,0,0,0.16) !important;
+}
+.leaflet-popup-tip{
+  background: rgba(250,246,238,0.98) !important;
+}
+
+/* Popup “card” */
+.popup-card{ max-width: 320px; }
+.popup-title{
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #2A1F10;
+  margin: 0 0 0.35rem 0;
+}
+.popup-sub{
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7A5A18;
+  margin-bottom: 0.6rem;
+}
+.popup-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.popup-table td{
+  padding: 0.22rem 0;
+  vertical-align: top;
+}
+.popup-k{ color: #7A5A18; font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding-right: 0.6rem; }
+.popup-v{ color: #4A3A22; }
+
+.pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(221,208,179,0.9);
+}
+.pill-caatinga{ background: rgba(200,90,58,0.10); color: #C85A3A; border-color: rgba(200,90,58,0.28); }
+.pill-cerrado{  background: rgba(92,122,62,0.10); color: #4A7030; border-color: rgba(92,122,62,0.28); }
+
+.map-legend .legend-title{
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7A5A18;
+  margin-bottom: 0.4rem;
+}
+.map-legend .legend-row{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #4A3A22;
+}
+.map-legend .dot{
+  width: 10px; height: 10px; border-radius: 50%;
+  display: inline-block;
+}
+.map-legend .dot-caatinga{ background: #C85A3A; }
+.map-legend .dot-cerrado{ background: #5C7A3E; }
+</style>
+
+<div class="floating-logos">
+  <img src="/figures/c2.png" alt="logo RedeC2">
+</div>
+````
+::: {.column-screen}
+::: {.content-card}
+::: {.inner}
+::: column-screen
+```{=html}
+<div class="carousel-fullbleed">
+  <div class="carousel">
+    <div class="carousel-track">
+      <!-- SEQ 1 -->
+      <img src="/figures/canudos_dc.jpg" class="carousel-img" alt="Canudos" />
+      <img src="/figures/gruta_brejoes_dc.jpg" class="carousel-img" alt="Gruta" />
+      <img src="/figures/s_francisco_dc.jpg" class="carousel-img" alt="São Francisco" />
+      <img src="/figures/agua_limpa.jpg" class="carousel-img" alt="Água Limpa" />
+      <img src="/figures/itirapina.jpg" class="carousel-img" alt="Itirapina" />
+      <img src="/figures/itirapina_.jpg" class="carousel-img" alt="Itirapina 2" />
+      <img src="/figures/agua_limpa_.jpg" class="carousel-img" alt="Água Limpa 2" />
+      <img src="/figures/agua_limpa_1.jpg" class="carousel-img" alt="Água Limpa 3" />
+
+      <!-- SEQ 2 (cópia) -->
+      <img src="/figures/canudos_dc.jpg" class="carousel-img" alt="Canudos (2)" />
+      <img src="/figures/gruta_brejoes_dc.jpg" class="carousel-img" alt="Gruta (2)" />
+      <img src="/figures/s_francisco_dc.jpg" class="carousel-img" alt="São Francisco (2)" />
+      <img src="/figures/agua_limpa.jpg" class="carousel-img" alt="Água Limpa (2)" />
+      <img src="/figures/itirapina.jpg" class="carousel-img" alt="Itirapina (2)" />
+      <img src="/figures/itirapina_.jpg" class="carousel-img" alt="Itirapina 2 (2)" />
+      <img src="/figures/agua_limpa_.jpg" class="carousel-img" alt="Água Limpa 2 (2)" />
+      <img src="/figures/agua_limpa_1.jpg" class="carousel-img" alt="Água Limpa 3 (2)" />
+
+      <!-- SEQ 3 (cópia extra) -->
+      <img src="/figures/canudos_dc.jpg" class="carousel-img" alt="Canudos (3)" />
+      <img src="/figures/gruta_brejoes_dc.jpg" class="carousel-img" alt="Gruta (3)" />
+      <img src="/figures/s_francisco_dc.jpg" class="carousel-img" alt="São Francisco (3)" />
+      <img src="/figures/agua_limpa.jpg" class="carousel-img" alt="Água Limpa (3)" />
+      <img src="/figures/itirapina.jpg" class="carousel-img" alt="Itirapina (3)" />
+      <img src="/figures/itirapina_.jpg" class="carousel-img" alt="Itirapina 2 (3)" />
+      <img src="/figures/agua_limpa_.jpg" class="carousel-img" alt="Água Limpa 2 (3)" />
+      <img src="/figures/agua_limpa_1.jpg" class="carousel-img" alt="Água Limpa 3 (3)" />
+    </div>
+  </div>
+</div>
+```
+:::
+:::
+:::
+<div class="bg-window"></div>
+
+::: {.column-screen}
+::: {.content-card}
+::: {.inner}
+
+## Mapa interativo
+
+Explore os sítios permanentes da Rede C2 no mapa abaixo.
+
+```{r}
+library(leaflet)
+library(htmlwidgets)
+library(dplyr)
+library(htmltools)
+
+# Robust path: search upwards for _input_data/plotMetadata_R2C.csv
+csv_path <- find_up(file.path("_input_data", "plotMetadata_R2C.csv"))
+
+if (is.na(csv_path)) {
+  stop(
+    "Não encontrei o arquivo '_input_data/plotMetadata_R2C.csv'.\n",
+    "Diretório de trabalho (getwd): ", getwd(), "\n",
+    "Dica: verifique se a pasta '_input_data' está no projeto e contém 'plotMetadata_R2C.csv'."
+  )
+}
+
+plotMetadata_R2C <- read.csv(csv_path)
+
+# Add term for vegetation
+plotMetadata_R2C$biome <- vector("character", nrow(plotMetadata_R2C))
+plotMetadata_R2C$biome[plotMetadata_R2C$kyle_veg_broad == "Forest"]  <- "Caatinga"
+plotMetadata_R2C$biome[plotMetadata_R2C$kyle_veg_broad == "Savanna"] <- "Cerrado"
+
+# Correções manuais
+plotMetadata_R2C$biome[plotMetadata_R2C$plot_id == "CIP-21"] <- "Cerrado"
+plotMetadata_R2C$biome[plotMetadata_R2C$plot_id == "CIP-22"] <- "Cerrado"
+plotMetadata_R2C$biome[plotMetadata_R2C$plot_id == "CIP-23"] <- "Cerrado"
+plotMetadata_R2C$biome[plotMetadata_R2C$plot_id == "PNP-04"] <- "Cerrado"
+
+# Corrigir sinal das coordenadas, se necessário
+plotMetadata_R2C$longitude[plotMetadata_R2C$longitude > 0] <-
+  -plotMetadata_R2C$longitude[plotMetadata_R2C$longitude > 0]
+plotMetadata_R2C$latitude[plotMetadata_R2C$latitude > 0]   <-
+  -plotMetadata_R2C$latitude[plotMetadata_R2C$latitude > 0]
+
+# Ícones customizados por bioma
+custom_icons <- icons(
+  iconUrl = ifelse(
+    plotMetadata_R2C$biome == "Caatinga",
+    "https://leafletjs.com/examples/custom-icons/leaf-red.png",
+    "https://leafletjs.com/examples/custom-icons/leaf-orange.png"
+  ),
+  iconWidth   = 25,
+  iconHeight  = 41,
+  iconAnchorX = 12,
+  iconAnchorY = 41
+)
+
+map <- leaflet(
+  data    = plotMetadata_R2C,
+  width   = "100%",
+  height  = 700,
+  options = leafletOptions(minZoom = 2, maxZoom = 22)
+) %>%
+  addControl(
+    html = paste0(
+      "<div style='text-align:center; line-height:1.2; padding:4px 8px;",
+      "background:rgba(255,255,255,0.85); border-radius:8px;",
+      "box-shadow:0 1px 4px rgba(0,0,0,0.25);'>",
+      "<div style='font-size:14px; font-weight:400;'>", htmlEscape("Sites - Caatinga & Cerrado"), "</div>",
+      "</div>"
+    ),
+    position  = "topleft",
+    className = "custom-title"
+  ) %>%
+  addControl(
+    html = paste0(
+      "<a href='https://redec2.github.io/redeC2-website/' target='_blank' rel='noopener'>",
+      "<img src='/figures/c2.png' style='width:150px; height:auto;'>",
+      "</a>"
+    ),
+    position  = "topleft",
+    className = "project-logo"
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x){
+       this.whenReady(function(){
+         if (typeof addFilterControl === 'function') {
+           addFilterControl.call(this, el, x);
+         }
+       });
+     }"
+  ) %>%
+  addProviderTiles(providers$OpenStreetMap,       group = "OSM Street") %>%
+  addProviderTiles(providers$Esri.WorldStreetMap, group = "ESRI Street") %>%
+  addProviderTiles(providers$Esri.WorldImagery,   group = "Satellite")  %>%
+  addProviderTiles(providers$OpenTopoMap,         group = "OpenTopo")   %>%
+  addProviderTiles(providers$CartoDB.DarkMatter,  group = "Dark Matter") %>%
+  addMarkers(
+    ~longitude, ~latitude,
+    icon  = custom_icons,
+    group = "Plots",
+    popup = ~paste0(
+      "<strong>Name:</strong> ", plot_id,
+      "<br><strong>Biome:</strong> ", biome,
+      "<br><strong>Area (ha):</strong> ", plot_area,
+      "<br><strong>Census Number:</strong> ", n_census,
+      "<br><strong>BIO12:</strong> ", bio12,
+      "<br><strong>PI:</strong> ", prinv
+    )
+  ) %>%
+  addCircleMarkers(
+    ~longitude, ~latitude,
+    radius = 5,
+    group  = "Plots",
+    label  = ~paste0(plot_id, " (", biome, ")"),
+    labelOptions = labelOptions(direction = "auto", textsize = "12px", opacity = 0.9)
+  ) %>%
+  addLayersControl(
+    baseGroups    = c("OSM Street", "ESRI Street", "Satellite", "OpenTopo", "Dark Matter"),
+    overlayGroups = c("Plots"),
+    position      = "bottomleft",
+    options       = layersControlOptions(collapsed = TRUE, autoZIndex = TRUE)
+  )
+
+map
+```
+
+:::
+:::
+:::

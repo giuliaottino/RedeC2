@@ -1,0 +1,39 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Rede C2"
+  site-url: https://giuliaottino.github.io/RedeC2/
+  navbar:
+    left:
+      - text: "Overview"
+        href: index.qmd
+      - text: "About"
+        href: about.qmd
+      - text: "Sites"
+        href: sites/index.qmd
+      - text: "Protocols"
+        href: protocols/index.qmd
+      - text: "Team"
+        href: team/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/giuliaottino/RedeC2
+        aria-label: Rede C2 GitHub
+
+  page-footer:
+    center:
+      - text: "About"
+        href: about.qmd
+    right:
+      - icon: github
+        href: https://github.com/giuliaottino/RedeC2
+        aria-label: Rede C2 GitHub
+
+format:
+  html:
+    css: styles.css
+    theme:
+      light: [spacelab, theme.scss]
+      dark: [spacelab, theme-dark.scss]
