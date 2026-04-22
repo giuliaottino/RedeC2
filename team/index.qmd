@@ -1,5 +1,5 @@
 ---
-title: "Team - Rede C2"
+title: "The RedeC2 Team"
 format:
   html:
     toc: true
@@ -89,7 +89,7 @@ if(any(!existing_files)) {
 
 <style>
   body {
-    background-image: url('/figures/c2_bg.png');
+    background-image: url('/figures/c2_bg.jpg');
     background-repeat: repeat-y;
     background-size: cover;
     background-attachment: fixed;
@@ -207,7 +207,6 @@ if(any(!existing_files)) {
 </style>
 
 
-## The RedeC2 Team
 
 ```{r generate-team-cards, echo=FALSE}
 # Function to generate HTML for each team member
