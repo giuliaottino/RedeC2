@@ -158,14 +158,11 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!-- Rede C2: protocols page — alinhada ao visual da home, hero full-width e legível -->
+<!-- Rede C2: protocols page — hero limpo, sem sobreposição, alinhado à home -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
-/* =====================================================================
-   VARIÁVEIS GLOBAIS
-   ===================================================================== */
 :root {
   --rc2-red:        #A93632;
   --rc2-red-dark:   #6E1F1D;
@@ -186,7 +183,9 @@ ul.task-list li input[type="checkbox"] {
   --rc2-xl-max:      1560px;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
 html,
 body {
@@ -209,8 +208,17 @@ body {
   font-family: 'Montserrat', Arial, sans-serif;
 }
 
-img, video, iframe, svg, canvas { max-width: 100%; }
-a { color: var(--rc2-red); }
+img,
+video,
+iframe,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+a {
+  color: var(--rc2-red);
+}
 
 #quarto-content,
 #quarto-document-content,
@@ -252,25 +260,25 @@ main.content {
   border-bottom: 2px solid var(--rc2-red);
 }
 
-/* =====================================================================
-   HERO DA PÁGINA — FULL-WIDTH, PADRONIZADO COM A HOME
-   ===================================================================== */
+/* =========================================================
+   HERO — LIMPO E SEM SOBREPOSIÇÃO
+   ========================================================= */
 .rc2-page-hero {
   position: relative;
   width: 100vw;
   max-width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  min-height: clamp(680px, 92vh, 920px);
+  min-height: clamp(620px, 88vh, 860px);
   display: grid;
   align-items: center;
   overflow: hidden;
   isolation: isolate;
   color: #fff;
   background:
-    radial-gradient(circle at 82% 14%, rgba(217,154,39,0.42), transparent 30%),
-    radial-gradient(circle at 18% 82%, rgba(169,54,50,0.30), transparent 36%),
-    linear-gradient(108deg, rgba(23,23,23,0.84) 0%, rgba(46,59,36,0.82) 40%, rgba(110,31,29,0.74) 100%),
+    radial-gradient(circle at 82% 14%, rgba(217,154,39,0.38), transparent 28%),
+    radial-gradient(circle at 18% 82%, rgba(169,54,50,0.26), transparent 36%),
+    linear-gradient(108deg, rgba(23,23,23,0.84) 0%, rgba(46,59,36,0.82) 42%, rgba(110,31,29,0.72) 100%),
     url("../figures/c2_bg.jpg");
   background-size: cover;
   background-position: center;
@@ -282,10 +290,12 @@ main.content {
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(180deg,
-      rgba(0,0,0,0.42) 0%,
-      rgba(0,0,0,0.10) 42%,
-      rgba(0,0,0,0.58) 100%),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.40) 0%,
+      rgba(0,0,0,0.10) 46%,
+      rgba(0,0,0,0.56) 100%
+    ),
     repeating-linear-gradient(
       135deg,
       rgba(255,255,255,0.055) 0 1px,
@@ -302,10 +312,12 @@ main.content {
   bottom: 0;
   width: 5px;
   z-index: 1;
-  background: linear-gradient(180deg,
+  background: linear-gradient(
+    180deg,
     var(--rc2-ochre) 0%,
     var(--rc2-red) 50%,
-    var(--rc2-green) 100%);
+    var(--rc2-green) 100%
+  );
 }
 
 .rc2-page-hero-inner {
@@ -313,60 +325,47 @@ main.content {
   z-index: 2;
   width: min(1360px, calc(100% - var(--rc2-safe-gutter) * 2));
   margin: 0 auto;
-  padding: clamp(5rem, 9vw, 8rem) 0 clamp(3rem, 6vw, 5rem);
+  padding: clamp(4.8rem, 8vw, 7.3rem) 0 clamp(3rem, 5vw, 4.5rem);
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.48fr);
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.28fr);
+  gap: clamp(2rem, 4.5vw, 4.5rem);
   align-items: center;
 }
 
-/* Kicker */
-.rc2-kicker,
-.rc2-eyebrow {
+.rc2-kicker {
   display: inline-flex;
-  width: fit-content;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 0.85rem;
-  padding: 0.38rem 0.88rem;
+  padding: 0.36rem 0.82rem;
   border-radius: 999px;
-  background: rgba(246,241,232,0.13);
-  border: 1px solid rgba(246,241,232,0.28);
+  background: rgba(246,241,232,0.12);
+  border: 1px solid rgba(246,241,232,0.24);
   color: var(--rc2-ochre);
   font-family: 'Space Mono', monospace;
   font-size: clamp(0.62rem, 0.9vw, 0.76rem);
   font-weight: 800;
   letter-spacing: 0.16em;
-  line-height: 1.2;
   text-transform: uppercase;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   animation: fadeSlideUp 0.7s ease both;
 }
 
-.rc2-kicker::before,
-.rc2-eyebrow::before {
+.rc2-kicker::before {
   content: "";
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: var(--rc2-ochre);
   box-shadow: 0 0 0 3px rgba(217,154,39,0.28);
-  animation: pulse 2.4s ease infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(217,154,39,0.28); }
-  50%      { box-shadow: 0 0 0 6px rgba(217,154,39,0.10); }
-}
-
-/* Título principal */
 .rc2-page-hero h1 {
-  margin: 0;
-  max-width: 980px;
+  margin: 0.7rem 0 0;
+  max-width: 900px;
   color: #fff;
-  font-size: clamp(4.4rem, 10.6vw, 10.5rem);
-  line-height: 0.78;
+  font-size: clamp(3.8rem, 8.5vw, 8.2rem);
+  line-height: 0.80;
   font-weight: 900;
   letter-spacing: -0.10em;
   text-transform: uppercase;
@@ -379,15 +378,14 @@ main.content {
 }
 
 .rc2-title-line:nth-child(2) {
-  margin-left: clamp(1.6rem, 8vw, 6.8rem);
+  margin-left: clamp(1.4rem, 6vw, 5.4rem);
 }
 
-/* Sublinha decorativa */
 .rc2-title-rule {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin: 1.1rem 0;
+  margin: 1.05rem 0 1.25rem;
   animation: fadeSlideUp 0.75s 0.2s ease both;
 }
 
@@ -411,112 +409,60 @@ main.content {
   margin: 0;
   color: rgba(255,253,247,0.94);
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(1.05rem, 1.9vw, 1.38rem);
+  font-size: clamp(1.05rem, 1.9vw, 1.34rem);
   line-height: 1.58;
   text-shadow: 0 3px 18px rgba(0,0,0,0.42);
   animation: fadeSlideUp 0.75s 0.28s ease both;
 }
 
-/* Cards temáticos do hero — substituem pills pouco legíveis */
-.rc2-topic-board {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.65rem;
-  width: min(840px, 100%);
-  margin: 1.35rem 0 0;
+/* Palavras-chave slim */
+.rc2-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 1.2rem 0 0;
   animation: fadeSlideUp 0.75s 0.36s ease both;
 }
 
-.rc2-topic-card {
-  position: relative;
-  min-width: 0;
-  min-height: 96px;
-  padding: 0.85rem 0.85rem 0.8rem;
-  border-radius: 18px;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(23,23,23,0.84), rgba(23,23,23,0.60));
+.rc2-keyword {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0.36rem 0.78rem;
+  border-radius: 999px;
+  background: rgba(23,23,23,0.46);
   border: 1px solid rgba(246,241,232,0.26);
-  box-shadow:
-    0 14px 28px rgba(0,0,0,0.24),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.rc2-topic-card::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  background: var(--rc2-ochre);
-}
-
-.rc2-topic-card::after {
-  content: "";
-  position: absolute;
-  right: -28px;
-  bottom: -34px;
-  width: 86px;
-  height: 86px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.055);
-  pointer-events: none;
-}
-
-.rc2-topic-card span {
-  display: block;
-  margin-bottom: 0.42rem;
-  color: rgba(246,241,232,0.72);
+  color: rgba(255,253,247,0.93);
   font-family: 'Space Mono', monospace;
-  font-size: 0.55rem;
-  line-height: 1;
+  font-size: clamp(0.62rem, 0.78vw, 0.72rem);
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
 }
 
-.rc2-topic-card strong {
-  display: block;
-  color: #FFFDF7;
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-size: clamp(0.78rem, 1vw, 0.95rem);
-  line-height: 1.08;
-  font-weight: 900;
-  letter-spacing: 0.015em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
-}
+.rc2-keyword--red   { border-left: 4px solid var(--rc2-red); }
+.rc2-keyword--green { border-left: 4px solid var(--rc2-green-soft); }
+.rc2-keyword--ochre { border-left: 4px solid var(--rc2-ochre); }
+.rc2-keyword--cream { border-left: 4px solid var(--rc2-cream); }
 
-.rc2-topic-card small {
-  display: block;
-  margin-top: 0.35rem;
-  color: rgba(255,253,247,0.70);
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 0.78rem;
-  line-height: 1.2;
-}
-
-.rc2-topic-card--red::before    { background: var(--rc2-red); }
-.rc2-topic-card--green::before  { background: var(--rc2-green-soft); }
-.rc2-topic-card--ochre::before  { background: var(--rc2-ochre); }
-.rc2-topic-card--cream::before  { background: var(--rc2-cream); }
-
-/* Logo card lateral */
+/* Card lateral menor e discreto */
 .rc2-hero-logo-card {
-  align-self: stretch;
+  align-self: center;
+  justify-self: end;
+  width: min(270px, 100%);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 1.25rem;
-  padding: clamp(1.2rem, 2.2vw, 2rem);
+  justify-content: center;
+  gap: 1rem;
+  padding: clamp(1rem, 1.8vw, 1.45rem);
   border-radius: 28px;
-  background: rgba(255,253,247,0.09);
-  border: 1px solid rgba(246,241,232,0.20);
+  background: rgba(255,253,247,0.08);
+  border: 1px solid rgba(246,241,232,0.18);
   box-shadow:
-    0 24px 54px rgba(0,0,0,0.22),
+    0 22px 50px rgba(0,0,0,0.20),
     inset 0 1px 0 rgba(255,255,255,0.08);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -524,70 +470,26 @@ main.content {
 }
 
 .rc2-hero-logo-card img {
-  width: clamp(100px, 12vw, 170px);
+  width: clamp(88px, 8vw, 132px);
   filter: drop-shadow(0 12px 26px rgba(0,0,0,0.36));
-}
-
-.rc2-hero-logo-card p {
-  margin: 0;
-  color: rgba(255,253,247,0.82);
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(0.88rem, 1.3vw, 1.02rem);
-  line-height: 1.58;
 }
 
 .rc2-hero-logo-card-divider {
   height: 1px;
   background: rgba(246,241,232,0.15);
-  border-radius: 1px;
 }
 
-/* Indicador de scroll */
-.rc2-scroll-hint {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  color: rgba(255,253,247,0.52);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  animation: fadeIn 1.2s 1s ease both;
+.rc2-hero-logo-card p {
+  margin: 0;
+  color: rgba(255,253,247,0.78);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(0.84rem, 1.1vw, 0.96rem);
+  line-height: 1.5;
 }
 
-.rc2-scroll-hint-line {
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.40), transparent);
-  animation: scrollLine 1.8s ease infinite;
-}
-
-@keyframes scrollLine {
-  0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
-  50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
-  51%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
-  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
-}
-
-@keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* =====================================================================
+/* =========================================================
    SEÇÕES PADRÃO
-   ===================================================================== */
+   ========================================================= */
 .rc2-section,
 .content-card {
   width: min(var(--rc2-content-max), calc(100% - var(--rc2-safe-gutter) * 2));
@@ -604,10 +506,6 @@ main.content {
 
 .rc2-section--wide {
   width: min(var(--rc2-wide-max), calc(100% - var(--rc2-safe-gutter) * 2));
-}
-
-.rc2-section--xl {
-  width: min(var(--rc2-xl-max), calc(100% - var(--rc2-safe-gutter) * 2));
 }
 
 .rc2-section-title {
@@ -638,15 +536,6 @@ main.content {
   text-transform: uppercase;
 }
 
-.rc2-display-title {
-  margin: 0 0 1.1rem 0;
-  color: var(--rc2-green-dark);
-  font-size: clamp(2.15rem, 5vw, 5.4rem);
-  line-height: 0.9;
-  font-weight: 900;
-  letter-spacing: -0.075em;
-}
-
 .rc2-lead,
 .lead {
   margin: 0 0 1.25rem 0 !important;
@@ -665,55 +554,7 @@ main.content {
   line-height: 1.72;
 }
 
-.rc2-muted { color: var(--rc2-muted) !important; }
-
-/* Pills gerais, usadas fora do hero */
-.rc2-pills,
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.62rem;
-  margin: 1rem 0;
-}
-
-.rc2-pill,
-.tag,
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.34rem 0.72rem;
-  border-radius: 999px;
-  background: rgba(246,241,232,0.84);
-  border: 1.5px solid rgba(98,106,56,0.28);
-  color: var(--rc2-green-dark);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-.rc2-pill--red {
-  color: var(--rc2-red);
-  border-color: rgba(169,54,50,0.32);
-  background: rgba(169,54,50,0.08);
-}
-
-.rc2-pill--green {
-  color: var(--rc2-green-dark);
-  border-color: rgba(98,106,56,0.32);
-  background: rgba(98,106,56,0.09);
-}
-
-.rc2-pill--ochre {
-  color: #7A5A18;
-  border-color: rgba(217,154,39,0.42);
-  background: rgba(217,154,39,0.10);
-}
-
-/* Grids */
+/* Grids e cards */
 .rc2-grid-2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
@@ -726,17 +567,8 @@ main.content {
   gap: 1rem;
 }
 
-.rc2-grid-4 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  gap: 0.9rem;
-}
-
-/* Cards */
 .rc2-card,
-.proto-card,
-.sites-box,
-.info-box {
+.proto-card {
   position: relative;
   min-width: 0;
   padding: clamp(1rem, 2vw, 1.35rem);
@@ -748,16 +580,14 @@ main.content {
 }
 
 .rc2-card:hover,
-.proto-card:hover,
-.sites-box:hover {
+.proto-card:hover {
   transform: translateY(-2px);
   border-color: rgba(169,54,50,0.30);
   box-shadow: 0 14px 26px rgba(0,0,0,0.10);
 }
 
 .rc2-card h3,
-.proto-card h3,
-.sites-box h3 {
+.proto-card h3 {
   margin: 0 0 0.7rem 0;
   color: var(--rc2-green-dark);
   font-family: 'Space Mono', monospace;
@@ -769,38 +599,11 @@ main.content {
 }
 
 .rc2-card p,
-.proto-card p,
-.sites-box p {
+.proto-card p {
   margin: 0;
   color: var(--rc2-muted);
   font-size: 0.92rem;
   line-height: 1.6;
-}
-
-.rc2-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.rc2-card li {
-  position: relative;
-  padding-left: 1.25rem;
-  margin: 0.52rem 0;
-  line-height: 1.55;
-  color: var(--rc2-ink);
-  font-size: 0.94rem;
-}
-
-.rc2-card li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.6rem;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--rc2-ochre);
 }
 
 /* Protocol-specific */
@@ -848,6 +651,48 @@ main.content {
   color: var(--rc2-red);
 }
 
+.rc2-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 1.1rem 0;
+}
+
+.rc2-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.32rem 0.72rem;
+  border-radius: 999px;
+  background: rgba(246,241,232,0.84);
+  border: 1.5px solid rgba(98,106,56,0.28);
+  color: var(--rc2-green-dark);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.rc2-pill--red {
+  color: var(--rc2-red);
+  border-color: rgba(169,54,50,0.32);
+  background: rgba(169,54,50,0.08);
+}
+
+.rc2-pill--green {
+  color: var(--rc2-green-dark);
+  border-color: rgba(98,106,56,0.32);
+  background: rgba(98,106,56,0.09);
+}
+
+.rc2-pill--ochre {
+  color: #7A5A18;
+  border-color: rgba(217,154,39,0.42);
+  background: rgba(217,154,39,0.10);
+}
+
+/* Workflow */
 .method-river {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -897,49 +742,12 @@ main.content {
   line-height: 1.55 !important;
 }
 
-/* Buttons */
-.rc2-btn-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  margin-top: 1.2rem;
+/* Animações */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.rc2-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.68rem 1.02rem;
-  border-radius: 999px;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none !important;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-}
-
-.rc2-btn--main {
-  background: var(--rc2-red);
-  color: #fff !important;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.18);
-}
-
-.rc2-btn--ghost {
-  background: rgba(246,241,232,0.92);
-  color: var(--rc2-green-dark) !important;
-  border: 1px solid rgba(98,106,56,0.28);
-}
-
-.rc2-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
-}
-
-/* =====================================================================
-   ANIMAÇÕES
-   ===================================================================== */
 .reveal-ready {
   opacity: 0;
   transform: translateY(42px);
@@ -961,21 +769,15 @@ main.content {
   }
 }
 
-/* =====================================================================
-   RESPONSIVIDADE
-   ===================================================================== */
+/* Responsivo */
 @media (max-width: 1180px) {
   .rc2-page-hero-inner {
     grid-template-columns: 1fr;
   }
 
   .rc2-hero-logo-card {
-    max-width: 460px;
-  }
-
-  .rc2-topic-board {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 640px;
+    justify-self: start;
+    max-width: 420px;
   }
 
   .method-river {
@@ -1003,14 +805,13 @@ main.content {
   }
 
   .rc2-page-hero h1 {
-    font-size: clamp(3.5rem, 18vw, 6.2rem);
+    font-size: clamp(3.2rem, 16vw, 5.8rem);
   }
 
   .rc2-title-line:nth-child(2) {
     margin-left: 0;
   }
 
-  .rc2-topic-board,
   .method-river {
     grid-template-columns: 1fr;
   }
@@ -1021,11 +822,6 @@ main.content {
 
   .rc2-section-title {
     grid-template-columns: 34px 1fr;
-  }
-
-  .rc2-btn {
-    width: 100%;
-    justify-content: center;
   }
 }
 
@@ -1041,7 +837,6 @@ main.content {
   }
 }
 
-/* Garante que widgets não criem largura fantasma */
 .html-widget,
 .leaflet,
 .leaflet-container,
@@ -1050,9 +845,6 @@ iframe {
   max-width: 100% !important;
 }
 </style>
-<!-- ============================================================
-     HERO SECTION — PROTOCOLS
-     ============================================================ -->
 <section class="rc2-page-hero page-columns page-full" id="protocols-hero" aria-label="RedeC2 protocols hero">
 
   <div class="rc2-page-hero-inner page-columns page-full">
@@ -1068,57 +860,27 @@ iframe {
       <div class="rc2-title-rule" aria-hidden="true"></div>
 
       <p>
-        Standardized protocols are the backbone of long-term monitoring:
-        they keep data comparable across sites, teams and years.
+        Standardized methods keep field data comparable across sites, teams
+        and years.
       </p>
 
-      <div class="rc2-topic-board" aria-label="Protocol themes">
-        <div class="rc2-topic-card rc2-topic-card--red">
-          <span>Biome</span>
-          <strong>Caatinga</strong>
-          <small>Dry forest plots</small>
-        </div>
-
-        <div class="rc2-topic-card rc2-topic-card--green">
-          <span>Biome</span>
-          <strong>Cerrado</strong>
-          <small>Savanna workflows</small>
-        </div>
-
-        <div class="rc2-topic-card rc2-topic-card--ochre">
-          <span>Method</span>
-          <strong>Permanent plots</strong>
-          <small>Long-term monitoring</small>
-        </div>
-
-        <div class="rc2-topic-card rc2-topic-card--cream">
-          <span>Output</span>
-          <strong>Data standards</strong>
-          <small>Comparable datasets</small>
-        </div>
+      <div class="rc2-keywords" aria-label="Protocol keywords">
+        <span class="rc2-keyword rc2-keyword--red">Caatinga</span>
+        <span class="rc2-keyword rc2-keyword--green">Cerrado</span>
+        <span class="rc2-keyword rc2-keyword--ochre">Permanent plots</span>
+        <span class="rc2-keyword rc2-keyword--cream">Data standards</span>
       </div>
     </div>
 
     <aside class="rc2-hero-logo-card" aria-label="RedeC2 protocol identity">
       <img src="../figures/logoc2.png" alt="RedeC2 logo">
       <div class="rc2-hero-logo-card-divider"></div>
-      <p>
-        Protocols connect field methods, data structure and partner manuals
-        so Rede C2 can keep monitoring consistent across sites and years.
-      </p>
+      <p>Field methods, harmonized tables and partner manuals.</p>
     </aside>
 
   </div>
 
-  <div class="rc2-scroll-hint" aria-hidden="true">
-    <div class="rc2-scroll-hint-line"></div>
-    <span>scroll</span>
-  </div>
-
 </section>
-<!-- ============================================================
-     OVERVIEW
-     ============================================================ -->
 <section class="rc2-section page-columns page-full" id="overview">
   <div class="rc2-section-title"><h2 class="anchored">Protocol logic</h2></div>
 
@@ -1173,9 +935,6 @@ iframe {
     </a>
   </div>
 </section>
-<!-- ============================================================
-     CORE REFERENCES
-     ============================================================ -->
 <section class="rc2-section rc2-section--wide" id="references">
   <div class="rc2-section-title"><h2 class="anchored">Core protocol references</h2></div>
 
@@ -1260,9 +1019,6 @@ iframe {
     </article>
   </div>
 </section>
-<!-- ============================================================
-     WORKFLOW
-     ============================================================ -->
 <section class="rc2-section" id="workflow">
   <div class="rc2-section-title"><h2 class="anchored">Suggested Rede C2 workflow</h2></div>
 
@@ -1304,9 +1060,6 @@ iframe {
     </article>
   </div>
 </section>
-<!-- ============================================================
-     STANDARDS
-     ============================================================ -->
 <section class="rc2-section" id="standards">
   <div class="rc2-section-title"><h2 class="anchored">Datasheets and standards</h2></div>
 
@@ -1341,7 +1094,6 @@ iframe {
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* Reveal on scroll */
   const revealTargets = document.querySelectorAll(
     ".rc2-section, .content-card, .rc2-page-hero, .team-controls, .team-card"
   );
@@ -1351,7 +1103,10 @@ document.addEventListener("DOMContentLoaded", function () {
     el.style.setProperty("--reveal-delay", `${Math.min(index, 8) * 45}ms`);
   });
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+  if (
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    !("IntersectionObserver" in window)
+  ) {
     revealTargets.forEach(el => el.classList.add("is-visible"));
   } else {
     const revealObserver = new IntersectionObserver(entries => {
@@ -1361,12 +1116,14 @@ document.addEventListener("DOMContentLoaded", function () {
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    }, {
+      threshold: 0.12,
+      rootMargin: "0px 0px -8% 0px"
+    });
 
     revealTargets.forEach(el => revealObserver.observe(el));
   }
 
-  /* Active nav link on scroll */
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".navbar a[href]");
 
@@ -1382,7 +1139,10 @@ document.addEventListener("DOMContentLoaded", function () {
           link.classList.toggle("active-section", href.endsWith("#" + id));
         });
       });
-    }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
+    }, {
+      rootMargin: "-35% 0px -55% 0px",
+      threshold: 0
+    });
 
     sections.forEach(section => navObserver.observe(section));
   }
@@ -1425,7 +1185,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       <div class="redec2-footer-title">Contato</div>
 
-      <a href="mailto:c2redec2@gmail.com">SEU_EMAIL_AQUI@gmail.com</a>
+      <a href="mailto:c2redec2@gmail.com">c2redec2@gmail.com</a>
 
     </div>
 
