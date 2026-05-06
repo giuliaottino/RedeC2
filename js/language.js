@@ -1,9 +1,8 @@
-CAMINHO ORIGINAL: js/language.js
-================================================================================
-
 /* Rede C2 language switcher
  * Adds a small language selector and translates the current static Quarto page
  * using the exact-text dictionary defined in js/translations.js.
+ *
+ * Default behavior: always starts in English unless the URL has ?lang=pt.
  */
 (function () {
   "use strict";
@@ -15,24 +14,23 @@ CAMINHO ORIGINAL: js/language.js
   const defaultLanguage = config.defaultLanguage || "en";
   const textOriginals = new WeakMap();
   const attrOriginals = new WeakMap();
-  const storageKey = "rede-c2-language";
-  const excludedSelectors = "script, style, code, pre, noscript, svg, .rede-c2-language-control";
+  const excludedSelectors = "script, style, code, pre, kbd, samp, textarea, noscript, svg, canvas, .rede-c2-language-control";
   let originalTitle = document.title;
+  let currentLanguage = defaultLanguage;
 
   function normalize(value) {
-    return String(value || "").replace(/\s+/g, " ").trim();
+    return String(value || "").replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
   }
 
   function getInitialLanguage() {
     const params = new URLSearchParams(window.location.search);
     const queryLanguage = params.get("lang");
-    if (available.includes(queryLanguage)) return queryLanguage;
 
-    const storedLanguage = localStorage.getItem(storageKey);
-    if (available.includes(storedLanguage)) return storedLanguage;
+    if (available.includes(queryLanguage)) {
+      return queryLanguage;
+    }
 
-    const browserLanguage = (navigator.language || "").slice(0, 2).toLowerCase();
-    return available.includes(browserLanguage) ? browserLanguage : defaultLanguage;
+    return defaultLanguage;
   }
 
   function translateValue(value, language) {
@@ -40,11 +38,14 @@ CAMINHO ORIGINAL: js/language.js
     if (!original || language === defaultLanguage) return original;
 
     const dictionary = strings[language] || {};
-    if (dictionary[original]) return dictionary[original];
+
+    if (Object.prototype.hasOwnProperty.call(dictionary, original)) {
+      return dictionary[original];
+    }
 
     const memberPrefix = "RedeC2 member at ";
-    if (original.startsWith(memberPrefix) && dictionary["RedeC2 member at"]) {
-      return dictionary["RedeC2 member at"] + " " + original.slice(memberPrefix.length);
+    if (original.startsWith(memberPrefix) && dictionary[memberPrefix]) {
+      return dictionary[memberPrefix] + original.slice(memberPrefix.length);
     }
 
     return original;
@@ -52,29 +53,37 @@ CAMINHO ORIGINAL: js/language.js
 
   function translateTextNode(node, language) {
     if (!textOriginals.has(node)) textOriginals.set(node, node.nodeValue);
+
     const original = textOriginals.get(node);
     const trimmed = normalize(original);
     if (!trimmed) return;
 
-    const leading = original.match(/^\s*/)[0];
-    const trailing = original.match(/\s*$/)[0];
+    const leading = (original.match(/^\s*/) || [""])[0];
+    const trailing = (original.match(/\s*$/) || [""])[0];
     const translated = translateValue(trimmed, language);
+
     node.nodeValue = leading + translated + trailing;
   }
 
   function translateAttributes(element, language) {
     const attrs = ["placeholder", "title", "aria-label", "alt"];
+
     attrs.forEach((attr) => {
       if (!element.hasAttribute(attr)) return;
+
       if (!attrOriginals.has(element)) attrOriginals.set(element, {});
+
       const stored = attrOriginals.get(element);
       if (!stored[attr]) stored[attr] = element.getAttribute(attr);
+
       const translated = translateValue(stored[attr], language);
       element.setAttribute(attr, translated);
     });
   }
 
   function walkAndTranslate(language) {
+    currentLanguage = available.includes(language) ? language : defaultLanguage;
+
     const walker = document.createTreeWalker(
       document.body,
       NodeFilter.SHOW_TEXT,
@@ -89,18 +98,33 @@ CAMINHO ORIGINAL: js/language.js
 
     const textNodes = [];
     while (walker.nextNode()) textNodes.push(walker.currentNode);
-    textNodes.forEach((node) => translateTextNode(node, language));
+    textNodes.forEach((node) => translateTextNode(node, currentLanguage));
 
     document.querySelectorAll("[placeholder], [title], [aria-label], img[alt]").forEach((element) => {
-      if (!element.closest(excludedSelectors)) translateAttributes(element, language);
+      if (!element.closest(excludedSelectors)) translateAttributes(element, currentLanguage);
     });
 
-    document.title = translateValue(originalTitle, language);
-    document.documentElement.lang = language === "pt" ? "pt-BR" : "en";
-    document.body.dataset.language = language;
+    document.title = translateValue(originalTitle, currentLanguage);
+    document.documentElement.lang = currentLanguage === "pt" ? "pt-BR" : "en";
+    document.body.dataset.language = currentLanguage;
+
+    const select = document.getElementById("rede-c2-language-select");
+    if (select && select.value !== currentLanguage) select.value = currentLanguage;
   }
 
-  function createControl(currentLanguage) {
+  function findNavTarget() {
+    return (
+      document.querySelector(".quarto-navbar-tools") ||
+      document.querySelector("#quarto-header .quarto-navbar-tools") ||
+      document.querySelector(".navbar .container-fluid") ||
+      document.querySelector("#quarto-header .navbar .container-fluid") ||
+      document.querySelector("#quarto-header .navbar") ||
+      document.querySelector("nav.navbar") ||
+      document.body
+    );
+  }
+
+  function createControl(currentLanguageForControl) {
     if (document.querySelector(".rede-c2-language-control")) return;
 
     const container = document.createElement("div");
@@ -115,34 +139,39 @@ CAMINHO ORIGINAL: js/language.js
     select.id = "rede-c2-language-select";
     select.className = "rede-c2-language-select";
     select.setAttribute("aria-label", "Language");
+    select.setAttribute("title", "Language");
 
     available.forEach((language) => {
       const option = document.createElement("option");
       option.value = language;
       option.textContent = labels[language] || language.toUpperCase();
-      option.selected = language === currentLanguage;
+      option.selected = language === currentLanguageForControl;
       select.appendChild(option);
     });
 
     select.addEventListener("change", function () {
-      const language = this.value;
-      localStorage.setItem(storageKey, language);
-      walkAndTranslate(language);
+      walkAndTranslate(this.value);
     });
 
     container.appendChild(label);
     container.appendChild(select);
 
-    const target = document.querySelector(".quarto-navbar-tools") || document.querySelector(".navbar .container-fluid");
-    if (target) target.prepend(container);
+    const target = findNavTarget();
+    target.prepend(container);
   }
 
   function injectStyles() {
     if (document.getElementById("rede-c2-language-style")) return;
+
     const style = document.createElement("style");
     style.id = "rede-c2-language-style";
     style.textContent = `
-      .rede-c2-language-control { display: inline-flex; align-items: center; margin-right: .35rem; }
+      .rede-c2-language-control {
+        display: inline-flex;
+        align-items: center;
+        margin-right: .35rem;
+      }
+
       .rede-c2-language-select {
         border: 1px solid rgba(92,122,62,.35);
         border-radius: 999px;
@@ -152,22 +181,34 @@ CAMINHO ORIGINAL: js/language.js
         padding: .25rem .55rem;
         cursor: pointer;
       }
-      .rede-c2-language-select:focus { outline: 2px solid rgba(200,90,58,.35); outline-offset: 2px; }
-      @media (max-width: 768px) { .rede-c2-language-control { margin: .5rem 0; } }
+
+      .rede-c2-language-select:focus {
+        outline: 2px solid rgba(200,90,58,.35);
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 768px) {
+        .rede-c2-language-control { margin: .5rem 0; }
+      }
     `;
+
     document.head.appendChild(style);
   }
 
   function init() {
     const language = getInitialLanguage();
+    currentLanguage = language;
+
     injectStyles();
     createControl(language);
     walkAndTranslate(language);
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", init, { once: true });
   } else {
     init();
   }
+
+  window.RedeC2SetLanguage = walkAndTranslate;
 })();

@@ -1,10 +1,7 @@
-CAMINHO ORIGINAL: js/translations.js
-================================================================================
-
 /* Rede C2 i18n dictionary
  * Source language: English.
- * Portuguese translations are intentionally stored as exact-text mappings so
- * the current Quarto pages can be translated without rewriting every .qmd file.
+ * Portuguese translations are stored as exact-text mappings so the current
+ * Quarto pages can be translated without rewriting every .qmd file.
  */
 window.RedeC2Translations = {
   defaultLanguage: "en",
@@ -23,16 +20,21 @@ window.RedeC2Translations = {
       "Toggle reader mode": "Alternar modo de leitura",
       "Research Network · Brazil": "Rede de pesquisa · Brasil",
       "Permanent plots for understanding Caatinga and Cerrado dynamics": "Parcelas permanentes para compreender a dinâmica da Caatinga e do Cerrado",
+      "Permanent plots for understanding Caatinga and Cerrado dynamics across Brazil's seasonally dry ecosystems.": "Parcelas permanentes para compreender a dinâmica da Caatinga e do Cerrado nos ecossistemas sazonalmente secos do Brasil.",
       "Long-term Network": "Rede de longo prazo",
       "A collaborative network of permanent plots tracking the pulse of Brazil's dry ecosystems — from the thorny resilience of Caatinga to the ancient savannas of Cerrado.": "Uma rede colaborativa de parcelas permanentes que acompanha o pulso dos ecossistemas secos do Brasil — da resiliência espinhosa da Caatinga às savanas antigas do Cerrado.",
       "Biomes": "Biomas",
       "Long-term plots": "Parcelas de longo prazo",
       "Institutions": "Instituições",
       "Brazil-wide": "Abrangência nacional",
+      "Explore sites": "Explorar sítios",
+      "See protocols": "Ver protocolos",
+      "Caatinga": "Caatinga",
+      "Dry ecosystems": "Ecossistemas secos",
       "The RedeC2 network": "A rede RedeC2",
       "RedeC2 is a collaborative research network dedicated to understanding the multifunctional dynamics of Brazil’s seasonally dry tropical ecosystems, especially Caatinga and Cerrado. Bringing together researchers from multiple institutions, the network integrates permanent plots, floristic inventories, functional traits and environmental data to investigate how plant communities are structured and how they respond to climatic seasonality, soil conditions and landscape context.": "A RedeC2 é uma rede colaborativa de pesquisa dedicada a compreender a dinâmica multifuncional dos ecossistemas tropicais sazonalmente secos do Brasil, especialmente a Caatinga e o Cerrado. Reunindo pesquisadoras e pesquisadores de múltiplas instituições, a rede integra parcelas permanentes, inventários florísticos, atributos funcionais e dados ambientais para investigar como as comunidades vegetais são estruturadas e como respondem à sazonalidade climática, às condições do solo e ao contexto da paisagem.",
       "This long-term, plot-based approach allows RedeC2 to link taxonomic and functional diversity with ecosystem processes, such as biomass dynamics, regeneration and responses to water stress.": "Essa abordagem de longo prazo baseada em parcelas permite que a RedeC2 conecte a diversidade taxonômica e funcional a processos ecossistêmicos, como dinâmica de biomassa, regeneração e respostas ao estresse hídrico.",
-      "Across different sites and regions, RedeC2 studies how natural gradients and human-driven disturbances – including land-use change, degradation and recovery – influence vegetation structure, successional pathways and the spatial turnover of species. By combining local field data with regional and biome-wide perspectives, the network aims to reveal both the high beta diversity characteristic of dry forests and savannas and the mechanisms that underpin resilience or vulnerability in these systems.": "Em diferentes sítios e regiões, a RedeC2 estuda como gradientes naturais e distúrbios antrópicos — incluindo mudanças no uso da terra, degradação e recuperação — influenciam a estrutura da vegetação, as trajetórias sucessionais e a substituição espacial de espécies. Ao combinar dados locais de campo com perspectivas regionais e biome-wide, a rede busca revelar tanto a alta diversidade beta característica das florestas secas e savanas quanto os mecanismos que sustentam a resiliência ou a vulnerabilidade desses sistemas.",
+      "Across different sites and regions, RedeC2 studies how natural gradients and human-driven disturbances – including land-use change, degradation and recovery – influence vegetation structure, successional pathways and the spatial turnover of species. By combining local field data with regional and biome-wide perspectives, the network aims to reveal both the high beta diversity characteristic of dry forests and savannas and the mechanisms that underpin resilience or vulnerability in these systems.": "Em diferentes sítios e regiões, a RedeC2 estuda como gradientes naturais e distúrbios antrópicos — incluindo mudanças no uso da terra, degradação e recuperação — influenciam a estrutura da vegetação, as trajetórias sucessionais e a substituição espacial de espécies. Ao combinar dados locais de campo com perspectivas regionais e de escala de bioma, a rede busca revelar tanto a alta diversidade beta característica das florestas secas e savanas quanto os mecanismos que sustentam a resiliência ou a vulnerabilidade desses sistemas.",
       "Overarching goal": "Objetivo geral",
       "Generate robust, comparable data that support conservation planning, ecological restoration and evidence-based management of dry ecosystems in Brazil.": "Gerar dados robustos e comparáveis que apoiem o planejamento da conservação, a restauração ecológica e o manejo baseado em evidências dos ecossistemas secos do Brasil.",
       "Sites, data, and outputs": "Sítios, dados e produtos",
@@ -93,7 +95,28 @@ window.RedeC2Translations = {
       "Controlled vocabularies for species status, stem condition, damage, phenology, collection status and data-quality flags.": "Vocabulários controlados para status de espécie, condição do caule, dano, fenologia, status de coleta e marcadores de qualidade de dados.",
       "The RedeC2 Team": "Equipe da RedeC2",
       "Search by name...": "Buscar por nome...",
-      "RedeC2 member at": "Membro da RedeC2 em"
+
+      "RedeC2 is a collaborative research network dedicated to understanding the multifunctional dynamics of Brazil's seasonally dry tropical ecosystems, especially Caatinga and Cerrado.": "A RedeC2 é uma rede colaborativa de pesquisa dedicada a compreender a dinâmica multifuncional dos ecossistemas tropicais sazonalmente secos do Brasil, especialmente a Caatinga e o Cerrado.",
+      "RedeC2 is a collaborative research network dedicated to understanding the multifunctional dynamics of Brazil’s seasonally dry tropical ecosystems, especially Caatinga and Cerrado.": "A RedeC2 é uma rede colaborativa de pesquisa dedicada a compreender a dinâmica multifuncional dos ecossistemas tropicais sazonalmente secos do Brasil, especialmente a Caatinga e o Cerrado.",
+      "is a collaborative research network dedicated to understanding the multifunctional dynamics of Brazil's seasonally dry tropical ecosystems, especially Caatinga and Cerrado.": "é uma rede colaborativa de pesquisa dedicada a compreender a dinâmica multifuncional dos ecossistemas tropicais sazonalmente secos do Brasil, especialmente a Caatinga e o Cerrado.",
+      "is a collaborative research network dedicated to understanding the multifunctional dynamics of Brazil’s seasonally dry tropical ecosystems, especially Caatinga and Cerrado.": "é uma rede colaborativa de pesquisa dedicada a compreender a dinâmica multifuncional dos ecossistemas tropicais sazonalmente secos do Brasil, especialmente a Caatinga e o Cerrado.",
+      "Bringing together researchers from multiple institutions, the network integrates permanent plots, floristic inventories, functional traits and environmental data to investigate how plant communities are structured and how they respond to climatic seasonality, soil conditions and landscape context.": "Reunindo pesquisadoras e pesquisadores de múltiplas instituições, a rede integra parcelas permanentes, inventários florísticos, atributos funcionais e dados ambientais para investigar como as comunidades vegetais são estruturadas e como respondem à sazonalidade climática, às condições do solo e ao contexto da paisagem.",
+      "Permanent plots across Caatinga and Cerrado formations.": "Parcelas permanentes em formações de Caatinga e Cerrado.",
+      "Seasonality, soils, structure and landscape context.": "Sazonalidade, solos, estrutura e contexto da paisagem.",
+      "Comparable data for conservation, restoration and synthesis.": "Dados comparáveis para conservação, restauração e síntese.",
+      "Floristics": "Florística",
+      "FLORISTICS": "FLORÍSTICA",
+      "Dynamics": "Dinâmica",
+      "DYNAMICS": "DINÂMICA",
+      "Restoration": "Restauração",
+      "RESTORATION": "RESTAURAÇÃO",
+      "Open workflows": "Fluxos abertos",
+      "OPEN WORKFLOWS": "FLUXOS ABERTOS",
+      "Gradients": "Gradientes",
+      "GRADIENTS": "GRADIENTES",
+      "Products": "Produtos",
+      "PRODUCTS": "PRODUTOS",
+      "RedeC2 member at ": "Membro da RedeC2 em "
     }
   }
 };
