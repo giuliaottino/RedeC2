@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - js/
+    - figures/
 
 website:
   title: "Rede C2"
@@ -25,16 +28,32 @@ website:
         href: https://github.com/giuliaottino/RedeC2
         aria-label: Rede C2 GitHub
 
-  page-footer:
-    right:
-      - icon: github
-        href: https://github.com/giuliaottino/RedeC2
-        aria-label: Rede C2 GitHub
-
 format:
   html:
     css: styles.css
+    include-after-body:
+      - footer-redec2.html
+      - text: |
+          <script>
+          (function () {
+            var assetBase = '';
+            var asset = document.querySelector('link[href*="site_libs/"], link[href$="styles.css"]');
+            if (asset) {
+              var href = asset.getAttribute('href') || '';
+              if (href.indexOf('site_libs/') >= 0) assetBase = href.split('site_libs/')[0];
+              else if (href.endsWith('styles.css')) assetBase = href.slice(0, -'styles.css'.length);
+            }
+            if (assetBase === '') assetBase = './';
+            function addScript(path, callback) {
+              var script = document.createElement('script');
+              script.src = assetBase + path.replace(/^\//, '');
+              script.defer = true;
+              script.onload = callback || null;
+              document.body.appendChild(script);
+            }
+            addScript('js/translations.js', function () { addScript('js/language.js'); });
+          })();
+          </script>
     theme:
       light: [spacelab, theme.scss]
       dark: [spacelab, theme-dark.scss]
-      

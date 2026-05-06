@@ -3,7 +3,7 @@ title: "Sites - Rede C2"
 subtitle: "Permanent plots for understanding Caatinga and Cerrado dynamics"
 format:
   html:
-    toc: true
+    toc: false
     page-layout: full
 execute:
   echo: false
@@ -13,13 +13,14 @@ execute:
   warning: false
   message: false
 resources:
-  - figures/
+  - ../figures/
+  - ../_input_data/
 ---
+
+<!-- Rede C2: layout v2 responsivo, inspirado no index Tsiino Hiiwiida. -->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
-
-# Helper: find a file by walking up parent directories (robust to where Quarto renders from)
 find_up <- function(rel_path, start = getwd(), max_levels = 8) {
   d <- normalizePath(start, winslash = "/", mustWork = FALSE)
   for (i in 0:max_levels) {
@@ -32,463 +33,624 @@ find_up <- function(rel_path, start = getwd(), max_levels = 8) {
   NA_character_
 }
 ```
+
+```{=html}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+```
+
 ```{=html}
 <style>
-  /* FUNDO FIXO */
-  body{
-    background-image: url("figures/c2_bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center top;
-  }
-
-  main.content{
-    background: transparent;
-    padding-top: 2.5rem;
-    padding-bottom: 3rem;
-  }
-
-  /* Retângulo flutuante só para título/subtítulo */
-/* === TITLE (paper strip, left aligned, sem blur) === */
-.quarto-title-block{
-  display: block !important;
+:root {
+  --rc2-red: #A93632;
+  --rc2-red-dark: #6E1F1D;
+  --rc2-green: #626A38;
+  --rc2-green-dark: #2E3B24;
+  --rc2-green-soft: #D7DDC5;
+  --rc2-ochre: #D99A27;
+  --rc2-cream: #F6F1E8;
+  --rc2-paper: #FFFDF7;
+  --rc2-ink: #171717;
+  --rc2-muted: #675F55;
+  --rc2-line: rgba(98,106,56,0.22);
+  --rc2-shadow: 0 16px 34px rgba(0,0,0,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
   width: 100%;
-  margin: 0;
-  padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  background:
+    linear-gradient(rgba(246,241,232,0.90), rgba(246,241,232,0.86)),
+    url("../figures/c2_bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center top;
+  color: var(--rc2-ink);
+  font-family: 'Montserrat', Arial, sans-serif;
 }
-.quarto-title-block .quarto-title{
-  width: 100%;
-  padding: 1.05rem 0;
-  margin: 0.4rem 0 1.2rem 0;
-  background: rgba(250, 246, 238, 0.94);
-  border-top: 4px solid #5C7A3E;
-  border-bottom: 1px solid rgba(200,90,58,0.22);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  border-radius: 0;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-.quarto-title-block .title,
-.quarto-title-block .subtitle{
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 1.2rem;
-  text-align: left !important;
-}
-.quarto-title-block .title{
-  color: #C85A3A;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  margin: 0 0 0.25rem 0;
-}
-.quarto-title-block .subtitle{
-  color: #4A3A22;
-  opacity: 0.95;
-  font-family: 'Lora', Georgia, serif;
-  font-style: italic;
-  margin: 0;
-}
-
-  /* CARTÕES full-bleed e opacos */
-.content-card{
-  width: 100%;
-  margin: 0;
-  padding: 2rem 2.25rem;
-  background: rgba(250, 246, 238, 0.96);
-  border-radius: 18px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+img, video, iframe, svg, canvas { max-width: 100%; }
+a { color: var(--rc2-red); }
+main.content, #quarto-content, main { background: transparent; width: 100%; max-width: none; }
+main.content { padding-top: 0; padding-bottom: 3.5rem; }
+.quarto-title-block, #title-block-header { display: none !important; }
+.navbar { box-shadow: 0 2px 18px rgba(0,0,0,0.10); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.navbar .navbar-brand, .navbar .nav-link { font-family: 'Montserrat', Arial, sans-serif; }
+.navbar .nav-link.active-section { color: var(--rc2-red) !important; font-weight: 800; border-bottom: 2px solid var(--rc2-red); }
+.rc2-page-hero {
   position: relative;
-  z-index: 2;
-  border-top: 3px solid #C85A3A;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  min-height: clamp(340px, 44vh, 520px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(217,154,39,0.42), transparent 30%),
+    linear-gradient(110deg, rgba(46,59,36,0.96) 0%, rgba(98,106,56,0.88) 38%, rgba(169,54,50,0.88) 100%),
+    url("../figures/c2_bg.jpg");
+  background-size: cover;
+  background-position: center;
+  color: var(--rc2-cream);
 }
-.content-card .inner{
-  max-width: 1100px;
-  margin: 0 auto;
+.rc2-page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.20), rgba(0,0,0,0.34)),
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 14px);
+  z-index: -1;
 }
-.content-card h2{
-  font-family: 'Playfair Display', serif;
-  color: #C85A3A;
-  font-size: clamp(1.4rem, 2.8vw, 1.9rem);
-  font-weight: 700;
-  margin-top: 0;
-  margin-bottom: 1.1rem;
-  padding-bottom: 0.45rem;
-  border-bottom: 1px solid #DDD0B3;
-  display: flex;
+.rc2-page-hero-inner {
+  width: min(1260px, calc(100vw - 2rem));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1.2rem, 4vw, 3rem);
+  align-items: end;
+  padding: clamp(4rem, 8vw, 6.5rem) 0 clamp(2rem, 5vw, 4rem) 0;
+}
+.rc2-kicker, .rc2-eyebrow {
+  display: inline-flex;
+  width: fit-content;
   align-items: center;
   gap: 0.55rem;
-}
-.content-card p{
-  font-family: 'Lora', serif;
-  line-height: 1.85;
-  color: #4A3A22;
-}
-  .content-card h2{ margin-top: 0; }
-
-  /* JANELA entre cartões (deixa o background aparecer) */
-  .bg-window{
-    width: 100%;
-    height: 5.5rem;
-  }
-
-  /* Logos flutuantes */
-  .floating-logos {
-    position: fixed;
-    top: 60px;
-    right: 40px;
-    width: 165px;
-    opacity: 0.85;
-    z-index: 50;
-  }
-  .floating-logos img {
-    display: block;
-    width: 100%;
-    margin-bottom: 16px;
-    border-radius: 6px;
-  }
-
-  /* --------------------------
-     CARROSSEL (faixa em card)
-     - começa já preenchendo a largura
-     - loop contínuo (conteúdo duplicado)
-  --------------------------- */
-  .sel-viewport{
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .carousel-track{
-    display: flex;
-    gap: 24px;
-    width: max-content;
-    will-change: transform;
-    animation: carousel-marquee 55s linear infinite;
-  }
-
-  .carousel-viewport:hover .carousel-track{
-    animation-play-state: paused;
-  }
-
-  .carousel-img{
-    width: clamp(260px, 28vw, 460px);
-    height: 220px;
-    object-fit: cover;
-
-    border-radius: 10px;
-    flex-shrink: 0;
-    box-shadow: 0 10px 22px rgba(0,0,0,0.16);
-
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    cursor: pointer;
-  }
-
-  .carousel-img:hover{
-    transform: scale(1.06);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.22);
-  }
-
-  @keyframes carousel-marquee{
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .carousel-track{ animation: none; }
-  }
-
-  @media (max-width: 992px){
-    .content-card{ padding: 1.4rem 1.2rem; border-radius: 14px; }
-    .bg-window{ height: 3.5rem; }
-    .floating-logos{ right: 14px; width: 120px; }
-    .quarto-title-block .quarto-title{
-      padding: 1rem 1.1rem;
-      border-radius: 14px;
-    }
-    .carousel-img{
-      width: clamp(220px, 70vw, 420px);
-      height: 200px;
-    }
-  }
-  /* === Leaflet: estética RedeC2 === */
-.leaflet-container{
-  border-radius: 16px;
-  overflow: hidden;              /* evita controles/popup “vazarem” */
-  box-shadow: 0 12px 26px rgba(0,0,0,0.14);
-  font-family: 'Lora', Georgia, serif;
-}
-
-.leaflet-control, .leaflet-bar, .leaflet-control-layers{
-  border-radius: 12px !important;
-  box-shadow: 0 10px 18px rgba(0,0,0,0.12) !important;
-  border: 1px solid rgba(221,208,179,0.85) !important;
-  background: rgba(250,246,238,0.96) !important;
-}
-
-.leaflet-bar a{
-  border-radius: 10px !important;
-}
-
-.leaflet-popup-content-wrapper{
-  border-radius: 14px !important;
-  background: rgba(250,246,238,0.98) !important;
-  border: 1px solid rgba(221,208,179,0.85) !important;
-  box-shadow: 0 14px 26px rgba(0,0,0,0.16) !important;
-}
-.leaflet-popup-tip{
-  background: rgba(250,246,238,0.98) !important;
-}
-
-/* Popup “card” */
-.popup-card{ max-width: 320px; }
-.popup-title{
-  font-family: 'Playfair Display', serif;
-  font-weight: 800;
-  font-size: 1.05rem;
-  color: #2A1F10;
-  margin: 0 0 0.35rem 0;
-}
-.popup-sub{
+  margin-bottom: 0.85rem;
+  padding: 0.34rem 0.78rem;
+  border-radius: 999px;
+  background: rgba(246,241,232,0.14);
+  border: 1px solid rgba(246,241,232,0.22);
+  color: var(--rc2-ochre);
   font-family: 'Space Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
   text-transform: uppercase;
-  color: #7A5A18;
-  margin-bottom: 0.6rem;
+  backdrop-filter: blur(8px);
 }
-.popup-table{
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.92rem;
+.rc2-page-hero h1 {
+  margin: 0;
+  max-width: 960px;
+  color: #fff;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.88;
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 6px 28px rgba(0,0,0,0.35);
 }
-.popup-table td{
-  padding: 0.22rem 0;
-  vertical-align: top;
+.rc2-title-line { display: block; }
+.rc2-title-line:nth-child(2) { margin-left: clamp(0rem, 7vw, 4rem); }
+.rc2-page-hero p {
+  max-width: 820px;
+  margin: 1rem 0 0 0;
+  color: rgba(255,253,247,0.92);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(1.08rem, 2vw, 1.38rem);
+  line-height: 1.5;
+  text-shadow: 0 3px 18px rgba(0,0,0,0.30);
 }
-.popup-k{ color: #7A5A18; font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding-right: 0.6rem; }
-.popup-v{ color: #4A3A22; }
-
-.pill{
+.rc2-hero-logo { width: clamp(92px, 10vw, 150px); filter: drop-shadow(0 12px 22px rgba(0,0,0,0.28)); }
+.rc2-hero-logo img { display: block; width: 100%; height: auto; }
+.rc2-section, .content-card {
+  width: min(1260px, calc(100vw - 2rem));
+  margin: 2.4rem auto 0 auto;
+  padding: clamp(1.25rem, 3vw, 2.4rem);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(217,154,39,0.08), transparent 32%),
+    linear-gradient(180deg, rgba(255,253,247,0.96), rgba(246,241,232,0.88));
+  border: 1px solid rgba(98,106,56,0.18);
+  border-top: 5px solid var(--rc2-green);
+  box-shadow: var(--rc2-shadow);
+  overflow: hidden;
+}
+.rc2-section--wide { width: min(1460px, calc(100vw - 2rem)); }
+.rc2-section-title { display: grid; grid-template-columns: 90px 1fr; gap: 0.8rem; align-items: center; margin-bottom: 1.35rem; }
+.rc2-section-title::before { content: ""; height: 1px; background: var(--rc2-ink); opacity: 0.72; }
+.rc2-section-title h2 {
+  margin: 0;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(98,106,56,0.18);
+  color: var(--rc2-red);
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(1.25rem, 3vw, 2.1rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+.rc2-display-title { margin: 0 0 1.1rem 0; color: var(--rc2-green-dark); font-size: clamp(2.15rem, 5vw, 5.4rem); line-height: 0.9; font-weight: 900; letter-spacing: -0.075em; }
+.rc2-lead, .lead {
+  margin: 0 0 1.25rem 0 !important;
+  padding-left: 1rem;
+  border-left: 5px solid var(--rc2-ochre);
+  color: #191711 !important;
+  font-family: 'Source Serif 4', Georgia, serif !important;
+  font-size: clamp(1.08rem, 2vw, 1.3rem) !important;
+  line-height: 1.65 !important;
+}
+.rc2-section p, .content-card p { color: var(--rc2-ink); font-size: 0.98rem; line-height: 1.72; }
+.rc2-muted { color: var(--rc2-muted) !important; }
+.rc2-pills, .tags { display: flex; flex-wrap: wrap; gap: 0.62rem; margin: 1rem 0; }
+.rc2-pill, .tag, .pill {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.22rem 0.55rem;
+  padding: 0.34rem 0.72rem;
   border-radius: 999px;
+  background: rgba(246,241,232,0.84);
+  border: 1.5px solid rgba(98,106,56,0.28);
+  color: var(--rc2-green-dark);
   font-family: 'Space Mono', monospace;
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.06em;
+  line-height: 1.2;
   text-transform: uppercase;
-  border: 1px solid rgba(221,208,179,0.9);
 }
-.pill-caatinga{ background: rgba(200,90,58,0.10); color: #C85A3A; border-color: rgba(200,90,58,0.28); }
-.pill-cerrado{  background: rgba(92,122,62,0.10); color: #4A7030; border-color: rgba(92,122,62,0.28); }
-
-.map-legend .legend-title{
-  font-family: 'Space Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #7A5A18;
-  margin-bottom: 0.4rem;
+.rc2-pill--red { color: var(--rc2-red); border-color: rgba(169,54,50,0.32); background: rgba(169,54,50,0.08); }
+.rc2-pill--green { color: var(--rc2-green-dark); border-color: rgba(98,106,56,0.32); background: rgba(98,106,56,0.09); }
+.rc2-pill--ochre { color: #7A5A18; border-color: rgba(217,154,39,0.42); background: rgba(217,154,39,0.10); }
+.rc2-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.rc2-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.rc2-grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.9rem; }
+.rc2-card, .proto-card, .sites-box, .info-box {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border-radius: 20px;
+  background: rgba(255,253,247,0.84);
+  border: 1px solid var(--rc2-line);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.065);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
-.map-legend .legend-row{
+.rc2-card:hover, .proto-card:hover, .sites-box:hover { transform: translateY(-2px); border-color: rgba(169,54,50,0.30); box-shadow: 0 14px 26px rgba(0,0,0,0.10); }
+.rc2-card h3, .proto-card h3, .sites-box h3 { margin: 0 0 0.7rem 0; color: var(--rc2-green-dark); font-family: 'Space Mono', monospace; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.11em; line-height: 1.25; text-transform: uppercase; }
+.rc2-card p, .proto-card p, .sites-box p { margin: 0; color: var(--rc2-muted); font-size: 0.92rem; line-height: 1.6; }
+.rc2-card ul { list-style: none; padding: 0; margin: 0; }
+.rc2-card li { position: relative; padding-left: 1.25rem; margin: 0.52rem 0; line-height: 1.55; color: var(--rc2-ink); font-size: 0.94rem; }
+.rc2-card li::before { content: ""; position: absolute; left: 0; top: 0.6rem; width: 7px; height: 7px; border-radius: 50%; background: var(--rc2-ochre); }
+.rc2-stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.2rem; }
+.rc2-stat {
+  min-height: 130px;
+  padding: 1rem;
+  border-radius: 20px;
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
-  color: #4A3A22;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--rc2-cream);
+  background:
+    radial-gradient(circle at 88% 18%, rgba(217,154,39,0.25), transparent 30%),
+    linear-gradient(135deg, rgba(46,59,36,0.94), rgba(98,106,56,0.86)),
+    url("../figures/c2_bg.jpg");
+  background-size: cover;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
 }
-.map-legend .dot{
-  width: 10px; height: 10px; border-radius: 50%;
-  display: inline-block;
+.rc2-stat strong { color: var(--rc2-ochre); font-size: clamp(2rem, 4vw, 3.1rem); line-height: 0.9; font-weight: 900; letter-spacing: -0.07em; }
+.rc2-stat span { margin-top: 0.55rem; color: rgba(255,253,247,0.92); font-family: 'Space Mono', monospace; font-size: 0.64rem; font-weight: 800; letter-spacing: 0.08em; line-height: 1.35; text-transform: uppercase; }
+.rc2-btn-row { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.2rem; }
+.rc2-btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.68rem 1.02rem; border-radius: 999px; font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none !important; transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease; }
+.rc2-btn--main { background: var(--rc2-red); color: #fff !important; box-shadow: 0 8px 16px rgba(0,0,0,0.18); }
+.rc2-btn--ghost { background: rgba(246,241,232,0.92); color: var(--rc2-green-dark) !important; border: 1px solid rgba(98,106,56,0.28); }
+.rc2-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,0.18); }
+.rc2-feature-band {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  margin: 2.6rem 0 0 0;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(246,241,232,0.94), rgba(246,241,232,0.78)),
+    url("../figures/c2_bg.jpg");
+  background-size: cover;
+  background-position: center;
 }
-.map-legend .dot-caatinga{ background: #C85A3A; }
-.map-legend .dot-cerrado{ background: #5C7A3E; }
+.rc2-feature-title-wrap { width: min(1260px, calc(100vw - 2rem)); margin: 0 auto; padding: clamp(2rem, 4vw, 3.5rem) 0 1.15rem 0; }
+.rc2-feature-title { display: inline-flex; align-items: center; padding: 0.45rem 0.85rem; background: var(--rc2-green-dark); color: var(--rc2-cream); border: 1px solid rgba(217,154,39,0.35); font-size: clamp(1.45rem, 3vw, 2.6rem); line-height: 1; font-weight: 900; letter-spacing: -0.05em; text-transform: uppercase; box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
+.rc2-feature-title::before { content: ""; width: 18px; height: 44px; margin-right: 0.65rem; background: repeating-linear-gradient(135deg, rgba(246,241,232,0.96) 0 3px, transparent 3px 6px); border-left: 3px solid var(--rc2-ochre); }
+.rc2-feature-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); min-height: clamp(360px, 35vw, 520px); }
+.rc2-feature-photo, .rc2-feature-panel { min-height: clamp(360px, 35vw, 520px); min-width: 0; }
+.rc2-feature-photo { position: relative; overflow: hidden; background: var(--rc2-green-dark); }
+.rc2-feature-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.94) contrast(1.04); transition: transform 1.1s ease; }
+.rc2-feature-photo:hover img { transform: scale(1.04); }
+.rc2-feature-panel { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1.15rem, 2.2vw, 1.9rem); color: #fff; background: linear-gradient(135deg, var(--rc2-green), #4f5b33); }
+.rc2-feature-panel:nth-child(4n) { background: linear-gradient(135deg, var(--rc2-green-dark), #41502f); }
+.rc2-feature-panel:nth-child(6n) { background: linear-gradient(135deg, #8b641a, var(--rc2-red-dark)); }
+.rc2-feature-panel h3 { width: fit-content; margin: 0; padding: 0.48rem 0.72rem; background: var(--rc2-red-dark); color: var(--rc2-cream); border-left: 5px solid var(--rc2-ochre); font-family: 'Space Mono', monospace; font-size: 0.76rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+.rc2-feature-panel p { margin: 1.5rem 0 0 0 !important; color: var(--rc2-cream) !important; font-size: clamp(1.02rem, 1.55vw, 1.36rem) !important; line-height: 1.16 !important; font-weight: 900; letter-spacing: -0.035em; text-transform: uppercase; }
+.reveal-ready { opacity: 0; transform: translateY(42px); transition: opacity 0.72s ease, transform 0.72s cubic-bezier(.2,.7,.2,1); transition-delay: var(--reveal-delay, 0ms); will-change: opacity, transform; }
+.reveal-ready.is-visible { opacity: 1; transform: translateY(0); }
+.rc2-feature-band.reveal-ready { transform: translateX(-50%) translateY(42px); }
+.rc2-feature-band.reveal-ready.is-visible { transform: translateX(-50%) translateY(0); }
+@media (prefers-reduced-motion: reduce) { .reveal-ready, .rc2-feature-band.reveal-ready { opacity: 1 !important; transform: none !important; transition: none !important; } .rc2-feature-band.reveal-ready, .rc2-feature-band.reveal-ready.is-visible { transform: translateX(-50%) !important; } }
+@media (max-width: 1180px) { .rc2-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rc2-feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .rc2-feature-photo, .rc2-feature-panel { min-height: 340px; } }
+@media (max-width: 980px) { .rc2-page-hero-inner { grid-template-columns: 1fr; align-items: start; } .rc2-hero-logo { width: 92px; } .rc2-grid-2, .rc2-grid-3 { grid-template-columns: 1fr; } .rc2-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .rc2-page-hero { width: 100vw; min-height: 360px; } .rc2-page-hero-inner, .rc2-section, .content-card { width: calc(100vw - 0.8rem); } .rc2-page-hero h1 { font-size: clamp(2.7rem, 15vw, 4.8rem); } .rc2-title-line:nth-child(2) { margin-left: 0; } .rc2-section-title { grid-template-columns: 44px 1fr; gap: 0.55rem; } .rc2-feature-grid { grid-template-columns: 1fr; } .rc2-feature-photo, .rc2-feature-panel { min-height: 300px; } }
+@media (max-width: 520px) { .rc2-stat-grid { grid-template-columns: 1fr; } .rc2-btn { width: 100%; } .rc2-display-title { font-size: clamp(2.15rem, 13vw, 3.7rem); } }
 </style>
-
-<div class="floating-logos">
-  <img src="/figures/c2.png" alt="logo RedeC2">
-</div>
 ```
-::: {.column-screen}
-::: {.content-card}
-::: {.inner}
-::: {.column-screen}
+
 ```{=html}
-<div class="carousel-fullbleed">
-  <div class="carousel">
-    <div class="carousel-track">
-      <!-- SEQ 1 -->
-      <img src="/figures/canudos_dc.jpg" class="carousel-img" alt="Canudos" />
-      <img src="/figures/gruta_brejoes_dc.jpg" class="carousel-img" alt="Gruta" />
-      <img src="/figures/s_francisco_dc.jpg" class="carousel-img" alt="São Francisco" />
-      <img src="/figures/agua_limpa.jpg" class="carousel-img" alt="Água Limpa" />
-      <img src="/figures/itirapina.jpg" class="carousel-img" alt="Itirapina" />
-      <img src="/figures/itirapina_.jpg" class="carousel-img" alt="Itirapina 2" />
-      <img src="/figures/agua_limpa_.jpg" class="carousel-img" alt="Água Limpa 2" />
-      <img src="/figures/agua_limpa_1.jpg" class="carousel-img" alt="Água Limpa 3" />
-
-      <!-- SEQ 2 (cópia) -->
-      <img src="/figures/canudos_dc.jpg" class="carousel-img" alt="Canudos (2)" />
-      <img src="/figures/gruta_brejoes_dc.jpg" class="carousel-img" alt="Gruta (2)" />
-      <img src="/figures/s_francisco_dc.jpg" class="carousel-img" alt="São Francisco (2)" />
-      <img src="/figures/agua_limpa.jpg" class="carousel-img" alt="Água Limpa (2)" />
-      <img src="/figures/itirapina.jpg" class="carousel-img" alt="Itirapina (2)" />
-      <img src="/figures/itirapina_.jpg" class="carousel-img" alt="Itirapina 2 (2)" />
-      <img src="/figures/agua_limpa_.jpg" class="carousel-img" alt="Água Limpa 2 (2)" />
-      <img src="/figures/agua_limpa_1.jpg" class="carousel-img" alt="Água Limpa 3 (2)" />
-
-      <!-- SEQ 3 (cópia extra) -->
-      <img src="/figures/canudos_dc.jpg" class="carousel-img" alt="Canudos (3)" />
-      <img src="/figures/gruta_brejoes_dc.jpg" class="carousel-img" alt="Gruta (3)" />
-      <img src="/figures/s_francisco_dc.jpg" class="carousel-img" alt="São Francisco (3)" />
-      <img src="/figures/agua_limpa.jpg" class="carousel-img" alt="Água Limpa (3)" />
-      <img src="/figures/itirapina.jpg" class="carousel-img" alt="Itirapina (3)" />
-      <img src="/figures/itirapina_.jpg" class="carousel-img" alt="Itirapina 2 (3)" />
-      <img src="/figures/agua_limpa_.jpg" class="carousel-img" alt="Água Limpa 2 (3)" />
-      <img src="/figures/agua_limpa_1.jpg" class="carousel-img" alt="Água Limpa 3 (3)" />
-    </div>
-  </div>
-</div>
+<style>
+.rc2-carousel-shell{width:min(1460px,calc(100vw - 2rem));margin:2.4rem auto 0 auto;overflow:hidden;border-radius:28px;box-shadow:var(--rc2-shadow);background:rgba(255,253,247,.84);border:1px solid rgba(98,106,56,.18)}.rc2-carousel-track{display:flex;gap:1rem;width:max-content;padding:1rem;animation:rc2-marquee 54s linear infinite}.rc2-carousel-shell:hover .rc2-carousel-track{animation-play-state:paused}.rc2-carousel-img{width:clamp(260px,28vw,450px);height:240px;object-fit:cover;border-radius:20px;box-shadow:0 12px 24px rgba(0,0,0,.13);transition:transform .3s ease}.rc2-carousel-img:hover{transform:scale(1.035)}@keyframes rc2-marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}@media(max-width:760px){.rc2-carousel-shell{width:calc(100vw - .75rem);border-radius:20px}.rc2-carousel-img{width:82vw;height:210px}}.leaflet-container{border-radius:24px;overflow:hidden;box-shadow:0 16px 34px rgba(0,0,0,.14);font-family:'Montserrat',Arial,sans-serif}.leaflet-control,.leaflet-bar,.leaflet-control-layers{border-radius:14px!important;box-shadow:0 10px 18px rgba(0,0,0,.12)!important;border:1px solid rgba(98,106,56,.22)!important;background:rgba(255,253,247,.96)!important}.leaflet-popup-content-wrapper{border-radius:18px!important;background:rgba(255,253,247,.98)!important;border:1px solid rgba(98,106,56,.24)!important}.popup-card{max-width:330px}.popup-title{font-weight:900;font-size:1rem;color:var(--rc2-green-dark);margin:0 0 .35rem 0}.popup-sub{font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:#7A5A18;margin-bottom:.6rem}.popup-row{display:grid;grid-template-columns:90px 1fr;gap:.4rem;font-size:.86rem;margin:.22rem 0}.popup-k{font-family:'Space Mono',monospace;font-size:.62rem;text-transform:uppercase;color:#7A5A18}.popup-v{color:#312719}.map-note{margin-top:.9rem;color:var(--rc2-muted);font-size:.88rem}.map-warning{padding:1rem;border-radius:18px;background:rgba(169,54,50,.08);border:1px dashed rgba(169,54,50,.35);color:var(--rc2-red-dark)}
+</style>
 ```
-:::
-:::
-:::
-:::
-<div class="bg-window"></div>
 
-::: {.column-screen}
-::: {.content-card}
-::: {.inner}
 
-## Mapa interativo
+```{=html}
+<style>
+/* ==========================================================================
+   REDEC2 RESPONSIVE WIDTH SYSTEM — v2
+   Ajuste inspirado no index do Tsiino: nenhum card depende de 100vw para
+   layout interno; os grids quebram por auto-fit; e as faixas ocupam a largura
+   disponível sem empurrar conteúdo para a direita.
+   ========================================================================== */
+:root{
+  --rc2-safe-gutter: clamp(0.75rem, 2.6vw, 2.25rem);
+  --rc2-content-max: 1260px;
+  --rc2-wide-max: 1480px;
+  --rc2-xl-max: 1560px;
+}
 
-Explore os sítios permanentes da Rede C2 no mapa abaixo.
+html,
+body{
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  overflow-x: clip !important;
+}
+
+body{
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+#quarto-content,
+#quarto-document-content,
+main,
+main.content,
+.page-columns,
+.page-columns .content{
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  overflow-x: clip !important;
+}
+
+main.content{
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Faixas full-width sem o truque 100vw + translateX, que pode estourar no notebook. */
+.rc2-page-hero,
+.rc2-home-hero,
+.rc2-feature-band{
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  overflow-x: hidden !important;
+  overflow-x: clip !important;
+}
+
+/* Containers internos com margem segura. */
+.rc2-page-hero-inner,
+.rc2-feature-title-wrap,
+.rc2-section,
+.content-card,
+.team-controls,
+.team-group,
+.team-empty,
+.rc2-carousel-shell{
+  width: min(var(--rc2-content-max), calc(100% - (var(--rc2-safe-gutter) * 2))) !important;
+  max-width: calc(100% - (var(--rc2-safe-gutter) * 2)) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  min-width: 0 !important;
+}
+
+.rc2-home-hero-inner{
+  width: min(1320px, calc(100% - (var(--rc2-safe-gutter) * 2))) !important;
+  max-width: calc(100% - (var(--rc2-safe-gutter) * 2)) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  min-width: 0 !important;
+}
+
+.rc2-section--wide{
+  width: min(var(--rc2-wide-max), calc(100% - (var(--rc2-safe-gutter) * 2))) !important;
+}
+
+.rc2-section--xl,
+#institutions{
+  width: min(var(--rc2-xl-max), calc(100% - (var(--rc2-safe-gutter) * 2))) !important;
+}
+
+/* Grids fluidos: nenhum repeat fixo força escape lateral. */
+.rc2-grid-2,
+.rc2-grid-3,
+.rc2-grid-4,
+.protocol-index,
+.method-river{
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)) !important;
+  gap: clamp(0.75rem, 1.6vw, 1rem) !important;
+}
+
+.rc2-grid-4,
+.method-river{
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)) !important;
+}
+
+.rc2-stat-grid,
+.rc2-home-stats{
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)) !important;
+}
+
+/* Cards e blocos sempre quebram texto internamente. */
+.rc2-card,
+.proto-card,
+.method-step,
+.team-card,
+.inst-item,
+.rc2-home-stat,
+.rc2-home-logo-card,
+.rc2-feature-panel,
+.rc2-carousel-shell,
+.leaflet-container{
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-wrap: break-word !important;
+}
+
+/* Feature band: animação sem translateX, porque agora não há left:50%. */
+.rc2-feature-band.reveal-ready{
+  transform: translateY(42px) !important;
+}
+.rc2-feature-band.reveal-ready.is-visible{
+  transform: translateY(0) !important;
+}
+@media (prefers-reduced-motion: reduce){
+  .rc2-feature-band.reveal-ready,
+  .rc2-feature-band.reveal-ready.is-visible{
+    transform: none !important;
+  }
+}
+
+/* Carousel permanece animado, mas confinado dentro do shell. */
+.rc2-carousel-shell{
+  overflow: hidden !important;
+}
+.rc2-carousel-track{
+  max-width: none !important;
+}
+.rc2-carousel-img{
+  max-width: min(450px, 84vw) !important;
+}
+
+/* Instituições: seção mais larga e cards mais legíveis, sem estourar à direita. */
+.inst-grid{
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)) !important;
+  gap: clamp(0.65rem, 1.2vw, 0.95rem) !important;
+  align-items: stretch !important;
+}
+
+.inst-item{
+  min-height: 122px !important;
+  justify-content: center !important;
+  padding: clamp(0.85rem, 1.2vw, 1.05rem) !important;
+  border-radius: 20px !important;
+}
+
+.inst-logo{
+  width: 100% !important;
+  height: clamp(56px, 5vw, 76px) !important;
+  object-fit: contain !important;
+}
+
+.inst-name{
+  max-width: 100% !important;
+  line-height: 1.22 !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Equipe: quebra progressiva limpa. */
+.team-group{
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)) !important;
+  gap: clamp(0.8rem, 1.5vw, 1rem) !important;
+}
+
+.team-controls{
+  grid-template-columns: minmax(0, 0.68fr) minmax(0, 1fr) !important;
+}
+
+.team-index{
+  min-width: 0 !important;
+}
+
+/* Mapa e htmlwidgets não devem criar largura fantasma. */
+.html-widget,
+.leaflet,
+.leaflet-container,
+iframe{
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Tablet */
+@media (max-width: 980px){
+  .rc2-page-hero-inner,
+  .rc2-home-hero-inner{
+    grid-template-columns: 1fr !important;
+  }
+
+  .team-controls{
+    grid-template-columns: 1fr !important;
+  }
+
+  .rc2-section-title{
+    grid-template-columns: 56px 1fr !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px){
+  :root{
+    --rc2-safe-gutter: 0.65rem;
+  }
+
+  .rc2-section,
+  .content-card{
+    padding: clamp(1rem, 4vw, 1.35rem) !important;
+    border-radius: 22px !important;
+  }
+
+  .rc2-page-hero,
+  .rc2-home-hero{
+    min-height: auto !important;
+  }
+
+  .rc2-page-hero-inner,
+  .rc2-home-hero-inner{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .rc2-page-hero h1,
+  .rc2-home-title{
+    overflow-wrap: anywhere !important;
+  }
+
+  .rc2-section-title{
+    grid-template-columns: 34px 1fr !important;
+  }
+
+  .rc2-btn{
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .inst-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Celulares muito estreitos */
+@media (max-width: 380px){
+  .inst-grid,
+  .rc2-stat-grid,
+  .rc2-home-stats{
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+```
+
+```{=html}
+<section class="rc2-page-hero" id="sites-hero"><div class="rc2-page-hero-inner"><div><div class="rc2-kicker">Permanent plots · Caatinga + Cerrado</div><h1><span class="rc2-title-line">Sites</span><span class="rc2-title-line">& gradients</span></h1><p>Explore the spatial structure of Rede C2 field sites and the environmental gradients that connect dry forests, savannas, soils and seasonality.</p><div class="rc2-pills"><span class="rc2-pill rc2-pill--red">Caatinga</span><span class="rc2-pill rc2-pill--green">Cerrado</span><span class="rc2-pill rc2-pill--ochre">Interactive map</span></div></div><div class="rc2-hero-logo"><img src="../figures/logoc2.png" alt="RedeC2 logo"></div></div></section>
+<div class="rc2-carousel-shell" aria-label="Rede C2 site image carousel"><div class="rc2-carousel-track"><img src="../figures/canudos_dc.jpg" class="rc2-carousel-img" alt="Canudos" loading="lazy" decoding="async"><img src="../figures/gruta_brejoes_dc.jpg" class="rc2-carousel-img" alt="Gruta dos Brejões" loading="lazy" decoding="async"><img src="../figures/s_francisco_dc.jpg" class="rc2-carousel-img" alt="São Francisco" loading="lazy" decoding="async"><img src="../figures/agua_limpa.jpg" class="rc2-carousel-img" alt="Água Limpa" loading="lazy" decoding="async"><img src="../figures/itirapina.jpg" class="rc2-carousel-img" alt="Itirapina" loading="lazy" decoding="async"><img src="../figures/agua_limpa_1.jpg" class="rc2-carousel-img" alt="Água Limpa landscape" loading="lazy" decoding="async"><img src="../figures/canudos_dc.jpg" class="rc2-carousel-img" alt="Canudos" loading="lazy" decoding="async"><img src="../figures/gruta_brejoes_dc.jpg" class="rc2-carousel-img" alt="Gruta dos Brejões" loading="lazy" decoding="async"><img src="../figures/s_francisco_dc.jpg" class="rc2-carousel-img" alt="São Francisco" loading="lazy" decoding="async"><img src="../figures/agua_limpa.jpg" class="rc2-carousel-img" alt="Água Limpa" loading="lazy" decoding="async"><img src="../figures/itirapina.jpg" class="rc2-carousel-img" alt="Itirapina" loading="lazy" decoding="async"><img src="../figures/agua_limpa_1.jpg" class="rc2-carousel-img" alt="Água Limpa landscape" loading="lazy" decoding="async"></div></div>
+<section class="rc2-section" id="mapa"><div class="rc2-section-title"><h2>Interactive map</h2></div><p class="rc2-lead">Use the map to inspect Rede C2 permanent plots, biome classification, plot area, census number and climatic or institutional metadata available in the project table.</p>
+```
 
 ```{r}
-library(leaflet)
-library(htmlwidgets)
-library(dplyr)
 library(htmltools)
-
-# Robust path: search upwards for _input_data/plotMetadata_R2C.csv
 csv_path <- find_up(file.path("_input_data", "plotMetadata_R2C.csv"))
-
 if (is.na(csv_path)) {
-  stop(
-    "Não encontrei o arquivo '_input_data/plotMetadata_R2C.csv'.\n",
-    "Diretório de trabalho (getwd): ", getwd(), "\n",
-    "Dica: verifique se a pasta '_input_data' está no projeto e contém 'plotMetadata_R2C.csv'."
-  )
+  HTML('<div class="map-warning">The file <strong>_input_data/plotMetadata_R2C.csv</strong> was not found. Keep this file in the project root to render the interactive map.</div>')
+} else {
+  library(leaflet); library(dplyr)
+  plotMetadata_R2C <- read.csv(csv_path)
+  plotMetadata_R2C$biome <- "Unclassified"
+  plotMetadata_R2C$biome[plotMetadata_R2C$kyle_veg_broad == "Forest"] <- "Caatinga"
+  plotMetadata_R2C$biome[plotMetadata_R2C$kyle_veg_broad == "Savanna"] <- "Cerrado"
+  plotMetadata_R2C$biome[plotMetadata_R2C$plot_id %in% c("CIP-21", "CIP-22", "CIP-23", "PNP-04")] <- "Cerrado"
+  plotMetadata_R2C$longitude[plotMetadata_R2C$longitude > 0] <- -plotMetadata_R2C$longitude[plotMetadata_R2C$longitude > 0]
+  plotMetadata_R2C$latitude[plotMetadata_R2C$latitude > 0] <- -plotMetadata_R2C$latitude[plotMetadata_R2C$latitude > 0]
+  pal <- colorFactor(c("#A93632", "#626A38", "#D99A27"), domain = c("Caatinga", "Cerrado", "Unclassified"))
+  popup_html <- paste0('<div class="popup-card"><div class="popup-title">', htmlEscape(plotMetadata_R2C$plot_id), '</div><div class="popup-sub">', htmlEscape(plotMetadata_R2C$biome), '</div><div class="popup-row"><span class="popup-k">Area</span><span class="popup-v">', htmlEscape(plotMetadata_R2C$plot_area), ' ha</span></div><div class="popup-row"><span class="popup-k">Census</span><span class="popup-v">', htmlEscape(plotMetadata_R2C$n_census), '</span></div><div class="popup-row"><span class="popup-k">BIO12</span><span class="popup-v">', htmlEscape(plotMetadata_R2C$bio12), '</span></div><div class="popup-row"><span class="popup-k">PI</span><span class="popup-v">', htmlEscape(plotMetadata_R2C$prinv), '</span></div></div>')
+  leaflet(data = plotMetadata_R2C, width = "100%", height = 720, options = leafletOptions(minZoom = 2, maxZoom = 22)) %>% addProviderTiles(providers$CartoDB.Positron, group = "Light") %>% addProviderTiles(providers$Esri.WorldImagery, group = "Satellite") %>% addProviderTiles(providers$OpenTopoMap, group = "Topo") %>% addCircleMarkers(~longitude, ~latitude, radius = 7, stroke = TRUE, weight = 2, color = "#FFFDF7", fillColor = ~pal(biome), fillOpacity = 0.92, label = ~paste0(plot_id, " · ", biome), popup = popup_html, group = "Plots") %>% addLayersControl(baseGroups = c("Light", "Satellite", "Topo"), overlayGroups = c("Plots"), position = "bottomleft", options = layersControlOptions(collapsed = TRUE)) %>% addLegend("bottomright", pal = pal, values = ~biome, title = "Biome", opacity = 0.9)
 }
-
-plotMetadata_R2C <- read.csv(csv_path)
-
-# Add term for vegetation
-plotMetadata_R2C$biome <- vector("character", nrow(plotMetadata_R2C))
-plotMetadata_R2C$biome[plotMetadata_R2C$kyle_veg_broad == "Forest"]  <- "Caatinga"
-plotMetadata_R2C$biome[plotMetadata_R2C$kyle_veg_broad == "Savanna"] <- "Cerrado"
-
-# Correções manuais
-plotMetadata_R2C$biome[plotMetadata_R2C$plot_id == "CIP-21"] <- "Cerrado"
-plotMetadata_R2C$biome[plotMetadata_R2C$plot_id == "CIP-22"] <- "Cerrado"
-plotMetadata_R2C$biome[plotMetadata_R2C$plot_id == "CIP-23"] <- "Cerrado"
-plotMetadata_R2C$biome[plotMetadata_R2C$plot_id == "PNP-04"] <- "Cerrado"
-
-# Corrigir sinal das coordenadas, se necessário
-plotMetadata_R2C$longitude[plotMetadata_R2C$longitude > 0] <-
-  -plotMetadata_R2C$longitude[plotMetadata_R2C$longitude > 0]
-plotMetadata_R2C$latitude[plotMetadata_R2C$latitude > 0]   <-
-  -plotMetadata_R2C$latitude[plotMetadata_R2C$latitude > 0]
-
-# Ícones customizados por bioma
-custom_icons <- icons(
-  iconUrl = ifelse(
-    plotMetadata_R2C$biome == "Caatinga",
-    "https://leafletjs.com/examples/custom-icons/leaf-red.png",
-    "https://leafletjs.com/examples/custom-icons/leaf-orange.png"
-  ),
-  iconWidth   = 25,
-  iconHeight  = 41,
-  iconAnchorX = 12,
-  iconAnchorY = 41
-)
-
-map <- leaflet(
-  data    = plotMetadata_R2C,
-  width   = "100%",
-  height  = 700,
-  options = leafletOptions(minZoom = 2, maxZoom = 22)
-) %>%
-  addControl(
-    html = paste0(
-      "<div style='text-align:center; line-height:1.2; padding:4px 8px;",
-      "background:rgba(255,255,255,0.85); border-radius:8px;",
-      "box-shadow:0 1px 4px rgba(0,0,0,0.25);'>",
-      "<div style='font-size:14px; font-weight:400;'>", htmlEscape("Sites - Caatinga & Cerrado"), "</div>",
-      "</div>"
-    ),
-    position  = "topleft",
-    className = "custom-title"
-  ) %>%
-  addControl(
-    html = paste0(
-      "<a href='https://redec2.github.io/redeC2-website/' target='_blank' rel='noopener'>",
-      "<img src='/figures/logoc2.png' style='width:150px; height:auto;'>",
-      "</a>"
-    ),
-    position  = "topleft",
-    className = "project-logo"
-  ) %>%
-  htmlwidgets::onRender(
-    "function(el, x){
-       this.whenReady(function(){
-         if (typeof addFilterControl === 'function') {
-           addFilterControl.call(this, el, x);
-         }
-       });
-     }"
-  ) %>%
-  addProviderTiles(providers$OpenStreetMap,       group = "OSM Street") %>%
-  addProviderTiles(providers$Esri.WorldStreetMap, group = "ESRI Street") %>%
-  addProviderTiles(providers$Esri.WorldImagery,   group = "Satellite")  %>%
-  addProviderTiles(providers$OpenTopoMap,         group = "OpenTopo")   %>%
-  addProviderTiles(providers$CartoDB.DarkMatter,  group = "Dark Matter") %>%
-  addMarkers(
-    ~longitude, ~latitude,
-    icon  = custom_icons,
-    group = "Plots",
-    popup = ~paste0(
-      "<strong>Name:</strong> ", plot_id,
-      "<br><strong>Biome:</strong> ", biome,
-      "<br><strong>Area (ha):</strong> ", plot_area,
-      "<br><strong>Census Number:</strong> ", n_census,
-      "<br><strong>BIO12:</strong> ", bio12,
-      "<br><strong>PI:</strong> ", prinv
-    )
-  ) %>%
-  addCircleMarkers(
-    ~longitude, ~latitude,
-    radius = 5,
-    group  = "Plots",
-    label  = ~paste0(plot_id, " (", biome, ")"),
-    labelOptions = labelOptions(direction = "auto", textsize = "12px", opacity = 0.9)
-  ) %>%
-  addLayersControl(
-    baseGroups    = c("OSM Street", "ESRI Street", "Satellite", "OpenTopo", "Dark Matter"),
-    overlayGroups = c("Plots"),
-    position      = "bottomleft",
-    options       = layersControlOptions(collapsed = TRUE, autoZIndex = TRUE)
-  )
-
-map
 ```
 
-:::
-:::
-:::
+```{=html}
+<p class="map-note">Tip: keep the image carousel light by using optimized WebP/JPG versions and only load high-resolution images when necessary.</p></section>
+<section class="rc2-section" id="gradients"><div class="rc2-section-title"><h2>How to read the network</h2></div><div class="rc2-grid-3"><article class="rc2-card"><h3>Spatial coverage</h3><p>Sites are distributed across formations and regions that capture ecological turnover in dry ecosystems.</p></article><article class="rc2-card"><h3>Environmental gradients</h3><p>Climate, soil, vegetation structure and landscape context should be interpreted jointly with plot-level data.</p></article><article class="rc2-card"><h3>Long-term comparability</h3><p>Repeated censuses make it possible to connect local dynamics with biome-wide patterns.</p></article></div></section>
+```
+
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const revealTargets = document.querySelectorAll(
+    ".rc2-section, .content-card, .rc2-page-hero, .rc2-home-hero, .rc2-feature-band, .team-controls, .team-card"
+  );
+  revealTargets.forEach((el, index) => {
+    el.classList.add("reveal-ready");
+    el.style.setProperty("--reveal-delay", `${Math.min(index, 8) * 45}ms`);
+  });
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    revealTargets.forEach(el => el.classList.add("is-visible"));
+  } else {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    revealTargets.forEach(el => revealObserver.observe(el));
+  }
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".navbar a[href]");
+  if (sections.length && "IntersectionObserver" in window) {
+    const navObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          const href = link.getAttribute("href") || "";
+          link.classList.toggle("active-section", href.endsWith("#" + id));
+        });
+      });
+    }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
+    sections.forEach(section => navObserver.observe(section));
+  }
+});
+</script>
+```
+

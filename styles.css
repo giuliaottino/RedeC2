@@ -104,3 +104,101 @@
     height: 400px;
   }
 }
+
+/* Footer Rede C2 ---------------------------------------------------------- */
+
+.redec2-site-footer {
+  width: 100%;
+  margin-top: 4rem;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid rgba(120, 120, 120, 0.25);
+  background: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
+.redec2-footer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.redec2-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.redec2-footer-logo {
+  width: 72px;
+  height: auto;
+  display: block;
+}
+
+.redec2-footer-logo-missing {
+  display: none;
+}
+
+.redec2-footer-name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  line-height: 1.3;
+}
+
+.redec2-footer-name strong {
+  font-size: 1rem;
+}
+
+.redec2-footer-name span {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.redec2-footer-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+}
+
+.redec2-footer-contact,
+.redec2-footer-links {
+  font-size: 0.9rem;
+}
+
+.redec2-site-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.redec2-site-footer a:hover {
+  text-decoration: underline;
+}
+
+.redec2-footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+@media (max-width: 800px) {
+  .redec2-footer-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .redec2-footer-brand {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .redec2-footer-logo {
+    width: 84px;
+  }
+
+  .redec2-footer-links a {
+    justify-content: center;
+  }
+}
