@@ -1,7 +1,9 @@
 /* Rede C2 language switcher
- * Adds a small language selector and translates the current static Quarto pages
- * using the exact-text dictionary defined in js/translations.js.
- * Default language is always English unless ?lang=pt is explicitly passed.
+ * Static Quarto runtime for EN/PT translation.
+ * This version preserves the Quarto navbar structure: it only translates text
+ * nodes and attributes, never replacing parent HTML with textContent.
+ * Default language is always English unless ?lang=pt is used or the selector
+ * is changed during the current page view.
  */
 (function () {
   "use strict";
@@ -12,159 +14,268 @@
   const available = config.availableLanguages || ["en", "pt"];
   const defaultLanguage = config.defaultLanguage || "en";
   const storageKey = config.storageKey || "rede-c2-language";
+  const prefixes = (config.prefixes && config.prefixes.pt) || {};
 
   const textOriginals = new WeakMap();
   const attrOriginals = new WeakMap();
-  const elementOriginals = new WeakMap();
+  const trackedTextNodes = [];
+  const trackedAttrElements = [];
 
   const excludedSelectors = [
     "script", "style", "code", "pre", "kbd", "samp", "textarea", "noscript",
-    "svg", "canvas", ".rede-c2-language-control", ".MathJax", ".sourceCode"
-  ].join(",");
-
-  const elementSelector = [
-    "h1", "h2", "h3", "h4", "h5", "h6", "p", "li", "figcaption", "blockquote",
-    "a", "button", "label", "legend", ".navbar-title", ".nav-link", ".dropdown-item",
-    ".rc2-btn", ".rc2-card", ".proto-card", ".sites-box", ".tag", ".pill", ".agency-pill",
-    ".team-name", ".team-affiliation", ".team-empty", ".redec2-footer-title",
-    ".redec2-footer-name span", ".redec2-footer-contact", ".redec2-footer-links"
+    "svg", "canvas", ".rede-c2-language-control", ".MathJax", ".sourceCode",
+    ".leaflet-container", ".leaflet-control", ".plotly", ".js-plotly-plot"
   ].join(",");
 
   let originalTitle = document.title;
   let currentLanguage = defaultLanguage;
   let observerStarted = false;
   let refreshTimer = null;
+  let isTranslating = false;
 
   function normalize(value) {
-    return String(value || "").replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
+    return String(value || "")
+      .replace(/\u00a0/g, " ")
+      .replace(/[“”]/g, '"')
+      .replace(/[‘’]/g, "'")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
   function preserveSpacing(original, translated) {
-    const originalString = String(original || "");
-    const leading = (originalString.match(/^\s*/) || [""])[0];
-    const trailing = (originalString.match(/\s*$/) || [""])[0];
+    const raw = String(original || "");
+    const leading = (raw.match(/^\s*/) || [""])[0];
+    const trailing = (raw.match(/\s*$/) || [""])[0];
     return leading + translated + trailing;
+  }
+
+  function getDictionary(language) {
+    return (strings && strings[language]) || {};
   }
 
   function getInitialLanguage() {
     const params = new URLSearchParams(window.location.search);
     const queryLanguage = params.get("lang");
-    if (available.includes(queryLanguage)) return queryLanguage;
+
+    if (available.includes(queryLanguage)) {
+      return queryLanguage;
+    }
 
     try {
       localStorage.removeItem(storageKey);
+      localStorage.removeItem("site-language");
+      localStorage.removeItem("language");
+      localStorage.removeItem("tsiino_i18n_lang");
+      localStorage.removeItem("rede-c2-language");
     } catch (error) {}
 
     return defaultLanguage;
   }
 
-  function translateValue(value, language) {
-    const originalRaw = String(value || "");
-    const original = normalize(originalRaw);
+  function dictionaryLookup(key, dictionary) {
+    if (!key) return null;
 
-    if (!original || language === defaultLanguage) return originalRaw;
-
-    const dictionary = strings[language] || {};
-
-    if (Object.prototype.hasOwnProperty.call(dictionary, original)) {
-      return preserveSpacing(originalRaw, dictionary[original]);
+    if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
+      return dictionary[key];
     }
 
-    const prefixes = (config.prefixes && config.prefixes[language]) || {};
-    for (const prefix in prefixes) {
-      if (Object.prototype.hasOwnProperty.call(prefixes, prefix) && original.startsWith(prefix)) {
-        return preserveSpacing(originalRaw, prefixes[prefix] + original.slice(prefix.length));
+    const normalizedKey = normalize(key);
+    if (Object.prototype.hasOwnProperty.call(dictionary, normalizedKey)) {
+      return dictionary[normalizedKey];
+    }
+
+    const upperKey = normalizedKey.toUpperCase();
+    if (Object.prototype.hasOwnProperty.call(dictionary, upperKey)) {
+      return dictionary[upperKey];
+    }
+
+    const lowerKey = normalizedKey.toLowerCase();
+    const keys = Object.keys(dictionary);
+
+    for (let i = 0; i < keys.length; i += 1) {
+      if (keys[i].toLowerCase() === lowerKey) {
+        return dictionary[keys[i]];
       }
     }
 
-    return originalRaw;
+    return null;
   }
 
-  function isExcludedElement(element) {
-    if (!element) return true;
-    return !!element.closest(excludedSelectors);
-  }
+  function applyPrefixTranslation(value, language) {
+    if (language === defaultLanguage) return null;
 
-  function captureElementOriginal(element) {
-    if (!elementOriginals.has(element)) {
-      elementOriginals.set(element, { html: element.innerHTML, text: element.textContent });
+    const original = normalize(value);
+    const keys = Object.keys(prefixes || {}).sort(function (a, b) {
+      return b.length - a.length;
+    });
+
+    for (let i = 0; i < keys.length; i += 1) {
+      const prefix = keys[i];
+      if (original.startsWith(prefix)) {
+        return prefixes[prefix] + original.slice(prefix.length);
+      }
     }
+
+    return null;
   }
 
-  function translateWholeElements(language) {
-    document.querySelectorAll(elementSelector).forEach(function (element) {
-      if (isExcludedElement(element)) return;
+  function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
 
-      captureElementOriginal(element);
+  function replaceFragments(value, dictionary) {
+    let output = normalize(value);
+    if (!output) return output;
 
-      const original = elementOriginals.get(element);
-      const originalText = normalize(original.text);
-      const dictionary = strings[language] || {};
-      const blockChildren = element.querySelectorAll("section, article, div, p, h1, h2, h3, h4, h5, h6, ul, ol, table");
+    const sortedKeys = Object.keys(dictionary)
+      .map(function (key) { return normalize(key); })
+      .filter(function (key, index, arr) {
+        return key.length >= 4 && arr.indexOf(key) === index;
+      })
+      .sort(function (a, b) { return b.length - a.length; });
 
-      if (originalText.length > 1400 || blockChildren.length > 10) return;
+    sortedKeys.forEach(function (source) {
+      const target = dictionaryLookup(source, dictionary);
+      if (!source || !target) return;
+      if (source.length > output.length) return;
 
-      if (language !== defaultLanguage && Object.prototype.hasOwnProperty.call(dictionary, originalText)) {
-        element.textContent = dictionary[originalText];
-        element.dataset.redec2I18nElementTranslated = "1";
-      } else if (language === defaultLanguage && element.dataset.redec2I18nElementTranslated === "1") {
-        element.innerHTML = original.html;
-        delete element.dataset.redec2I18nElementTranslated;
+      if (output === source) {
+        output = target;
+        return;
+      }
+
+      if (output.indexOf(source) >= 0) {
+        output = output.split(source).join(target);
+        return;
+      }
+
+      // Case-insensitive fallback for all-caps labels and small UI fragments.
+      if (source.length <= 80) {
+        const regex = new RegExp(escapeRegExp(source), "gi");
+        output = output.replace(regex, target);
       }
     });
+
+    return output;
   }
 
-  function hasTranslatedElementAncestor(node) {
-    let element = node && node.parentElement;
-    while (element) {
-      if (element.dataset && element.dataset.redec2I18nElementTranslated === "1") return true;
-      element = element.parentElement;
+  function translateValue(value, language) {
+    const raw = String(value || "");
+    const original = normalize(raw);
+
+    if (!original || language === defaultLanguage) {
+      return raw;
     }
-    return false;
+
+    const dictionary = getDictionary(language);
+    const direct = dictionaryLookup(original, dictionary);
+    if (direct !== null) {
+      return preserveSpacing(raw, direct);
+    }
+
+    const prefixed = applyPrefixTranslation(original, language);
+    if (prefixed !== null) {
+      return preserveSpacing(raw, prefixed);
+    }
+
+    const replaced = replaceFragments(original, dictionary);
+    if (replaced && replaced !== original) {
+      return preserveSpacing(raw, replaced);
+    }
+
+    return raw;
+  }
+
+  function shouldSkipNode(node) {
+    if (!node || !node.parentElement) return true;
+    if (node.parentElement.closest(excludedSelectors)) return true;
+    return !normalize(node.nodeValue);
+  }
+
+  function captureTextNode(node) {
+    if (!textOriginals.has(node)) {
+      textOriginals.set(node, node.nodeValue);
+      trackedTextNodes.push(node);
+    }
   }
 
   function translateTextNode(node, language) {
-    if (!node || !node.parentElement) return;
-    if (isExcludedElement(node.parentElement)) return;
-    if (hasTranslatedElementAncestor(node)) return;
+    if (shouldSkipNode(node)) return;
 
-    if (!textOriginals.has(node)) textOriginals.set(node, node.nodeValue);
+    captureTextNode(node);
+    const original = textOriginals.get(node);
+    node.nodeValue = translateValue(original, language);
+  }
 
-    node.nodeValue = translateValue(textOriginals.get(node), language);
+  function captureAttribute(element, attr) {
+    if (!attrOriginals.has(element)) {
+      attrOriginals.set(element, {});
+      trackedAttrElements.push(element);
+    }
+
+    const stored = attrOriginals.get(element);
+    if (!Object.prototype.hasOwnProperty.call(stored, attr)) {
+      stored[attr] = element.getAttribute(attr);
+    }
   }
 
   function translateAttributes(element, language) {
-    if (!element || isExcludedElement(element)) return;
+    if (!element || element.closest(excludedSelectors)) return;
 
-    ["placeholder", "title", "aria-label", "alt", "data-label"].forEach(function (attr) {
+    const attrs = ["placeholder", "title", "aria-label", "alt", "data-label"];
+
+    attrs.forEach(function (attr) {
       if (!element.hasAttribute(attr)) return;
 
-      if (!attrOriginals.has(element)) attrOriginals.set(element, {});
+      captureAttribute(element, attr);
+      const original = attrOriginals.get(element)[attr];
+      element.setAttribute(attr, translateValue(original, language));
+    });
+  }
+
+  function restoreOriginals() {
+    trackedTextNodes.forEach(function (node) {
+      if (node && node.parentElement && textOriginals.has(node)) {
+        node.nodeValue = textOriginals.get(node);
+      }
+    });
+
+    trackedAttrElements.forEach(function (element) {
+      if (!element || !attrOriginals.has(element)) return;
       const stored = attrOriginals.get(element);
-
-      if (!Object.prototype.hasOwnProperty.call(stored, attr)) stored[attr] = element.getAttribute(attr);
-
-      element.setAttribute(attr, translateValue(stored[attr], language));
+      Object.keys(stored).forEach(function (attr) {
+        element.setAttribute(attr, stored[attr]);
+      });
     });
   }
 
   function walkAndTranslate(language) {
     currentLanguage = available.includes(language) ? language : defaultLanguage;
 
-    translateWholeElements(currentLanguage);
+    isTranslating = true;
 
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-      acceptNode: function (node) {
-        const parent = node.parentElement;
-        if (!parent || isExcludedElement(parent)) return NodeFilter.FILTER_REJECT;
-        if (hasTranslatedElementAncestor(node)) return NodeFilter.FILTER_REJECT;
-        return normalize(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    if (currentLanguage === defaultLanguage) {
+      restoreOriginals();
+    }
+
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: function (node) {
+          return shouldSkipNode(node) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+        }
       }
-    });
+    );
 
-    const textNodes = [];
-    while (walker.nextNode()) textNodes.push(walker.currentNode);
-    textNodes.forEach(function (node) { translateTextNode(node, currentLanguage); });
+    const nodes = [];
+    while (walker.nextNode()) {
+      nodes.push(walker.currentNode);
+    }
+
+    nodes.forEach(function (node) {
+      translateTextNode(node, currentLanguage);
+    });
 
     document.querySelectorAll("[placeholder], [title], [aria-label], img[alt], [data-label]").forEach(function (element) {
       translateAttributes(element, currentLanguage);
@@ -174,41 +285,46 @@
     document.documentElement.lang = currentLanguage === "pt" ? "pt-BR" : "en";
     document.body.dataset.language = currentLanguage;
 
-    updateControl(currentLanguage);
+    const select = document.getElementById("rede-c2-language-select");
+    if (select && select.value !== currentLanguage) {
+      select.value = currentLanguage;
+    }
+
+    window.setTimeout(function () {
+      isTranslating = false;
+    }, 0);
   }
 
-  function createControl(currentLanguageForControl) {
-    let container = document.querySelector(".rede-c2-language-control");
-    let select = document.querySelector("#rede-c2-language-select");
+  function createControl(currentLanguage) {
+    if (document.querySelector(".rede-c2-language-control")) return;
 
-    if (!container) {
-      container = document.createElement("div");
-      container.className = "rede-c2-language-control quarto-navigation-tool px-1";
-    }
+    const container = document.createElement("div");
+    container.className = "rede-c2-language-control quarto-navigation-tool px-1";
 
-    if (!select) {
-      const label = document.createElement("label");
-      label.className = "visually-hidden";
-      label.setAttribute("for", "rede-c2-language-select");
-      label.textContent = "Language";
+    const label = document.createElement("label");
+    label.className = "visually-hidden";
+    label.setAttribute("for", "rede-c2-language-select");
+    label.textContent = "Language";
 
-      select = document.createElement("select");
-      select.id = "rede-c2-language-select";
-      select.className = "rede-c2-language-select";
-      select.setAttribute("aria-label", "Language");
+    const select = document.createElement("select");
+    select.id = "rede-c2-language-select";
+    select.className = "rede-c2-language-select";
+    select.setAttribute("aria-label", "Language");
 
-      available.forEach(function (language) {
-        const option = document.createElement("option");
-        option.value = language;
-        option.textContent = labels[language] || language.toUpperCase();
-        select.appendChild(option);
-      });
+    available.forEach(function (language) {
+      const option = document.createElement("option");
+      option.value = language;
+      option.textContent = labels[language] || language.toUpperCase();
+      option.selected = language === currentLanguage;
+      select.appendChild(option);
+    });
 
-      select.addEventListener("change", function () { walkAndTranslate(this.value); });
+    select.addEventListener("change", function () {
+      walkAndTranslate(this.value);
+    });
 
-      container.appendChild(label);
-      container.appendChild(select);
-    }
+    container.appendChild(label);
+    container.appendChild(select);
 
     const target =
       document.querySelector(".quarto-navbar-tools") ||
@@ -219,17 +335,7 @@
       document.querySelector("nav.navbar") ||
       document.body;
 
-    if (target && !target.contains(container)) target.prepend(container);
-
-    updateControl(currentLanguageForControl);
-  }
-
-  function updateControl(language) {
-    const select = document.querySelector("#rede-c2-language-select");
-    if (!select) return;
-    select.value = available.includes(language) ? language : defaultLanguage;
-    select.setAttribute("aria-label", language === "pt" ? "Idioma" : "Language");
-    select.setAttribute("title", language === "pt" ? "Idioma" : "Language");
+    target.prepend(container);
   }
 
   function injectStyles() {
@@ -238,31 +344,48 @@
     const style = document.createElement("style");
     style.id = "rede-c2-language-style";
     style.textContent = `
-      .rede-c2-language-control { display: inline-flex; align-items: center; margin-right: .35rem; }
+      .rede-c2-language-control {
+        display: inline-flex;
+        align-items: center;
+        margin-right: .35rem;
+      }
+
       .rede-c2-language-select {
-        border: 1px solid rgba(92,122,62,.35);
+        border: 1px solid rgba(169, 54, 50, .35);
         border-radius: 999px;
-        background: rgba(250,246,238,.96);
+        background: rgba(250, 246, 238, .96);
         color: #4A3A22;
-        font: 700 .72rem/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        padding: .25rem .55rem;
+        font: 800 .72rem/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        padding: .28rem .65rem;
         cursor: pointer;
       }
-      .rede-c2-language-select:focus { outline: 2px solid rgba(200,90,58,.35); outline-offset: 2px; }
-      @media (max-width: 768px) { .rede-c2-language-control { margin: .5rem 0; } }
+
+      .rede-c2-language-select:focus {
+        outline: 2px solid rgba(200, 90, 58, .35);
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 768px) {
+        .rede-c2-language-control { margin: .5rem 0; }
+      }
     `;
     document.head.appendChild(style);
   }
 
   function scheduleRefresh() {
-    if (currentLanguage === defaultLanguage) return;
+    if (isTranslating || currentLanguage === defaultLanguage) return;
+
     window.clearTimeout(refreshTimer);
-    refreshTimer = window.setTimeout(function () { walkAndTranslate(currentLanguage); }, 120);
+    refreshTimer = window.setTimeout(function () {
+      walkAndTranslate(currentLanguage);
+    }, 150);
   }
 
   function startObserver() {
     if (observerStarted || !document.body || !window.MutationObserver) return;
+
     observerStarted = true;
+
     const observer = new MutationObserver(function (mutations) {
       for (let i = 0; i < mutations.length; i += 1) {
         const target = mutations[i].target;
@@ -271,7 +394,12 @@
         break;
       }
     });
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
   }
 
   function init() {
@@ -292,6 +420,9 @@
     init();
   }
 
-  window.addEventListener("load", function () { walkAndTranslate(currentLanguage); });
+  window.addEventListener("load", function () {
+    walkAndTranslate(currentLanguage);
+  });
+
   window.RedeC2SetLanguage = walkAndTranslate;
 })();
