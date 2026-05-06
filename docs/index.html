@@ -141,14 +141,10 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<!-- Rede C2: home — hero limpo + feature band anterior full-width -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
-/* =====================================================================
-   VARIÁVEIS GLOBAIS
-   ===================================================================== */
 :root {
   --rc2-red:        #A93632;
   --rc2-red-dark:   #6E1F1D;
@@ -246,9 +242,9 @@ main.content {
   border-bottom: 2px solid var(--rc2-red);
 }
 
-/* =====================================================================
-   HERO — LIMPO, MENOS POLUÍDO
-   ===================================================================== */
+/* =========================================================
+   HERO
+   ========================================================= */
 .rc2-home-hero {
   position: relative;
   width: 100vw;
@@ -317,7 +313,6 @@ main.content {
   align-items: center;
 }
 
-/* Kicker */
 .rc2-home-kicker {
   display: inline-flex;
   align-items: center;
@@ -346,7 +341,6 @@ main.content {
   box-shadow: 0 0 0 3px rgba(217,154,39,0.28);
 }
 
-/* Título principal */
 .rc2-home-title {
   margin: 0.7rem 0 0;
   line-height: 0.78;
@@ -372,7 +366,6 @@ main.content {
   -webkit-text-stroke: 2px rgba(255,255,255,0.18);
 }
 
-/* Linha decorativa */
 .rc2-title-rule {
   display: flex;
   align-items: center;
@@ -407,7 +400,6 @@ main.content {
   animation: fadeSlideUp 0.75s 0.28s ease both;
 }
 
-/* Palavras-chave slim */
 .rc2-keywords {
   display: flex;
   flex-wrap: wrap;
@@ -440,7 +432,6 @@ main.content {
 .rc2-keyword--ochre { border-left: 4px solid var(--rc2-ochre); }
 .rc2-keyword--cream { border-left: 4px solid var(--rc2-cream); }
 
-/* Botões */
 .rc2-btn-row {
   display: flex;
   flex-wrap: wrap;
@@ -486,7 +477,6 @@ main.content {
   box-shadow: 0 14px 28px rgba(0,0,0,0.22);
 }
 
-/* Card lateral mais limpo */
 .rc2-home-logo-card {
   align-self: center;
   display: flex;
@@ -523,9 +513,9 @@ main.content {
   line-height: 1.5;
 }
 
-/* =====================================================================
-   SEÇÕES PADRÃO
-   ===================================================================== */
+/* =========================================================
+   SEÇÕES
+   ========================================================= */
 .rc2-section,
 .content-card {
   width: min(var(--rc2-content-max), calc(100% - var(--rc2-safe-gutter) * 2));
@@ -595,11 +585,6 @@ main.content {
   line-height: 1.72;
 }
 
-.rc2-muted {
-  color: var(--rc2-muted) !important;
-}
-
-/* Pills gerais fora do hero */
 .rc2-pills {
   display: flex;
   flex-wrap: wrap;
@@ -642,7 +627,6 @@ main.content {
   background: rgba(217,154,39,0.10);
 }
 
-/* Grids */
 .rc2-grid-2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
@@ -661,7 +645,6 @@ main.content {
   gap: 0.9rem;
 }
 
-/* Cards */
 .rc2-card,
 .proto-card,
 .sites-box,
@@ -706,36 +689,10 @@ main.content {
   line-height: 1.6;
 }
 
-.rc2-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.rc2-card li {
-  position: relative;
-  padding-left: 1.25rem;
-  margin: 0.52rem 0;
-  line-height: 1.55;
-  color: var(--rc2-ink);
-  font-size: 0.94rem;
-}
-
-.rc2-card li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.6rem;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--rc2-ochre);
-}
-
-/* =====================================================================
-   FEATURE BAND — VERSÃO ANTERIOR RESTAURADA + FULL-WIDTH
-   Layout: foto | painel | foto | painel | foto | painel
-   ===================================================================== */
+/* =========================================================
+   FEATURE BAND
+   Ajustado: texto mais à esquerda + fonte um pouco menor
+   ========================================================= */
 .rc2-feature-band {
   position: relative;
   width: 100vw;
@@ -790,11 +747,10 @@ main.content {
   border-left: 4px solid var(--rc2-ochre);
 }
 
-/* Grid full-width em 6 partes: foto | painel | foto | painel | foto | painel */
 .rc2-feature-grid {
   display: grid;
   width: 100%;
-  grid-template-columns: 1.05fr 0.95fr 1.05fr 0.95fr 1.05fr 0.95fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   min-height: clamp(420px, 38vw, 640px);
 }
 
@@ -839,13 +795,16 @@ main.content {
   pointer-events: none;
 }
 
-/* Painéis verticais da versão anterior */
 .rc2-feature-panel {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: clamp(1.4rem, 2.4vw, 2.35rem);
+  padding:
+    clamp(1.15rem, 2vw, 1.95rem)
+    clamp(0.95rem, 1.55vw, 1.35rem)
+    clamp(0.9rem, 1.4vw, 1.2rem)
+    clamp(0.88rem, 1.45vw, 1.2rem);
   color: #fff;
   overflow: hidden;
 }
@@ -898,13 +857,13 @@ main.content {
 
 .rc2-feature-panel p {
   margin: 0 !important;
-  max-width: 13ch;
+  max-width: 12ch;
   color: rgba(255,253,247,0.98) !important;
   font-family: 'Montserrat', Arial, sans-serif !important;
-  font-size: clamp(1.22rem, 1.75vw, 2rem) !important;
-  line-height: 1.14 !important;
+  font-size: clamp(1.08rem, 1.48vw, 1.68rem) !important;
+  line-height: 1.10 !important;
   font-weight: 900 !important;
-  letter-spacing: -0.04em !important;
+  letter-spacing: -0.035em !important;
   text-transform: uppercase !important;
   text-shadow: 0 2px 8px rgba(0,0,0,0.20);
   overflow-wrap: normal;
@@ -916,16 +875,16 @@ main.content {
   align-self: flex-end;
   color: rgba(255,255,255,0.14);
   font-family: 'Montserrat', Arial, sans-serif;
-  font-size: clamp(2.8rem, 4.6vw, 5rem);
+  font-size: clamp(2.6rem, 4.2vw, 4.6rem);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.08em;
   user-select: none;
 }
 
-/* =====================================================================
+/* =========================================================
    ANIMAÇÕES
-   ===================================================================== */
+   ========================================================= */
 @keyframes fadeSlideUp {
   from {
     opacity: 0;
@@ -969,9 +928,9 @@ main.content {
   }
 }
 
-/* =====================================================================
-   RESPONSIVIDADE
-   ===================================================================== */
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
 @media (max-width: 1180px) {
   .rc2-home-hero-inner {
     grid-template-columns: 1fr;
@@ -990,9 +949,17 @@ main.content {
     min-height: 360px;
   }
 
+  .rc2-feature-panel {
+    padding:
+      1.05rem
+      0.95rem
+      0.9rem
+      0.9rem;
+  }
+
   .rc2-feature-panel p {
-    font-size: clamp(1.05rem, 2.2vw, 1.45rem) !important;
-    max-width: 13ch;
+    font-size: clamp(0.98rem, 2vw, 1.32rem) !important;
+    max-width: 12ch;
   }
 }
 
@@ -1013,12 +980,12 @@ main.content {
   }
 
   .rc2-feature-panel {
-    padding: 1.45rem 1.25rem;
+    padding: 1.25rem 1rem 1rem 1rem;
   }
 
   .rc2-feature-panel p {
-    max-width: 22ch;
-    font-size: clamp(1.25rem, 6vw, 1.75rem) !important;
+    max-width: 20ch;
+    font-size: clamp(1.08rem, 5.2vw, 1.55rem) !important;
   }
 }
 
@@ -1060,9 +1027,9 @@ main.content {
   }
 }
 
-/* =====================================================================
+/* =========================================================
    INSTITUIÇÕES
-   ===================================================================== */
+   ========================================================= */
 .inst-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
@@ -1123,7 +1090,6 @@ main.content {
   }
 }
 
-/* Garante que htmlwidgets e leaflet não estourem */
 .html-widget,
 .leaflet,
 .leaflet-container,
@@ -1132,11 +1098,7 @@ iframe {
   max-width: 100% !important;
 }
 </style>
-<!-- ============================================================
-     HERO SECTION
-     ============================================================ -->
 <section class="rc2-home-hero page-columns page-full" id="inicio" aria-label="RedeC2 homepage hero">
-
   <div class="rc2-home-hero-inner page-columns page-full">
 
     <div>
@@ -1174,11 +1136,7 @@ iframe {
     </aside>
 
   </div>
-
 </section>
-<!-- ============================================================
-     REDE SECTION
-     ============================================================ -->
 <section class="rc2-section" id="rede">
   <div class="rc2-section-title"><h2 class="anchored">The RedeC2 network</h2></div>
 
@@ -1222,10 +1180,6 @@ iframe {
     </div>
   </div>
 </section>
-<!-- ============================================================
-     FEATURE BAND — SITES, DATA AND OUTPUTS
-     Versão anterior: foto | painel | foto | painel | foto | painel
-     ============================================================ -->
 <section class="rc2-feature-band" id="eixos" aria-label="RedeC2 working axes">
 
   <div class="rc2-feature-title-wrap">
@@ -1237,36 +1191,30 @@ iframe {
 
   <div class="rc2-feature-grid">
 
-    <!-- Foto 1 -->
     <article class="rc2-feature-photo">
       <img src="figures/canudos_dc.jpg" alt="Caatinga landscape" loading="lazy" decoding="async">
     </article>
 
-    <!-- Painel 1 -->
     <article class="rc2-feature-panel rc2-feature-panel--sites" aria-label="Sites">
       <h3 class="anchored">Sites</h3>
       <p>Permanent plots across Caatinga and Cerrado formations.</p>
       <span class="rc2-feature-panel-num" aria-hidden="true">01</span>
     </article>
 
-    <!-- Foto 2 -->
     <article class="rc2-feature-photo">
       <img src="figures/agua_limpa.jpg" alt="Cerrado landscape" loading="lazy" decoding="async">
     </article>
 
-    <!-- Painel 2 -->
     <article class="rc2-feature-panel rc2-feature-panel--gradients" aria-label="Gradients">
       <h3 class="anchored">Gradients</h3>
       <p>Seasonality, soils, structure and landscape context.</p>
       <span class="rc2-feature-panel-num" aria-hidden="true">02</span>
     </article>
 
-    <!-- Foto 3 -->
     <article class="rc2-feature-photo">
       <img src="figures/gruta_brejoes_dc.jpg" alt="Dry ecosystem field site" loading="lazy" decoding="async">
     </article>
 
-    <!-- Painel 3 -->
     <article class="rc2-feature-panel rc2-feature-panel--products" aria-label="Products">
       <h3 class="anchored">Products</h3>
       <p>Comparable data for conservation, restoration and synthesis.</p>
@@ -1275,9 +1223,6 @@ iframe {
 
   </div>
 </section>
-<!-- ============================================================
-     WORKFLOW SECTION
-     ============================================================ -->
 <section class="rc2-section" id="workflows">
   <div class="rc2-section-title"><h2 class="anchored">Integrated monitoring workflow</h2></div>
 
@@ -1382,9 +1327,6 @@ iframe {
 </section>
 </div>
 </div>
-<!-- ============================================================
-     CONTACT
-     ============================================================ -->
 <section class="rc2-section" id="contact">
   <div class="rc2-section-title"><h2 class="anchored">Contact</h2></div>
 
@@ -1407,7 +1349,6 @@ iframe {
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* Reveal on scroll */
   const revealTargets = document.querySelectorAll(
     ".rc2-section, .content-card, .rc2-feature-band, .team-controls, .team-card"
   );
@@ -1438,7 +1379,6 @@ document.addEventListener("DOMContentLoaded", function () {
     revealTargets.forEach(el => revealObserver.observe(el));
   }
 
-  /* Active nav link on scroll */
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".navbar a[href]");
 
