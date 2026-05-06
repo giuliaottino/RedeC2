@@ -51,7 +51,7 @@ format:
               script.onload = callback || null;
               document.body.appendChild(script);
             }
-            addScript('js/translations.js', function () { addScript('js/language.js'); });
+            var i18nVersion = 'nofragment-v4-2026-05-06'; addScript('js/translations.js?v=' + i18nVersion, function () {   addScript('js/language.js?v=' + i18nVersion); });
           })();
           </script>
     theme:
