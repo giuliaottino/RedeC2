@@ -1,4 +1,4 @@
-/* Rede C2 i18n dictionary
+/* Rede C2 i18n dictionary — no-fragment v4
  * Source language: English.
  * Portuguese translations are exact-text mappings for the current Quarto pages.
  * Save this file as UTF-8.
