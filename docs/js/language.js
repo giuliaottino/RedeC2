@@ -29,7 +29,7 @@
 
   const wholeElementSelector = [
     "h1", "h2", "h3", "h4", "h5", "h6",
-    "p", "li", "figcaption", "dt", "dd", "summary",
+    "p", "figcaption", "dt", "dd", "summary",
     "a.nav-link", "a.dropdown-item", ".navbar-title",
     ".rc2-kicker", ".rc2-chip", ".rc2-pill", ".rc2-tag", ".tag", ".agency-pill",
     ".rc2-btn", ".proto-card h3", ".proto-card p", ".sites-box h3", ".sites-box p",
@@ -163,6 +163,12 @@
 
     const blockChildren = element.querySelectorAll("section, article, div, table, ul, ol, p, h1, h2, h3, h4, h5, h6");
     if (blockChildren.length > 10) return false;
+
+    // Evita trocar elementos que possuem filhos estruturais/interativos
+    // (ex.: <li><a class="nav-link">...</a></li> na navbar).
+    if (element.children && element.children.length > 0 && !element.matches("a.nav-link, a.dropdown-item")) {
+      return false;
+    }
 
     return true;
   }
