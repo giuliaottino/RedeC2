@@ -19,8 +19,8 @@ website:
         href: index.qmd
       - text: "Sites"
         href: sites/index.qmd
-      - text: "Protocols"
-        href: protocols/index.qmd
+      - text: "Network"
+        href: network/index.qmd
       - text: "Team"
         href: team/index.qmd
     right:
