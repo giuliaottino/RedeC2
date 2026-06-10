@@ -1,13 +1,12 @@
-/* Rede C2 language switcher — no-fragment v4
+/* Rede C2 language switcher — no-fragment v5
  * Runtime de tradução EN/PT para site Quarto estático.
- * Esta versão NÃO faz substituição por pedaços de palavras/frases.
- * Ela traduz apenas textos completos encontrados no dicionário.
- * Isso evita erros como: "collaborative Rede de pesquisa", "ecosyCaules" etc.
+ * Traduz apenas textos completos encontrados no dicionário.
+ * Não faz substituição por fragmentos soltos dentro de palavras/frases.
  */
 (function () {
   "use strict";
 
-  window.RedeC2_TRANSLATION_RUNTIME_VERSION = "nofragment-v4-2026-05-06";
+  window.RedeC2_TRANSLATION_RUNTIME_VERSION = "nofragment-v6-2026-06-09";
 
   if (window.RedeC2_TRANSLATION_RUNTIME_ACTIVE) {
     return;
@@ -16,6 +15,7 @@
 
   const config = window.RedeC2Translations || {};
   const strings = config.strings || {};
+  const prefixes = config.prefixes || {};
   const labels = config.labels || { en: "English", pt: "Português" };
   const available = config.availableLanguages || ["en", "pt"];
   const defaultLanguage = config.defaultLanguage || "en";
@@ -31,9 +31,11 @@
     "h1", "h2", "h3", "h4", "h5", "h6",
     "p", "figcaption", "dt", "dd", "summary",
     "a.nav-link", "a.dropdown-item", ".navbar-title",
+    ".rc2-home-subtitle", ".rc2-home-description",
     ".rc2-kicker", ".rc2-chip", ".rc2-pill", ".rc2-tag", ".tag", ".agency-pill",
     ".rc2-btn", ".proto-card h3", ".proto-card p", ".sites-box h3", ".sites-box p",
-    ".team-name", ".team-affiliation",
+    ".rc2-card h3", ".rc2-card p", ".rc2-feature-panel h3", ".rc2-feature-panel p",
+    ".team-name", ".team-affiliation", ".inst-name",
     ".redec2-footer-title", ".redec2-footer-name span", ".redec2-footer-contact", ".redec2-footer-links"
   ].join(",");
 
@@ -70,6 +72,10 @@
     return (strings && strings[language]) || {};
   }
 
+  function getPrefixes(language) {
+    return (prefixes && prefixes[language]) || {};
+  }
+
   function dictionaryLookup(value, dictionary) {
     const key = normalize(value);
     if (!key) return null;
@@ -102,6 +108,28 @@
     return null;
   }
 
+  function prefixLookup(value, language) {
+    if (language === defaultLanguage) return null;
+
+    const key = normalize(value);
+    if (!key) return null;
+
+    const languagePrefixes = getPrefixes(language);
+    const sourcePrefixes = Object.keys(languagePrefixes).sort(function (a, b) {
+      return b.length - a.length;
+    });
+
+    for (const sourcePrefix of sourcePrefixes) {
+      const normalizedPrefix = normalize(sourcePrefix);
+      if (key.startsWith(normalizedPrefix)) {
+        const suffix = key.slice(normalizedPrefix.length);
+        return languagePrefixes[sourcePrefix] + suffix;
+      }
+    }
+
+    return null;
+  }
+
   function translateValue(value, language) {
     const raw = String(value || "");
     const key = normalize(raw);
@@ -115,6 +143,11 @@
 
     if (translated !== null) {
       return preserveSpacing(raw, translated);
+    }
+
+    const prefixed = prefixLookup(key, language);
+    if (prefixed !== null) {
+      return preserveSpacing(raw, prefixed);
     }
 
     return raw;
@@ -164,9 +197,18 @@
     const blockChildren = element.querySelectorAll("section, article, div, table, ul, ol, p, h1, h2, h3, h4, h5, h6");
     if (blockChildren.length > 10) return false;
 
-    // Evita trocar elementos que possuem filhos estruturais/interativos
-    // (ex.: <li><a class="nav-link">...</a></li> na navbar).
-    if (element.children && element.children.length > 0 && !element.matches("a.nav-link, a.dropdown-item")) {
+    if (element.matches(".rc2-lead, .lead")) {
+      return true;
+    }
+
+    // Evita trocar elementos que possuem filhos estruturais/interativos,
+    // exceto classes pontuais em que só há elementos decorativos.
+    if (
+      element.children &&
+      element.children.length > 0 &&
+      !element.matches("a.nav-link, a.dropdown-item") &&
+      !element.classList.contains("rc2-feature-title")
+    ) {
       return false;
     }
 
@@ -267,6 +309,25 @@
     document.title = translateValue(originalTitle, language);
   }
 
+  function fixInstitutionLogoAlts() {
+    document.querySelectorAll("img.inst-logo").forEach(function (img) {
+      if (!img.dataset.redec2OriginalAlt && img.hasAttribute("alt")) {
+        img.dataset.redec2OriginalAlt = img.getAttribute("alt") || "";
+      }
+
+      // Evita que o texto alternativo apareça duplicado na página caso a imagem
+      // institucional não carregue. O nome da instituição já aparece no card.
+      img.setAttribute("alt", "");
+
+      if (!img.dataset.redec2ErrorHandler) {
+        img.dataset.redec2ErrorHandler = "1";
+        img.addEventListener("error", function () {
+          img.classList.add("inst-logo-missing");
+        });
+      }
+    });
+  }
+
   function walkAndTranslate(language) {
     if (!document.body || translating) return;
 
@@ -276,6 +337,7 @@
     translateTextNodes(language);
     translateAttributes(language);
     translateDocumentTitle(language);
+    fixInstitutionLogoAlts();
 
     document.documentElement.lang = language === "pt" ? "pt-BR" : "en";
     document.body.dataset.language = language;
@@ -324,12 +386,45 @@
         outline-offset: 2px;
       }
 
+
+      .inst-logo {
+        color: transparent;
+        font-size: 0;
+      }
+
+      .inst-logo::selection {
+        background: transparent;
+      }
+
+
+      img.inst-logo {
+        color: transparent !important;
+        font-size: 0 !important;
+      }
+
+      img.inst-logo-missing {
+        display: none !important;
+      }
+
       @media (max-width: 768px) {
         .rede-c2-language-control { margin: .45rem 0; }
       }
     `;
 
     document.head.appendChild(style);
+  }
+
+  function updateControlLanguageLabel(language) {
+    const label = document.querySelector("label[for='rede-c2-language-select']");
+    const select = document.querySelector("#rede-c2-language-select");
+
+    if (label) {
+      label.textContent = language === "pt" ? "Idioma" : "Language";
+    }
+
+    if (select) {
+      select.setAttribute("aria-label", language === "pt" ? "Idioma" : "Language");
+    }
   }
 
   function createControl(language) {
@@ -369,6 +464,7 @@
     }
 
     select.value = language;
+    updateControlLanguageLabel(language);
 
     const target = findNavContainer();
     if (target && !target.contains(control)) {
@@ -435,6 +531,7 @@
     currentLanguage = available.includes(language) ? language : defaultLanguage;
     const select = document.querySelector("#rede-c2-language-select");
     if (select) select.value = currentLanguage;
+    updateControlLanguageLabel(currentLanguage);
     walkAndTranslate(currentLanguage);
   };
 
