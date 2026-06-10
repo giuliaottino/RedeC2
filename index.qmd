@@ -829,72 +829,507 @@ iframe {
   width: 100% !important;
   max-width: 100% !important;
 }
+
+/* =========================================================
+   OVERVIEW FIRST FOLD · full width, conteúdo no primeiro frame
+   ========================================================= */
+.rc2-overview-fold {
+  position: relative;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-top: 0 !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  isolation: isolate;
+}
+
+.page-columns .content > .rc2-overview-fold,
+#quarto-document-content > .rc2-overview-fold,
+main.content > .rc2-overview-fold {
+  grid-column: screen-start / screen-end !important;
+}
+
+.rc2-overview-media {
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: clamp(320px, 42svh, 460px);
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(217,154,39,0.26), transparent 32%),
+    linear-gradient(106deg, rgba(23,23,23,0.74) 0%, rgba(46,59,36,0.48) 50%, rgba(110,31,29,0.30) 100%),
+    url("figures/c2_bg.jpg");
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+.rc2-overview-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.14) 0%,
+    rgba(0,0,0,0.04) 45%,
+    rgba(0,0,0,0.48) 100%
+  );
+  pointer-events: none;
+}
+
+.rc2-overview-media-inner {
+  position: relative;
+  z-index: 2;
+  width: min(1260px, calc(100vw - var(--rc2-safe-gutter) * 2));
+  max-width: calc(100vw - var(--rc2-safe-gutter) * 2);
+  margin: 0 auto;
+  padding: clamp(2.1rem, 4.2vw, 3.5rem) 0 clamp(5.2rem, 8vw, 6.4rem);
+}
+
+.rc2-overview-brand {
+  margin: 0;
+  color: #fff;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(3.2rem, 7.4vw, 7.1rem);
+  line-height: 0.82;
+  font-weight: 900;
+  letter-spacing: -0.10em;
+  text-transform: uppercase;
+  text-shadow: 0 12px 42px rgba(0,0,0,0.56);
+}
+
+.rc2-overview-brand .line-rede {
+  display: block;
+  color: #fff;
+}
+
+.rc2-overview-brand .line-c2 {
+  display: block;
+  margin-left: clamp(1rem, 5vw, 4.5rem);
+  color: var(--rc2-ochre);
+}
+
+.rc2-overview-title-rule {
+  width: min(420px, 52vw);
+  height: 5px;
+  margin: clamp(0.8rem, 1.5vw, 1.05rem) 0 clamp(0.72rem, 1.25vw, 1rem);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--rc2-ochre) 0%, rgba(217,154,39,0.62) 42%, rgba(255,253,247,0.12) 100%);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.26);
+}
+
+.rc2-overview-image-title {
+  margin: 0 0 0.42rem;
+  color: rgba(255,253,247,0.98);
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(0.96rem, 1.45vw, 1.28rem);
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-shadow: 0 8px 30px rgba(0,0,0,0.48);
+}
+
+.rc2-overview-image-subtitle {
+  margin: 0;
+  max-width: 760px;
+  color: rgba(255,253,247,0.95);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(0.96rem, 1.45vw, 1.18rem);
+  line-height: 1.28;
+  font-weight: 700;
+  text-shadow: 0 4px 18px rgba(0,0,0,0.50);
+}
+
+.rc2-overview-wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  z-index: 3;
+  width: 100%;
+  height: clamp(82px, 10vw, 145px);
+  display: block;
+  color: rgba(255,253,247,0.96);
+  filter: drop-shadow(0 -10px 18px rgba(0,0,0,0.10));
+}
+
+.rc2-overview-content-wrap {
+  position: relative;
+  z-index: 4;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: -1px 0 0 0 !important;
+  padding: clamp(0.38rem, 0.8vw, 0.68rem) 0 clamp(0.75rem, 1.25vw, 1.05rem);
+  overflow: visible;
+  background: linear-gradient(180deg, rgba(255,253,247,0.96), rgba(246,241,232,0.88));
+}
+
+.rc2-overview-content {
+  width: min(1260px, calc(100vw - var(--rc2-safe-gutter) * 2));
+  max-width: calc(100vw - var(--rc2-safe-gutter) * 2);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(250px, 0.46fr);
+  gap: clamp(0.9rem, 1.8vw, 1.35rem);
+  align-items: start;
+}
+
+.rc2-overview-main {
+  min-width: 0;
+}
+
+.rc2-overview-lead {
+  margin: 0 0 0.38rem 0 !important;
+  padding-left: 1rem;
+  border-left: 5px solid var(--rc2-ochre);
+  color: #191711 !important;
+  font-family: 'Source Serif 4', Georgia, serif !important;
+  font-size: clamp(0.88rem, 1.05vw, 0.98rem) !important;
+  line-height: 1.27 !important;
+}
+
+.rc2-overview-content p {
+  color: var(--rc2-ink);
+  font-size: clamp(0.76rem, 0.86vw, 0.84rem);
+  line-height: 1.28;
+  margin: 0 0 0.36rem;
+}
+
+.rc2-overview-focus {
+  min-width: 0;
+  margin-top: clamp(-4rem, -4.2vw, -1.4rem);
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(98,106,56,0.20);
+}
+
+.rc2-overview-focus h3 {
+  margin: 0 0 0.36rem 0;
+  color: var(--rc2-green-dark);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.rc2-overview-focus p {
+  margin: 0;
+  color: var(--rc2-muted);
+  font-size: clamp(0.74rem, 0.84vw, 0.82rem);
+  line-height: 1.28;
+}
+
+.rc2-overview-focus .rc2-pills {
+  display: none !important;
+}
+
+/* evita que o bloco seguinte use margem full-bleed acumulada à esquerda */
+.rc2-feature-band {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  overflow-x: hidden !important;
+}
+
+@media (min-width: 1100px) and (max-height: 850px) {
+  .rc2-overview-media {
+    min-height: clamp(310px, 39svh, 410px);
+  }
+
+  .rc2-overview-media-inner {
+    padding-top: clamp(1.8rem, 3vw, 2.6rem);
+    padding-bottom: clamp(4.5rem, 7vw, 5.6rem);
+  }
+
+  .rc2-overview-brand {
+    font-size: clamp(3rem, 6.4vw, 6.1rem);
+  }
+
+  .rc2-overview-title-rule {
+    margin-top: 0.72rem;
+    margin-bottom: 0.62rem;
+  }
+}
+
+@media (max-width: 980px) {
+  .rc2-overview-content {
+    grid-template-columns: 1fr;
+  }
+
+  .rc2-overview-focus {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .rc2-overview-media {
+    min-height: calc(100svh - 76px);
+  }
+
+  .rc2-overview-media-inner {
+    padding-top: 2.6rem;
+    padding-bottom: 6.2rem;
+  }
+
+  .rc2-overview-brand {
+    font-size: clamp(3.25rem, 17vw, 5.8rem);
+    line-height: 0.86;
+  }
+
+  .rc2-overview-brand .line-c2 {
+    margin-left: clamp(0.8rem, 8vw, 2.4rem);
+  }
+
+  .rc2-overview-title-rule {
+    width: min(280px, 70vw);
+  }
+
+  .rc2-overview-image-title {
+    max-width: 19ch;
+    font-size: clamp(0.95rem, 4.6vw, 1.25rem);
+  }
+
+  .rc2-overview-image-subtitle {
+    max-width: 24ch;
+    font-size: clamp(1rem, 4.8vw, 1.28rem);
+  }
+
+  .rc2-overview-wave {
+    height: clamp(92px, 19vw, 135px);
+  }
+
+  .rc2-overview-content p {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+}
+
+
+/* =========================================================
+   FIX FINAL VISUAL FULL-BLEED
+   Usa pseudo-elementos para pintar a imagem em 100vw,
+   sem depender do Quarto aceitar o bloco como full-width.
+   ========================================================= */
+html,
+body {
+  overflow-x: hidden !important;
+}
+
+/* O wrapper pode estar preso na coluna; a pintura do hero sangra para fora */
+.rc2-overview-fold {
+  overflow: visible !important;
+}
+
+/* Remove a imagem do box central e pinta a foto em 100vw via ::after */
+.rc2-overview-media {
+  position: relative !important;
+  overflow: visible !important;
+  background: none !important;
+  isolation: isolate !important;
+}
+
+/* Foto full-bleed real, atravessando as laterais do frame */
+.rc2-overview-media::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -100vmax;
+  right: -100vmax;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(217,154,39,0.26), transparent 32%),
+    linear-gradient(106deg, rgba(23,23,23,0.74) 0%, rgba(46,59,36,0.48) 50%, rgba(110,31,29,0.30) 100%),
+    url("figures/c2_bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* Overlay escuro também sangra para as laterais */
+.rc2-overview-media::before {
+  left: -100vmax !important;
+  right: -100vmax !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  inset: 0 -100vmax 0 -100vmax !important;
+  z-index: 1 !important;
+}
+
+/* Conteúdo e onda acima da pintura full-bleed */
+.rc2-overview-media-inner {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.rc2-overview-wave {
+  left: -100vmax !important;
+  right: -100vmax !important;
+  width: auto !important;
+  min-width: calc(100% + 200vmax) !important;
+  z-index: 3 !important;
+}
+
+/* O branco sob a onda também precisa ocupar toda a largura visual */
+.rc2-overview-content-wrap {
+  overflow: visible !important;
+  box-shadow: 0 0 0 100vmax rgba(255,253,247,0.96);
+  clip-path: inset(0 -100vmax);
+}
+
+/* Sobe o foco científico para acompanhar melhor a diagonal */
+.rc2-overview-focus {
+  margin-top: clamp(-5.2rem, -4.8vw, -1.8rem) !important;
+}
+
+/* O bloco seguinte não deve herdar escape lateral */
+.rc2-feature-band {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+@media (max-width: 980px) {
+  .rc2-overview-focus {
+    margin-top: 0 !important;
+  }
+}
+
+
+/* =========================================================
+   PATCH · remove faixa acima do hero e corrige scientific focus
+   ========================================================= */
+
+/* aproxima o hero do navbar, removendo a faixa clara acima da imagem */
+.rc2-overview-fold {
+  margin-top: -1.55rem !important;
+}
+
+/* garante leitura confortável sem perder o primeiro frame */
+.rc2-overview-media {
+  min-height: clamp(355px, 44svh, 480px) !important;
+}
+
+/* mantém a imagem visualmente cheia logo abaixo do navbar */
+.rc2-overview-media-inner {
+  padding-top: clamp(2.2rem, 4vw, 3.1rem) !important;
+  padding-bottom: clamp(5rem, 7.5vw, 6rem) !important;
+}
+
+/* dá mais respiro à transição branca abaixo da onda */
+.rc2-overview-content-wrap {
+  padding-top: clamp(0.9rem, 1.25vw, 1.15rem) !important;
+}
+
+/* evita que o texto do foco científico suba demais e seja cortado */
+.rc2-overview-focus {
+  margin-top: clamp(-1.6rem, -1.8vw, -0.45rem) !important;
+  padding-top: 0.8rem !important;
+}
+
+.rc2-overview-focus p {
+  line-height: 1.34 !important;
+}
+
+/* evita qualquer recorte lateral ou escape do bloco seguinte */
+.rc2-feature-band {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+}
+
+@media (max-width: 980px) {
+  .rc2-overview-fold {
+    margin-top: -1.1rem !important;
+  }
+
+  .rc2-overview-focus {
+    margin-top: 0 !important;
+    padding-top: 0.35rem !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .rc2-overview-fold {
+    margin-top: -0.9rem !important;
+  }
+
+  .rc2-overview-media {
+    min-height: calc(100svh - 68px) !important;
+  }
+}
+
 </style>
 ```
 
 ```{=html}
-<section class="rc2-home-hero" id="inicio" aria-label="RedeC2 homepage hero">
-  <div class="rc2-home-hero-inner">
+<section class="rc2-overview-fold" id="inicio" aria-label="RedeC2 homepage overview">
+  <div class="rc2-overview-media" aria-label="RedeC2 image banner">
+    <div class="rc2-overview-media-inner">
+      <h1 class="rc2-overview-brand">
+        <span class="line-rede">Rede</span>
+        <span class="line-c2">C2</span>
+      </h1>
 
-    <div class="rc2-home-brand">
-      <div class="rc2-home-copy">
-        <h1 class="rc2-home-title">
-          <span class="line-rede">Rede</span> C2
-        </h1>
+      <div class="rc2-overview-title-rule" aria-hidden="true"></div>
 
-        <div class="rc2-title-rule" aria-hidden="true"></div>
+      <h2 class="rc2-overview-image-title">The RedeC2 network</h2>
 
-        <p class="rc2-home-subtitle">
-          Rede C2 - Permanent plots for understanding Caatinga and Cerrado dynamics across Brazil's seasonally dry ecosystems.
+      <p class="rc2-overview-image-subtitle">
+        Permanent plots for understanding Caatinga and Cerrado dynamics across Brazil's seasonally dry ecosystems.
+      </p>
+    </div>
+
+    <svg class="rc2-overview-wave" viewBox="0 0 1440 145" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="currentColor" d="M0,118 C170,138 330,110 515,100 C690,90 820,134 985,86 C1160,35 1285,48 1440,8 L1440,145 L0,145 Z"></path>
+    </svg>
+  </div>
+
+  <div class="rc2-overview-content-wrap" id="rede">
+    <div class="rc2-overview-content">
+      <div class="rc2-overview-main">
+        <p class="rc2-overview-lead">
+          <strong>RedeC2</strong> is a collaborative research network dedicated to
+          understanding the multifunctional dynamics of Brazil's seasonally dry
+          tropical ecosystems, especially Caatinga and Cerrado.
+        </p>
+
+        <p>
+          Bringing together researchers from multiple institutions, the network
+          integrates permanent plots, floristic inventories, functional traits and
+          environmental data to investigate how plant communities are structured
+          and how they respond to climatic seasonality, soil conditions and
+          landscape context.
+        </p>
+
+        <p>
+          Across different sites and regions, RedeC2 studies how natural gradients
+          and human-driven disturbances influence vegetation structure,
+          successional pathways and the spatial turnover of species.
         </p>
       </div>
-    </div>
 
-  </div>
-</section>
-```
-
-```{=html}
-<section class="rc2-section" id="rede">
-  <div class="rc2-section-title"><h2>The RedeC2 network</h2></div>
-
-  <div class="rc2-grid-2">
-    <div>
-      <p class="rc2-lead">
-        <strong>RedeC2</strong> is a collaborative research network dedicated to
-        understanding the multifunctional dynamics of Brazil's seasonally dry
-        tropical ecosystems, especially Caatinga and Cerrado.
-      </p>
-
-      <p>
-        Bringing together researchers from multiple institutions, the network
-        integrates permanent plots, floristic inventories, functional traits and
-        environmental data to investigate how plant communities are structured
-        and how they respond to climatic seasonality, soil conditions and
-        landscape context.
-      </p>
-
-      <p>
-        Across different sites and regions, RedeC2 studies how natural gradients
-        and human-driven disturbances influence vegetation structure,
-        successional pathways and the spatial turnover of species.
-      </p>
-    </div>
-
-    <div class="rc2-card">
-      <h3>Scientific focus</h3>
-      <p>
-        RedeC2 connects long-term vegetation monitoring, ecological gradients,
-        taxonomic knowledge and reproducible workflows to support synthesis
-        across Caatinga and Cerrado sites.
-      </p>
-
-      <div class="rc2-pills" style="margin-top:1rem;">
-        <span class="rc2-pill rc2-pill--green">Permanent plots</span>
-        <span class="rc2-pill rc2-pill--red">Plant dynamics</span>
-        <span class="rc2-pill rc2-pill--ochre">Dry tropics</span>
-        <span class="rc2-pill">Synthesis</span>
-      </div>
+      <aside class="rc2-overview-focus">
+        <h3>Scientific focus</h3>
+        <p>
+          RedeC2 connects long-term vegetation monitoring, ecological gradients,
+          taxonomic knowledge and reproducible workflows to support synthesis
+          across Caatinga and Cerrado sites.
+        </p>
+      </aside>
     </div>
   </div>
 </section>
@@ -933,7 +1368,7 @@ iframe {
     </article>
 
     <article class="rc2-feature-photo">
-      <img src="figures/itirapina.jpg" alt="Dry ecosystem field site" loading="lazy" decoding="async">
+      <img src="figures/gruta_brejoes_dc.jpg" alt="Dry ecosystem field site" loading="lazy" decoding="async">
     </article>
 
     <article class="rc2-feature-panel rc2-feature-panel--products" aria-label="Synthesis">
@@ -998,15 +1433,23 @@ iframe {
 
     <p>
       The network dialogues with initiatives such as
-      <a href="https://blogs.ed.ac.uk/seco-project/" target="_blank" rel="noopener">SECO</a>,
-      <a href="COLOCAR_LINK_CORRETO_PHENOCHANGE_AQUI" target="_blank" rel="noopener">PhenoChange</a> and
-      <a href="https://afritron.org/" target="_blank" rel="noopener">AfriTRON</a>.
+      <a href="COLOCAR_LINK_CORRETO_SECO_AQUI" target="_blank" rel="noopener">SECO</a>,
+      <a href="COLOCAR_LINK_CORRETO_PHENOCHANGE_AQUI" target="_blank" rel="noopener">PhenoChange</a>,
+      <a href="COLOCAR_LINK_CORRETO_AFRITON_AQUI" target="_blank" rel="noopener">AfriTRON</a>,
+      <a href="COLOCAR_LINK_CORRETO_EPHENOLOGY_AQUI" target="_blank" rel="noopener">e-phenology</a>,
+      <a href="COLOCAR_LINK_CORRETO_FAPESP_NORDESTE_AQUI" target="_blank" rel="noopener">FAPESP Nordeste</a>
+      and
+      <a href="COLOCAR_LINK_CORRETO_CBIOCLIMA_AQUI" target="_blank" rel="noopener">CBioClima</a>.
       These connections help situate RedeC2 within a wider effort to integrate
       field ecology, vegetation monitoring, phenology, functional traits,
       carbon dynamics and environmental data across sites and regions.
     </p>
 
     <p>
+      Edit the partner links directly in this section of the file by replacing
+      the placeholders that start with <code>COLOCAR_LINK_CORRETO_...</code>.
+      The visible names are already linkable; only the <code>href</code>
+      addresses need to be updated with the final URLs.
     </p>
   </div>
 </section>
