@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The RedeC2 Team – Rede C2</title>
+<title>Team - Rede C2 – Rede C2</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -305,12 +305,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content page-columns page-full column-page" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">The RedeC2 Team</h1>
+<h1 class="title">Team - Rede C2</h1>
+<p class="subtitle lead">People and institutional links across Rede C2</p>
 </div>
 
 
@@ -346,19 +347,27 @@ ul.task-list li input[type="checkbox"] {
   --rc2-shadow: 0 16px 34px rgba(0,0,0,0.12);
 
   --rc2-safe-gutter: clamp(0.75rem, 2.6vw, 2.25rem);
-  --rc2-content-max: 1260px;
+  --rc2-content-max: 1180px;
   --rc2-wide-max: 1480px;
-  --rc2-xl-max: 1560px;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
 html,
 body {
   width: 100% !important;
   max-width: 100% !important;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   scroll-behavior: smooth;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden !important;
+  }
 }
 
 body {
@@ -374,8 +383,17 @@ body {
   font-family: 'Montserrat', Arial, sans-serif;
 }
 
-img, video, iframe, svg, canvas { max-width: 100%; }
-a { color: var(--rc2-red); }
+img,
+video,
+iframe,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+a {
+  color: var(--rc2-red);
+}
 
 #quarto-content,
 #quarto-document-content,
@@ -384,8 +402,20 @@ main.content,
 .page-columns,
 .page-columns .content {
   min-width: 0 !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
+  max-width: none !important;
+  overflow-x: visible !important;
+}
+
+#quarto-content,
+#quarto-document-content,
+main,
+main.content,
+.page-columns,
+.page-columns .content {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 main.content {
@@ -418,27 +448,36 @@ main.content {
 }
 
 /* =========================================================
-   HERO — PADRÃO HOME / PROTOCOLS
+   HERO · clean, full frame
    ========================================================= */
 .rc2-page-hero {
   position: relative;
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  min-height: clamp(620px, 88vh, 880px);
+  left: 50%;
+  right: 50%;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  min-height: calc(100svh - 88px);
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
   display: grid;
   align-items: center;
   overflow: hidden;
   isolation: isolate;
   color: #fff;
   background:
-    radial-gradient(circle at 82% 14%, rgba(217,154,39,0.38), transparent 28%),
-    radial-gradient(circle at 18% 82%, rgba(169,54,50,0.26), transparent 36%),
-    linear-gradient(108deg, rgba(23,23,23,0.84) 0%, rgba(46,59,36,0.82) 42%, rgba(110,31,29,0.72) 100%),
+    linear-gradient(108deg, rgba(23,23,23,0.58) 0%, rgba(46,59,36,0.38) 48%, rgba(110,31,29,0.25) 100%),
     url("../figures/c2_bg.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.page-columns .content > .rc2-page-hero,
+#quarto-document-content > .rc2-page-hero,
+main.content > .rc2-page-hero {
+  grid-column: screen-start / screen-end !important;
 }
 
 .rc2-page-hero::before {
@@ -447,205 +486,78 @@ main.content {
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(180deg, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.10) 46%, rgba(0,0,0,0.56) 100%),
-    repeating-linear-gradient(135deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 16px);
-}
-
-.rc2-page-hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  z-index: 1;
-  background: linear-gradient(180deg, var(--rc2-ochre) 0%, var(--rc2-red) 50%, var(--rc2-green) 100%);
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.18) 0%,
+      rgba(0,0,0,0.05) 48%,
+      rgba(0,0,0,0.34) 100%
+    );
+  pointer-events: none;
 }
 
 .rc2-page-hero-inner {
   position: relative;
   z-index: 2;
-  width: min(1360px, calc(100% - var(--rc2-safe-gutter) * 2));
+  width: min(1120px, calc(100% - var(--rc2-safe-gutter) * 2));
   margin: 0 auto;
-  padding: clamp(4.8rem, 8vw, 7.5rem) 0 clamp(3rem, 5vw, 4.5rem);
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(240px, 0.36fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: center;
-}
-
-.rc2-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.36rem 0.82rem;
-  border-radius: 999px;
-  background: rgba(246,241,232,0.12);
-  border: 1px solid rgba(246,241,232,0.24);
-  color: var(--rc2-ochre);
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(0.62rem, 0.9vw, 0.76rem);
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  animation: fadeSlideUp 0.7s ease both;
-}
-
-.rc2-kicker::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--rc2-ochre);
-  box-shadow: 0 0 0 3px rgba(217,154,39,0.28);
-}
-
-.rc2-page-hero h1 {
-  margin: 0.7rem 0 0;
-  max-width: 980px;
-  color: #fff;
-  font-size: clamp(4rem, 10vw, 9.6rem);
-  line-height: 0.78;
-  font-weight: 900;
-  letter-spacing: -0.10em;
-  text-transform: uppercase;
-  text-shadow: 0 10px 42px rgba(0,0,0,0.54);
-  animation: fadeSlideUp 0.75s 0.1s ease both;
-}
-
-.rc2-title-line {
-  display: block;
-}
-
-.rc2-title-line:nth-child(2) {
-  margin-left: clamp(1.6rem, 8vw, 6.8rem);
+  padding: clamp(2.4rem, 6vh, 4.5rem) 0;
 }
 
 .rc2-title-rule {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 1.05rem 0 1.25rem;
-  animation: fadeSlideUp 0.75s 0.2s ease both;
+  width: min(300px, 46vw);
+  height: 5px;
+  margin: 0 0 clamp(1rem, 2vw, 1.35rem);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--rc2-ochre), rgba(246,241,232,0.24));
+  animation: fadeSlideUp 0.75s 0.08s ease both;
 }
 
-.rc2-title-rule::before {
-  content: "";
-  flex: 0 0 clamp(36px, 5vw, 72px);
-  height: 3px;
-  background: var(--rc2-ochre);
-  border-radius: 2px;
+.rc2-page-hero h1 {
+  margin: 0;
+  max-width: 1000px;
+  color: #fff;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(3.6rem, 8.4vw, 8.2rem);
+  line-height: 0.88;
+  font-weight: 900;
+  letter-spacing: -0.085em;
+  text-transform: uppercase;
+  text-shadow: 0 12px 36px rgba(0,0,0,0.50);
+  animation: fadeSlideUp 0.75s 0.16s ease both;
 }
 
-.rc2-title-rule::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(255,255,255,0.20);
+.rc2-page-hero h1 span {
+  display: block;
+  color: var(--rc2-ochre);
 }
 
 .rc2-page-hero p {
-  max-width: 760px;
-  margin: 0;
-  color: rgba(255,253,247,0.94);
+  max-width: 860px;
+  margin: clamp(1rem, 2vw, 1.25rem) 0 0;
+  color: rgba(255,253,247,0.97);
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(1.05rem, 1.9vw, 1.38rem);
-  line-height: 1.58;
-  text-shadow: 0 3px 18px rgba(0,0,0,0.42);
-  animation: fadeSlideUp 0.75s 0.28s ease both;
-}
-
-/* Keywords slim */
-.rc2-keywords {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin: 1.2rem 0 0;
-  animation: fadeSlideUp 0.75s 0.36s ease both;
-}
-
-.rc2-keyword {
-  display: inline-flex;
-  align-items: center;
-  min-height: 36px;
-  padding: 0.36rem 0.78rem;
-  border-radius: 999px;
-  background: rgba(23,23,23,0.46);
-  border: 1px solid rgba(246,241,232,0.26);
-  color: rgba(255,253,247,0.93);
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(0.62rem, 0.78vw, 0.72rem);
-  font-weight: 800;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
-}
-
-.rc2-keyword--red   { border-left: 4px solid var(--rc2-red); }
-.rc2-keyword--green { border-left: 4px solid var(--rc2-green-soft); }
-.rc2-keyword--ochre { border-left: 4px solid var(--rc2-ochre); }
-.rc2-keyword--cream { border-left: 4px solid var(--rc2-cream); }
-
-/* Logo card */
-.rc2-hero-logo-card {
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  padding: clamp(1.1rem, 2vw, 1.8rem);
-  border-radius: 28px;
-  background: rgba(255,253,247,0.08);
-  border: 1px solid rgba(246,241,232,0.18);
-  box-shadow:
-    0 22px 50px rgba(0,0,0,0.20),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  animation: fadeSlideUp 0.75s 0.18s ease both;
-}
-
-.rc2-hero-logo-card img {
-  width: clamp(94px, 10vw, 150px);
-  filter: drop-shadow(0 12px 26px rgba(0,0,0,0.36));
-}
-
-.rc2-hero-logo-card-divider {
-  height: 1px;
-  background: rgba(246,241,232,0.15);
-}
-
-.rc2-hero-logo-card p {
-  margin: 0;
-  color: rgba(255,253,247,0.78);
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(0.86rem, 1.15vw, 0.98rem);
-  line-height: 1.5;
+  font-size: clamp(1.18rem, 2.15vw, 1.9rem);
+  line-height: 1.25;
+  font-weight: 700;
+  text-shadow: 0 4px 18px rgba(0,0,0,0.48);
+  animation: fadeSlideUp 0.75s 0.24s ease both;
 }
 
 /* =========================================================
-   SEÇÕES
+   SECTIONS
    ========================================================= */
 .rc2-section,
 .content-card {
   width: min(var(--rc2-content-max), calc(100% - var(--rc2-safe-gutter) * 2));
   margin: 2.4rem auto 0;
-  padding: clamp(1.25rem, 3vw, 2.4rem);
+  padding: clamp(1.35rem, 3vw, 2.5rem);
   background:
     radial-gradient(circle at 100% 0%, rgba(217,154,39,0.08), transparent 32%),
-    linear-gradient(180deg, rgba(255,253,247,0.96), rgba(246,241,232,0.88));
+    linear-gradient(180deg, rgba(255,253,247,0.97), rgba(246,241,232,0.90));
   border: 1px solid rgba(98,106,56,0.18);
   border-top: 5px solid var(--rc2-green);
   box-shadow: var(--rc2-shadow);
   overflow: hidden;
-}
-
-.rc2-section--wide {
-  width: min(var(--rc2-wide-max), calc(100% - var(--rc2-safe-gutter) * 2));
 }
 
 .rc2-section-title {
@@ -668,6 +580,7 @@ main.content {
   padding-bottom: 0.45rem;
   border-bottom: 1px solid rgba(98,106,56,0.18);
   color: var(--rc2-red);
+  font-family: 'Montserrat', Arial, sans-serif;
   font-size: clamp(1.25rem, 3vw, 2.1rem);
   font-weight: 900;
   line-height: 1.05;
@@ -675,9 +588,13 @@ main.content {
   text-transform: uppercase;
 }
 
+.rc2-text {
+  max-width: 980px;
+}
+
 .rc2-lead,
 .lead {
-  margin: 0 0 1.25rem 0 !important;
+  margin: 0 0 1.15rem 0 !important;
   padding-left: 1rem;
   border-left: 5px solid var(--rc2-ochre);
   color: #191711 !important;
@@ -690,63 +607,22 @@ main.content {
 .content-card p {
   color: var(--rc2-ink);
   font-size: 0.98rem;
-  line-height: 1.72;
-}
-
-.rc2-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 1rem;
-}
-
-.rc2-card {
-  position: relative;
-  min-width: 0;
-  padding: clamp(1rem, 2vw, 1.35rem);
-  border-radius: 20px;
-  background: rgba(255,253,247,0.84);
-  border: 1px solid var(--rc2-line);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.065);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-}
-
-.rc2-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(169,54,50,0.30);
-  box-shadow: 0 14px 26px rgba(0,0,0,0.10);
-}
-
-.rc2-card h3 {
-  margin: 0 0 0.7rem 0;
-  color: var(--rc2-green-dark);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.11em;
-  line-height: 1.25;
-  text-transform: uppercase;
-}
-
-.rc2-card p {
-  margin: 0;
-  color: var(--rc2-muted);
-  font-size: 0.92rem;
-  line-height: 1.6;
+  line-height: 1.75;
 }
 
 /* =========================================================
-   TEAM
+   TEAM CONTROLS
    ========================================================= */
 .team-controls {
   width: min(var(--rc2-content-max), calc(100% - var(--rc2-safe-gutter) * 2));
   margin: 2.4rem auto 0;
-  padding: 1rem;
-  border-radius: 24px;
-  background: rgba(255,253,247,0.92);
+  padding: 0.95rem;
+  border-radius: 22px;
+  background: rgba(255,253,247,0.94);
   border: 1px solid rgba(98,106,56,0.18);
   box-shadow: 0 12px 26px rgba(0,0,0,0.10);
   display: grid;
-  grid-template-columns: minmax(260px,0.65fr) minmax(0,1fr);
+  grid-template-columns: minmax(260px,0.58fr) minmax(0,1fr);
   gap: 1rem;
   align-items: center;
 }
@@ -759,6 +635,11 @@ main.content {
   padding: 0.72rem 1rem;
   color: var(--rc2-ink);
   font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.team-search:focus {
+  outline: 2px solid rgba(169,54,50,0.22);
+  outline-offset: 2px;
 }
 
 .team-index {
@@ -794,11 +675,14 @@ main.content {
   color: rgba(103,95,85,0.45);
 }
 
+/* =========================================================
+   TEAM GRID
+   ========================================================= */
 .team-group {
   width: min(var(--rc2-wide-max), calc(100% - var(--rc2-safe-gutter) * 2));
-  margin: 1rem auto 0;
+  margin: 1.25rem auto 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 1rem;
 }
 
@@ -807,7 +691,7 @@ main.content {
   min-width: 0;
   overflow: hidden;
   border-radius: 24px;
-  background: linear-gradient(180deg, rgba(255,253,247,0.96), rgba(246,241,232,0.84));
+  background: linear-gradient(180deg, rgba(255,253,247,0.97), rgba(246,241,232,0.90));
   border: 1px solid rgba(98,106,56,0.18);
   box-shadow: 0 12px 26px rgba(0,0,0,0.10);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -821,8 +705,10 @@ main.content {
 
 .team-photo-wrap {
   position: relative;
-  height: clamp(260px,28vw,390px);
-  background: var(--rc2-green-soft);
+  height: clamp(230px, 23vw, 340px);
+  background:
+    radial-gradient(circle at 50% 20%, rgba(217,154,39,0.18), transparent 36%),
+    linear-gradient(180deg, rgba(98,106,56,0.18), rgba(246,241,232,0.92));
   overflow: hidden;
 }
 
@@ -835,6 +721,12 @@ main.content {
   transition: transform 0.8s ease;
 }
 
+.team-photo-default {
+  object-fit: contain;
+  padding: clamp(2rem, 4vw, 3rem);
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,0.12));
+}
+
 .team-card:hover .team-photo {
   transform: scale(1.035);
 }
@@ -843,8 +735,12 @@ main.content {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(23,23,23,0) 42%, rgba(23,23,23,0.62) 100%);
+  background: linear-gradient(180deg, rgba(23,23,23,0) 50%, rgba(23,23,23,0.28) 100%);
   pointer-events: none;
+}
+
+.team-photo-wrap-default::after {
+  display: none;
 }
 
 .team-letter {
@@ -855,10 +751,10 @@ main.content {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.15rem;
+  height: 2.15rem;
   border-radius: 999px;
-  background: rgba(46,59,36,0.82);
+  background: rgba(46,59,36,0.84);
   color: var(--rc2-ochre);
   font-family: 'Space Mono', monospace;
   font-weight: 900;
@@ -871,16 +767,16 @@ main.content {
 }
 
 .team-name {
-  margin: 0 0 0.4rem 0;
+  margin: 0;
   color: var(--rc2-green-dark);
-  font-size: clamp(1.05rem,1.4vw,1.35rem);
-  line-height: 1.08;
+  font-size: clamp(1.05rem,1.4vw,1.28rem);
+  line-height: 1.12;
   font-weight: 900;
   letter-spacing: -0.04em;
 }
 
 .team-affiliation {
-  margin: 0.6rem 0 0 0 !important;
+  margin: 0.55rem 0 0 0 !important;
   color: var(--rc2-muted) !important;
   font-size: 0.86rem !important;
   line-height: 1.45 !important;
@@ -928,7 +824,7 @@ main.content {
 }
 
 /* =========================================================
-   ANIMAÇÕES
+   ANIMATION
    ========================================================= */
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -937,7 +833,7 @@ main.content {
 
 .reveal-ready {
   opacity: 0;
-  transform: translateY(42px);
+  transform: translateY(38px);
   transition: opacity 0.72s ease, transform 0.72s cubic-bezier(.2,.7,.2,1);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
@@ -957,15 +853,15 @@ main.content {
 }
 
 /* =========================================================
-   RESPONSIVO
+   RESPONSIVE
    ========================================================= */
-@media (max-width: 1180px) {
-  .rc2-page-hero-inner {
-    grid-template-columns: 1fr;
+@media (max-height: 760px) and (min-width: 900px) {
+  .rc2-page-hero h1 {
+    font-size: clamp(3.2rem, 7.2vw, 6.8rem);
   }
 
-  .rc2-hero-logo-card {
-    max-width: 420px;
+  .rc2-page-hero p {
+    font-size: clamp(1.05rem, 1.85vw, 1.6rem);
   }
 }
 
@@ -985,15 +881,15 @@ main.content {
 
 @media (max-width: 760px) {
   .rc2-page-hero {
-    min-height: auto;
+    min-height: calc(100svh - 76px);
   }
 
   .rc2-page-hero h1 {
-    font-size: clamp(3.3rem, 17vw, 6rem);
+    font-size: clamp(3rem, 15vw, 5.4rem);
   }
 
-  .rc2-title-line:nth-child(2) {
-    margin-left: 0;
+  .team-group {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
   }
 
   .rc2-section-title {
@@ -1011,84 +907,63 @@ main.content {
   }
 }
 </style>
-<section class="rc2-page-hero page-columns page-full" id="team-hero" aria-label="RedeC2 team hero">
-  <div class="rc2-page-hero-inner page-columns page-full">
+<section class="rc2-page-hero" id="team-hero" aria-label="RedeC2 team">
+  <div class="rc2-page-hero-inner">
+    <div class="rc2-title-rule" aria-hidden="true"></div>
 
-    <div>
-      <div class="rc2-kicker">People · Institutions · Collaboration</div>
+    <h1>
+      RedeC2
+      <span>team</span>
+    </h1>
 
-      <h1>
-        <span class="rc2-title-line">RedeC2</span>
-        <span class="rc2-title-line">team</span>
-      </h1>
-
-      <div class="rc2-title-rule" aria-hidden="true"></div>
-
-      <p>
-        A distributed scientific network connecting researchers, students and
-        institutions working on Caatinga and Cerrado monitoring.
-      </p>
-
-      <div class="rc2-keywords" aria-label="Team keywords">
-        <span class="rc2-keyword rc2-keyword--green">Researchers</span>
-        <span class="rc2-keyword rc2-keyword--red">Students</span>
-        <span class="rc2-keyword rc2-keyword--ochre">Institutions</span>
-        <span class="rc2-keyword rc2-keyword--cream">Collaboration</span>
-      </div>
-    </div>
-
-    <aside class="rc2-hero-logo-card" aria-label="RedeC2 team identity">
-      <img src="../figures/logoc2.png" alt="RedeC2 logo">
-      <div class="rc2-hero-logo-card-divider"></div>
-      <p>People, profiles and institutional links across the Rede C2 network.</p>
-    </aside>
-
+    <p>
+      People and institutional links supporting Caatinga and Cerrado monitoring
+      across Rede C2.
+    </p>
   </div>
 </section>
 <section class="rc2-section" id="team-overview">
-  <div class="rc2-section-title"><h2 class="anchored">Scientific network</h2></div>
+  <div class="rc2-section-title"><h2 class="anchored">People and institutions</h2></div>
 
-  <div class="rc2-grid-2">
+  <div class="rc2-text">
     <p class="rc2-lead">
-      The RedeC2 team brings together people working on long-term vegetation
-      monitoring, floristics, functional traits, restoration, biodiversity
-      synthesis and dry ecosystem conservation.
+      Rede C2 brings together researchers, students and institutions working on
+      long-term vegetation monitoring, floristics, functional traits,
+      restoration, biodiversity synthesis and conservation of seasonally dry
+      ecosystems.
     </p>
 
-    <div class="rc2-card">
-      <h3 class="anchored">Use the search</h3>
-      <p>
-        Filter by name or institution, or use the alphabet index to jump
-        through the team list.
-      </p>
-    </div>
+    <p>
+      The team list presents contact links, academic profiles and institutional
+      affiliations associated with the network.
+    </p>
   </div>
 </section>
 <div class="cell">
 <div class="cell-output-display">
-<div class="team-controls"><input type="text" id="team-search" class="team-search" placeholder="Search by name or institution..." aria-label="Search team by name or institution"><div class="team-index" aria-label="Alphabetical team index"><span>A</span><span>B</span><a href="#letter-C">C</a><a href="#letter-D">D</a><span>E</span><a href="#letter-F">F</a><a href="#letter-G">G</a><span>H</span><a href="#letter-I">I</a><a href="#letter-J">J</a><a href="#letter-K">K</a><span>L</span><a href="#letter-M">M</a><span>N</span><span>O</span><a href="#letter-P">P</a><span>Q</span><a href="#letter-R">R</a><span>S</span><a href="#letter-T">T</a><span>U</span><span>V</span><span>W</span><span>X</span><span>Y</span><span>Z</span></div></div><div class="team-empty" id="team-empty">No team members match your search.</div><section class="team-group" aria-label="RedeC2 team members"><article class="team-card" data-name="camilla farrapo" data-institution="universidade federal de lavras" id="letter-C"><div class="team-photo-wrap"><span class="team-letter">C</span><img src="../_input_data/C2_team_images/default.jpg" alt="Camilla Farrapo" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Camilla Farrapo</h3><div class="team-icons"><a class="icon-link" href="mailto:camila.farrapo@ufla.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal de Lavras</p></div></article>
-<article class="team-card" data-name="danilo neves" data-institution="universidade federal de minas gerais" id="letter-D"><div class="team-photo-wrap"><span class="team-letter">D</span><img src="../_input_data/C2_team_images/danilo_neves.jpg" alt="Danilo Neves" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Danilo Neves</h3><div class="team-icons"><a class="icon-link" href="mailto:dneves@icb.ufmg.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/7825577355355814" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0002-0855-4169" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?user=2uC73sEAAAAJ&amp;hl=en&amp;oi=ao" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a><a class="icon-link" href="https://daniloneves.org/" target="_blank" rel="noopener" aria-label="Website"><img src="../_input_data/icons/website.png" alt="Website"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal de Minas Gerais</p></div></article>
-<article class="team-card" data-name="desirée ramos" data-institution="universidade estadual paulista (rio claro)" id="letter-D"><div class="team-photo-wrap"><span class="team-letter">D</span><img src="../_input_data/C2_team_images/desiree_ramos.jpg" alt="Desirée Ramos" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Desirée Ramos</h3><div class="team-icons"><a class="icon-link" href="mailto:desibio@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/5643474167128596" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0002-3342-6708" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com.br/citations?user=-O9_YJUAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div><p class="team-affiliation">RedeC2 member at Universidade Estadual Paulista (Rio Claro)</p></div></article>
-<article class="team-card" data-name="domingos cardoso" data-institution="jardim botânico do rio de janeiro" id="letter-D"><div class="team-photo-wrap"><span class="team-letter">D</span><img src="../_input_data/C2_team_images/domingos_cardoso.jpg" alt="Domingos Cardoso" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Domingos Cardoso</h3><div class="team-icons"><a class="icon-link" href="mailto:cardosobot@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/2228981567893077" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0001-7072-2656" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?authuser=1&amp;user=WwBiCQoAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div><p class="team-affiliation">RedeC2 member at Jardim Botânico do Rio de Janeiro</p></div></article>
-<article class="team-card" data-name="felipe carvalho" data-institution="universidade federal de lavras" id="letter-F"><div class="team-photo-wrap"><span class="team-letter">F</span><img src="../_input_data/C2_team_images/default.jpg" alt="Felipe Carvalho" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Felipe Carvalho</h3><div class="team-icons"><a class="icon-link" href="mailto:carvalhoaraujo_f@yahoo.com.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal de Lavras</p></div></article>
-<article class="team-card" data-name="giulia cavalcanti ottino" data-institution="jardim botânico do rio de janeiro" id="letter-G"><div class="team-photo-wrap"><span class="team-letter">G</span><img src="../_input_data/C2_team_images/giulia_cavalcanti_ottino.jpg" alt="Giulia Cavalcanti Ottino" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Giulia Cavalcanti Ottino</h3><div class="team-icons"><a class="icon-link" href="mailto:gillescavalcanti@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/0819473317412079" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0009-0001-4352-1733" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a></div><p class="team-affiliation">RedeC2 member at Jardim Botânico do Rio de Janeiro</p></div></article>
-<article class="team-card" data-name="imma oliveras menor" data-institution="institut de recherche pour le développement" id="letter-I"><div class="team-photo-wrap"><span class="team-letter">I</span><img src="../_input_data/C2_team_images/default.jpg" alt="Imma Oliveras Menor" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Imma Oliveras Menor</h3><div class="team-icons"><a class="icon-link" href="mailto:imma.oliverasmenor@ird.fr" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Institut de Recherche pour le Développement</p></div></article>
-<article class="team-card" data-name="italo coutinho" data-institution="universidade federal de ceará" id="letter-I"><div class="team-photo-wrap"><span class="team-letter">I</span><img src="../_input_data/C2_team_images/default.jpg" alt="Italo Coutinho" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Italo Coutinho</h3><div class="team-icons"><a class="icon-link" href="mailto:cottacoutinho@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal de Ceará</p></div></article>
-<article class="team-card" data-name="jarcilene silva de almeida" data-institution="universidade federal de pernambuco" id="letter-J"><div class="team-photo-wrap"><span class="team-letter">J</span><img src="../_input_data/C2_team_images/default.jpg" alt="Jarcilene Silva de Almeida" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Jarcilene Silva de Almeida</h3><div class="team-icons"><a class="icon-link" href="mailto:jarcilene.almeida@ufpe.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/3305390900674832" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0002-7118-7090" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal de Pernambuco</p></div></article>
-<article class="team-card" data-name="jhonathan oliveira silva" data-institution="universidade federal do vale do são francisco" id="letter-J"><div class="team-photo-wrap"><span class="team-letter">J</span><img src="../_input_data/C2_team_images/jhonathan_oliveira_silva.jpg" alt="Jhonathan Oliveira Silva" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Jhonathan Oliveira Silva</h3><div class="team-icons"><a class="icon-link" href="mailto:jhonathanos@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/7940260936852045" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0001-9893-7501" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?user=v9KshqUAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal do Vale do São Francisco</p></div></article>
-<article class="team-card" data-name="kyle dexter" data-institution="universita di torino" id="letter-K"><div class="team-photo-wrap"><span class="team-letter">K</span><img src="../_input_data/C2_team_images/kyle_dexter.jpg" alt="Kyle Dexter" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Kyle Dexter</h3><div class="team-icons"><a class="icon-link" href="mailto:kgdexter@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universita di Torino</p></div></article>
-<article class="team-card" data-name="magna soelma" data-institution="embrapa" id="letter-M"><div class="team-photo-wrap"><span class="team-letter">M</span><img src="../_input_data/C2_team_images/default.jpg" alt="Magna Soelma" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Magna Soelma</h3><div class="team-icons"><a class="icon-link" href="mailto:magna.moura@embrapa.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at EMBRAPA</p></div></article>
-<article class="team-card" data-name="maria antonia carniello" data-institution="universidade estadual de mato grosso (cáceres)" id="letter-M"><div class="team-photo-wrap"><span class="team-letter">M</span><img src="../_input_data/C2_team_images/default.jpg" alt="Maria Antonia Carniello" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Maria Antonia Carniello</h3><div class="team-icons"><a class="icon-link" href="mailto:carniello@unemat.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universidade Estadual de Mato Grosso (Cáceres)</p></div></article>
-<article class="team-card" data-name="mauro guida santos" data-institution="universidade federal de pernambuco" id="letter-M"><div class="team-photo-wrap"><span class="team-letter">M</span><img src="../_input_data/C2_team_images/mauro_guida_santos.jpg" alt="Mauro Guida Santos" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Mauro Guida Santos</h3><div class="team-icons"><a class="icon-link" href="mailto:mauro.gsantos@ufpe.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/6196357646157819" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0001-5146-4591" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?user=Mel-KBQAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal de Pernambuco</p></div></article>
-<article class="team-card" data-name="moabe fernandes" data-institution="royal botanic gardens, kew" id="letter-M"><div class="team-photo-wrap"><span class="team-letter">M</span><img src="../_input_data/C2_team_images/default.jpg" alt="Moabe Fernandes" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Moabe Fernandes</h3><div class="team-icons"><a class="icon-link" href="mailto:moabeffernandes@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Royal Botanic Gardens, Kew</p></div></article>
-<article class="team-card" data-name="mário marcos do espírito santo" data-institution="universidade de estadual montes claros" id="letter-M"><div class="team-photo-wrap"><span class="team-letter">M</span><img src="../_input_data/C2_team_images/default.jpg" alt="Mário Marcos do Espírito Santo" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Mário Marcos do Espírito Santo</h3><div class="team-icons"><a class="icon-link" href="mailto:marioesanto@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universidade de Estadual Montes Claros</p></div></article>
-<article class="team-card" data-name="patricia morellato" data-institution="universidade estadual paulista (rio claro)" id="letter-P"><div class="team-photo-wrap"><span class="team-letter">P</span><img src="../_input_data/C2_team_images/default.jpg" alt="Patricia Morellato" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Patricia Morellato</h3><div class="team-icons"><a class="icon-link" href="mailto:patricia.morellato@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universidade Estadual Paulista (Rio Claro)</p></div></article>
-<article class="team-card" data-name="priscila oliveira" data-institution="universidade de estadual montes claros" id="letter-P"><div class="team-photo-wrap"><span class="team-letter">P</span><img src="../_input_data/C2_team_images/default.jpg" alt="Priscila Oliveira" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Priscila Oliveira</h3><div class="team-icons"><a class="icon-link" href="mailto:priscilaoliveira12366@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universidade de Estadual Montes Claros</p></div></article>
-<article class="team-card" data-name="priscyla maria silva rodrigues" data-institution="universidade federal do vale do são francisco" id="letter-P"><div class="team-photo-wrap"><span class="team-letter">P</span><img src="../_input_data/C2_team_images/default.jpg" alt="Priscyla Maria Silva Rodrigues" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Priscyla Maria Silva Rodrigues</h3><div class="team-icons"><a class="icon-link" href="mailto:priscylamsr@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/6026636494107330" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0003-4508-0131" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?user=PDtOK2EAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal do Vale do São Francisco</p></div></article>
-<article class="team-card" data-name="renata françoso" data-institution="serviço florestal brasileiro" id="letter-R"><div class="team-photo-wrap"><span class="team-letter">R</span><img src="../_input_data/C2_team_images/default.jpg" alt="Renata Françoso" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Renata Françoso</h3><div class="team-icons"><a class="icon-link" href="mailto:renata.francoso@florestal.gov.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Serviço Florestal Brasileiro</p></div></article>
-<article class="team-card" data-name="renato vanderlei" data-institution="universidade federal de pernambuco" id="letter-R"><div class="team-photo-wrap"><span class="team-letter">R</span><img src="../_input_data/C2_team_images/default.jpg" alt="Renato Vanderlei" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Renato Vanderlei</h3><div class="team-icons"><a class="icon-link" href="mailto:renato.vanderlei@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal de Pernambuco</p></div></article>
-<article class="team-card" data-name="rubens santos" data-institution="universidade federal de lavras" id="letter-R"><div class="team-photo-wrap"><span class="team-letter">R</span><img src="../_input_data/C2_team_images/default.jpg" alt="Rubens Santos" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Rubens Santos</h3><div class="team-icons"><a class="icon-link" href="mailto:rubensmanoel@ufla.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at Universidade Federal de Lavras</p></div></article>
-<article class="team-card" data-name="toby pennington" data-institution="university of exeter" id="letter-T"><div class="team-photo-wrap"><span class="team-letter">T</span><img src="../_input_data/C2_team_images/default.jpg" alt="Toby Pennington" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Toby Pennington</h3><div class="team-icons"><a class="icon-link" href="mailto:TPennington@rbge.org.uk" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div><p class="team-affiliation">RedeC2 member at University of Exeter</p></div></article></section>
+<div class="team-controls"><input type="text" id="team-search" class="team-search" placeholder="Search by name or institution..." aria-label="Search team by name or institution"><div class="team-index" aria-label="Alphabetical team index"><span>A</span><span>B</span><a href="#letter-C">C</a><a href="#letter-D">D</a><span>E</span><a href="#letter-F">F</a><a href="#letter-G">G</a><span>H</span><a href="#letter-I">I</a><a href="#letter-J">J</a><a href="#letter-K">K</a><span>L</span><a href="#letter-M">M</a><span>N</span><span>O</span><a href="#letter-P">P</a><span>Q</span><a href="#letter-R">R</a><span>S</span><a href="#letter-T">T</a><span>U</span><span>V</span><span>W</span><span>X</span><span>Y</span><span>Z</span></div></div><div class="team-empty" id="team-empty">No team members match your search.</div><section class="team-group" aria-label="RedeC2 team members"><article class="team-card" data-name="camilla farrapo" data-institution="universidade federal de lavras" id="letter-C"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">C</span><img src="../figures/redec2_hex_sticker_.png" alt="Camilla Farrapo" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Camilla Farrapo</h3><p class="team-affiliation">Universidade Federal de Lavras</p><div class="team-icons"><a class="icon-link" href="mailto:camila.farrapo@ufla.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="danilo neves" data-institution="universidade federal de minas gerais" id="letter-D"><div class="team-photo-wrap"><span class="team-letter">D</span><img src="../_input_data/C2_team_images/danilo_neves.jpg" alt="Danilo Neves" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Danilo Neves</h3><p class="team-affiliation">Universidade Federal de Minas Gerais</p><div class="team-icons"><a class="icon-link" href="mailto:dneves@icb.ufmg.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/7825577355355814" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0002-0855-4169" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?user=2uC73sEAAAAJ&amp;hl=en&amp;oi=ao" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a><a class="icon-link" href="https://daniloneves.org/" target="_blank" rel="noopener" aria-label="Website"><img src="../_input_data/icons/website.png" alt="Website"></a></div></div></article>
+<article class="team-card" data-name="desirée ramos" data-institution="universidade estadual paulista (rio claro)" id="letter-D"><div class="team-photo-wrap"><span class="team-letter">D</span><img src="../_input_data/C2_team_images/desiree_ramos.jpg" alt="Desirée Ramos" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Desirée Ramos</h3><p class="team-affiliation">Universidade Estadual Paulista (Rio Claro)</p><div class="team-icons"><a class="icon-link" href="mailto:desibio@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/5643474167128596" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0002-3342-6708" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com.br/citations?user=-O9_YJUAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div></div></article>
+<article class="team-card" data-name="domingos cardoso" data-institution="jardim botânico do rio de janeiro" id="letter-D"><div class="team-photo-wrap"><span class="team-letter">D</span><img src="../_input_data/C2_team_images/domingos_cardoso.jpg" alt="Domingos Cardoso" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Domingos Cardoso</h3><p class="team-affiliation">Jardim Botânico do Rio de Janeiro</p><div class="team-icons"><a class="icon-link" href="mailto:cardosobot@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/2228981567893077" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0001-7072-2656" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?authuser=1&amp;user=WwBiCQoAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div></div></article>
+<article class="team-card" data-name="felipe carvalho" data-institution="universidade federal de lavras" id="letter-F"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">F</span><img src="../figures/redec2_hex_sticker_.png" alt="Felipe Carvalho" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Felipe Carvalho</h3><p class="team-affiliation">Universidade Federal de Lavras</p><div class="team-icons"><a class="icon-link" href="mailto:carvalhoaraujo_f@yahoo.com.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="giulia cavalcanti ottino" data-institution="jardim botânico do rio de janeiro" id="letter-G"><div class="team-photo-wrap"><span class="team-letter">G</span><img src="../_input_data/C2_team_images/giulia_cavalcanti_ottino.jpg" alt="Giulia Cavalcanti Ottino" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Giulia Cavalcanti Ottino</h3><p class="team-affiliation">Jardim Botânico do Rio de Janeiro</p><div class="team-icons"><a class="icon-link" href="mailto:gillescavalcanti@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/0819473317412079" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0009-0001-4352-1733" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a></div></div></article>
+<article class="team-card" data-name="imma oliveras menor" data-institution="institut de recherche pour le développement" id="letter-I"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">I</span><img src="../figures/redec2_hex_sticker_.png" alt="Imma Oliveras Menor" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Imma Oliveras Menor</h3><p class="team-affiliation">Institut de Recherche pour le Développement</p><div class="team-icons"><a class="icon-link" href="mailto:imma.oliverasmenor@ird.fr" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="italo coutinho" data-institution="universidade federal de ceará" id="letter-I"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">I</span><img src="../figures/redec2_hex_sticker_.png" alt="Italo Coutinho" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Italo Coutinho</h3><p class="team-affiliation">Universidade Federal de Ceará</p><div class="team-icons"><a class="icon-link" href="mailto:cottacoutinho@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="jarcilene silva de almeida" data-institution="universidade federal de pernambuco" id="letter-J"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">J</span><img src="../figures/redec2_hex_sticker_.png" alt="Jarcilene Silva de Almeida" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Jarcilene Silva de Almeida</h3><p class="team-affiliation">Universidade Federal de Pernambuco</p><div class="team-icons"><a class="icon-link" href="mailto:jarcilene.almeida@ufpe.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/3305390900674832" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0002-7118-7090" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a></div></div></article>
+<article class="team-card" data-name="jhonathan oliveira silva" data-institution="universidade federal do vale do são francisco" id="letter-J"><div class="team-photo-wrap"><span class="team-letter">J</span><img src="../_input_data/C2_team_images/jhonathan_oliveira_silva.jpg" alt="Jhonathan Oliveira Silva" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Jhonathan Oliveira Silva</h3><p class="team-affiliation">Universidade Federal do Vale do São Francisco</p><div class="team-icons"><a class="icon-link" href="mailto:jhonathanos@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/7940260936852045" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0001-9893-7501" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?user=v9KshqUAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div></div></article>
+<article class="team-card" data-name="kyle dexter" data-institution="universita di torino" id="letter-K"><div class="team-photo-wrap"><span class="team-letter">K</span><img src="../_input_data/C2_team_images/kyle_dexter.jpg" alt="Kyle Dexter" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Kyle Dexter</h3><p class="team-affiliation">Universita di Torino</p><div class="team-icons"><a class="icon-link" href="mailto:kgdexter@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="magna soelma" data-institution="embrapa" id="letter-M"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">M</span><img src="../figures/redec2_hex_sticker_.png" alt="Magna Soelma" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Magna Soelma</h3><p class="team-affiliation">EMBRAPA</p><div class="team-icons"><a class="icon-link" href="mailto:magna.moura@embrapa.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="maria antonia carniello" data-institution="universidade estadual de mato grosso (cáceres)" id="letter-M"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">M</span><img src="../figures/redec2_hex_sticker_.png" alt="Maria Antonia Carniello" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Maria Antonia Carniello</h3><p class="team-affiliation">Universidade Estadual de Mato Grosso (Cáceres)</p><div class="team-icons"><a class="icon-link" href="mailto:carniello@unemat.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="mauro guida santos" data-institution="universidade federal de pernambuco" id="letter-M"><div class="team-photo-wrap"><span class="team-letter">M</span><img src="../_input_data/C2_team_images/mauro_guida_santos.jpg" alt="Mauro Guida Santos" class="team-photo" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Mauro Guida Santos</h3><p class="team-affiliation">Universidade Federal de Pernambuco</p><div class="team-icons"><a class="icon-link" href="mailto:mauro.gsantos@ufpe.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/6196357646157819" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0001-5146-4591" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?user=Mel-KBQAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div></div></article>
+<article class="team-card" data-name="moabe fernandes" data-institution="royal botanic gardens, kew" id="letter-M"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">M</span><img src="../figures/redec2_hex_sticker_.png" alt="Moabe Fernandes" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Moabe Fernandes</h3><p class="team-affiliation">Royal Botanic Gardens, Kew</p><div class="team-icons"><a class="icon-link" href="mailto:moabeffernandes@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="mário marcos do espírito santo" data-institution="universidade de estadual montes claros" id="letter-M"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">M</span><img src="../figures/redec2_hex_sticker_.png" alt="Mário Marcos do Espírito Santo" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Mário Marcos do Espírito Santo</h3><p class="team-affiliation">Universidade de Estadual Montes Claros</p><div class="team-icons"><a class="icon-link" href="mailto:marioesanto@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="patricia morellato" data-institution="universidade estadual paulista (rio claro)" id="letter-P"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">P</span><img src="../figures/redec2_hex_sticker_.png" alt="Patricia Morellato" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Patricia Morellato</h3><p class="team-affiliation">Universidade Estadual Paulista (Rio Claro)</p><div class="team-icons"><a class="icon-link" href="mailto:patricia.morellato@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="priscila oliveira" data-institution="universidade de estadual montes claros" id="letter-P"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">P</span><img src="../figures/redec2_hex_sticker_.png" alt="Priscila Oliveira" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Priscila Oliveira</h3><p class="team-affiliation">Universidade de Estadual Montes Claros</p><div class="team-icons"><a class="icon-link" href="mailto:priscilaoliveira12366@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="priscyla maria silva rodrigues" data-institution="universidade federal do vale do são francisco" id="letter-P"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">P</span><img src="../figures/redec2_hex_sticker_.png" alt="Priscyla Maria Silva Rodrigues" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Priscyla Maria Silva Rodrigues</h3><p class="team-affiliation">Universidade Federal do Vale do São Francisco</p><div class="team-icons"><a class="icon-link" href="mailto:priscylamsr@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a><a class="icon-link" href="http://lattes.cnpq.br/6026636494107330" target="_blank" rel="noopener" aria-label="Lattes"><img src="../_input_data/icons/_lattes.png" alt="Lattes"></a><a class="icon-link" href="https://orcid.org/0000-0003-4508-0131" target="_blank" rel="noopener" aria-label="ORCID"><img src="../_input_data/icons/_orcid.png" alt="ORCID"></a><a class="icon-link" href="https://scholar.google.com/citations?user=PDtOK2EAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener" aria-label="Google Scholar"><img src="../_input_data/icons/_scholar.png" alt="Google Scholar"></a></div></div></article>
+<article class="team-card" data-name="renata françoso" data-institution="serviço florestal brasileiro" id="letter-R"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">R</span><img src="../figures/redec2_hex_sticker_.png" alt="Renata Françoso" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Renata Françoso</h3><p class="team-affiliation">Serviço Florestal Brasileiro</p><div class="team-icons"><a class="icon-link" href="mailto:renata.francoso@florestal.gov.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="renato vanderlei" data-institution="universidade federal de pernambuco" id="letter-R"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">R</span><img src="../figures/redec2_hex_sticker_.png" alt="Renato Vanderlei" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Renato Vanderlei</h3><p class="team-affiliation">Universidade Federal de Pernambuco</p><div class="team-icons"><a class="icon-link" href="mailto:renato.vanderlei@gmail.com" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="rubens santos" data-institution="universidade federal de lavras" id="letter-R"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">R</span><img src="../figures/redec2_hex_sticker_.png" alt="Rubens Santos" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Rubens Santos</h3><p class="team-affiliation">Universidade Federal de Lavras</p><div class="team-icons"><a class="icon-link" href="mailto:rubensmanoel@ufla.br" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article>
+<article class="team-card" data-name="toby pennington" data-institution="university of exeter" id="letter-T"><div class="team-photo-wrap team-photo-wrap-default"><span class="team-letter">T</span><img src="../figures/redec2_hex_sticker_.png" alt="Toby Pennington" class="team-photo team-photo-default" loading="lazy" decoding="async"></div><div class="team-info"><h3 class="team-name anchored">Toby Pennington</h3><p class="team-affiliation">University of Exeter</p><div class="team-icons"><a class="icon-link" href="mailto:TPennington@rbge.org.uk" aria-label="Email"><img src="../_input_data/icons/_email.png" alt="Email"></a></div></div></article></section>
 </div>
 </div>
 <script>

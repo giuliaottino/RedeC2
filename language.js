@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  window.RedeC2_TRANSLATION_RUNTIME_VERSION = "nofragment-v9-2026-06-10";
+  window.RedeC2_TRANSLATION_RUNTIME_VERSION = "nofragment-v11-2026-06-10";
 
   if (window.RedeC2_TRANSLATION_RUNTIME_ACTIVE) {
     return;

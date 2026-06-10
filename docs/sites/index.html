@@ -327,13 +327,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content page-columns page-full column-page" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Sites - Rede C2</h1>
-<p class="subtitle lead">Permanent plots for understanding Caatinga and Cerrado dynamics</p>
+<p class="subtitle lead">Permanent plots and environmental gradients across Caatinga and Cerrado</p>
 </div>
 
 
@@ -369,26 +369,34 @@ ul.task-list li input[type="checkbox"] {
   --rc2-shadow: 0 16px 34px rgba(0,0,0,0.12);
 
   --rc2-safe-gutter: clamp(0.75rem, 2.6vw, 2.25rem);
-  --rc2-content-max: 1260px;
+  --rc2-content-max: 1180px;
   --rc2-wide-max: 1480px;
-  --rc2-xl-max: 1560px;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
 html,
 body {
   width: 100% !important;
   max-width: 100% !important;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   scroll-behavior: smooth;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden !important;
+  }
 }
 
 body {
   margin: 0 !important;
   background:
     linear-gradient(rgba(246,241,232,0.90), rgba(246,241,232,0.86)),
-    url("../figures/c2_bg.jpg");
+    url("../figures/itirapina.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -397,8 +405,17 @@ body {
   font-family: 'Montserrat', Arial, sans-serif;
 }
 
-img, video, iframe, svg, canvas { max-width: 100%; }
-a { color: var(--rc2-red); }
+img,
+video,
+iframe,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+a {
+  color: var(--rc2-red);
+}
 
 #quarto-content,
 #quarto-document-content,
@@ -407,8 +424,20 @@ main.content,
 .page-columns,
 .page-columns .content {
   min-width: 0 !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
+  max-width: none !important;
+  overflow-x: visible !important;
+}
+
+#quarto-content,
+#quarto-document-content,
+main,
+main.content,
+.page-columns,
+.page-columns .content {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 main.content {
@@ -441,27 +470,36 @@ main.content {
 }
 
 /* =========================================================
-   HERO — SITES AJUSTADO, SEM CORTE NO TÍTULO
+   HERO · full frame, clean
    ========================================================= */
 .rc2-page-hero {
   position: relative;
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  min-height: clamp(620px, 88vh, 860px);
+  left: 50%;
+  right: 50%;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  min-height: calc(100svh - 88px);
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
   display: grid;
   align-items: center;
   overflow: hidden;
   isolation: isolate;
   color: #fff;
   background:
-    radial-gradient(circle at 82% 14%, rgba(217,154,39,0.38), transparent 28%),
-    radial-gradient(circle at 18% 82%, rgba(169,54,50,0.26), transparent 36%),
-    linear-gradient(108deg, rgba(23,23,23,0.84) 0%, rgba(46,59,36,0.82) 42%, rgba(110,31,29,0.72) 100%),
-    url("../figures/c2_bg.jpg");
+    linear-gradient(108deg, rgba(23,23,23,0.56) 0%, rgba(46,59,36,0.34) 52%, rgba(110,31,29,0.22) 100%),
+    url("../figures/itirapina.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.page-columns .content > .rc2-page-hero,
+#quarto-document-content > .rc2-page-hero,
+main.content > .rc2-page-hero {
+  grid-column: screen-start / screen-end !important;
 }
 
 .rc2-page-hero::before {
@@ -472,215 +510,72 @@ main.content {
   background:
     linear-gradient(
       180deg,
-      rgba(0,0,0,0.40) 0%,
-      rgba(0,0,0,0.10) 46%,
-      rgba(0,0,0,0.56) 100%
-    ),
-    repeating-linear-gradient(
-      135deg,
-      rgba(255,255,255,0.055) 0 1px,
-      transparent 1px 16px
+      rgba(0,0,0,0.18) 0%,
+      rgba(0,0,0,0.05) 48%,
+      rgba(0,0,0,0.34) 100%
     );
   pointer-events: none;
-}
-
-.rc2-page-hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    var(--rc2-ochre) 0%,
-    var(--rc2-red) 50%,
-    var(--rc2-green) 100%
-  );
 }
 
 .rc2-page-hero-inner {
   position: relative;
   z-index: 2;
-  width: min(1360px, calc(100% - var(--rc2-safe-gutter) * 2));
+  width: min(1120px, calc(100% - var(--rc2-safe-gutter) * 2));
   margin: 0 auto;
-  padding: clamp(4.8rem, 8vw, 7.2rem) 0 clamp(3rem, 5vw, 4.5rem);
-  display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(210px, 0.22fr);
-  gap: clamp(1.6rem, 3.8vw, 3.8rem);
-  align-items: center;
-}
-
-.rc2-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.36rem 0.82rem;
-  border-radius: 999px;
-  background: rgba(246,241,232,0.12);
-  border: 1px solid rgba(246,241,232,0.24);
-  color: var(--rc2-ochre);
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(0.62rem, 0.9vw, 0.76rem);
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  animation: fadeSlideUp 0.7s ease both;
-}
-
-.rc2-kicker::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--rc2-ochre);
-  box-shadow: 0 0 0 3px rgba(217,154,39,0.28);
-}
-
-.rc2-page-hero h1 {
-  margin: 0.7rem 0 0;
-  width: min(840px, 100%);
-  max-width: 840px;
-  color: #fff;
-  font-size: clamp(3.5rem, 6.7vw, 6.7rem);
-  line-height: 0.82;
-  font-weight: 900;
-  letter-spacing: -0.095em;
-  text-transform: uppercase;
-  text-shadow: 0 10px 42px rgba(0,0,0,0.54);
-  animation: fadeSlideUp 0.75s 0.1s ease both;
-}
-
-.rc2-title-line {
-  display: block;
-  white-space: nowrap;
-}
-
-.rc2-title-line:nth-child(2) {
-  margin-left: clamp(1.2rem, 5vw, 4.7rem);
+  padding: clamp(2.4rem, 6vh, 4.5rem) 0;
 }
 
 .rc2-title-rule {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  width: min(820px, 100%);
-  margin: 1.05rem 0 1.25rem;
-  animation: fadeSlideUp 0.75s 0.2s ease both;
+  width: min(300px, 46vw);
+  height: 5px;
+  margin: 0 0 clamp(1rem, 2vw, 1.35rem);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--rc2-ochre), rgba(246,241,232,0.24));
+  animation: fadeSlideUp 0.75s 0.08s ease both;
 }
 
-.rc2-title-rule::before {
-  content: "";
-  flex: 0 0 clamp(36px, 5vw, 72px);
-  height: 3px;
-  background: var(--rc2-ochre);
-  border-radius: 2px;
+.rc2-page-hero h1 {
+  margin: 0;
+  max-width: 1000px;
+  color: #fff;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(3.6rem, 8.4vw, 8.2rem);
+  line-height: 0.88;
+  font-weight: 900;
+  letter-spacing: -0.085em;
+  text-transform: uppercase;
+  text-shadow: 0 12px 36px rgba(0,0,0,0.50);
+  animation: fadeSlideUp 0.75s 0.16s ease both;
 }
 
-.rc2-title-rule::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(255,255,255,0.20);
+.rc2-page-hero h1 span {
+  display: block;
+  color: var(--rc2-ochre);
 }
 
 .rc2-page-hero p {
-  max-width: 760px;
-  margin: 0;
-  color: rgba(255,253,247,0.94);
+  max-width: 860px;
+  margin: clamp(1rem, 2vw, 1.25rem) 0 0;
+  color: rgba(255,253,247,0.97);
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(1.05rem, 1.75vw, 1.30rem);
-  line-height: 1.58;
-  text-shadow: 0 3px 18px rgba(0,0,0,0.42);
-  animation: fadeSlideUp 0.75s 0.28s ease both;
-}
-
-/* Keywords slim */
-.rc2-keywords {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin: 1.2rem 0 0;
-  animation: fadeSlideUp 0.75s 0.36s ease both;
-}
-
-.rc2-keyword {
-  display: inline-flex;
-  align-items: center;
-  min-height: 36px;
-  padding: 0.36rem 0.78rem;
-  border-radius: 999px;
-  background: rgba(23,23,23,0.46);
-  border: 1px solid rgba(246,241,232,0.26);
-  color: rgba(255,253,247,0.93);
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(0.62rem, 0.78vw, 0.72rem);
-  font-weight: 800;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
-}
-
-.rc2-keyword--red   { border-left: 4px solid var(--rc2-red); }
-.rc2-keyword--green { border-left: 4px solid var(--rc2-green-soft); }
-.rc2-keyword--ochre { border-left: 4px solid var(--rc2-ochre); }
-.rc2-keyword--cream { border-left: 4px solid var(--rc2-cream); }
-
-/* Card lateral mais discreto */
-.rc2-hero-logo-card {
-  align-self: center;
-  justify-self: end;
-  width: min(260px, 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.9rem;
-  padding: clamp(1rem, 1.6vw, 1.35rem);
-  border-radius: 28px;
-  background: rgba(255,253,247,0.08);
-  border: 1px solid rgba(246,241,232,0.18);
-  box-shadow:
-    0 22px 50px rgba(0,0,0,0.20),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  animation: fadeSlideUp 0.75s 0.18s ease both;
-}
-
-.rc2-hero-logo-card img {
-  width: clamp(84px, 7.5vw, 126px);
-  filter: drop-shadow(0 12px 26px rgba(0,0,0,0.36));
-}
-
-.rc2-hero-logo-card-divider {
-  height: 1px;
-  background: rgba(246,241,232,0.15);
-}
-
-.rc2-hero-logo-card p {
-  margin: 0;
-  color: rgba(255,253,247,0.78);
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(0.82rem, 1vw, 0.94rem);
-  line-height: 1.45;
+  font-size: clamp(1.18rem, 2.15vw, 1.9rem);
+  line-height: 1.25;
+  font-weight: 700;
+  text-shadow: 0 4px 18px rgba(0,0,0,0.48);
+  animation: fadeSlideUp 0.75s 0.24s ease both;
 }
 
 /* =========================================================
-   SEÇÕES
+   SECTIONS
    ========================================================= */
 .rc2-section,
 .content-card {
   width: min(var(--rc2-content-max), calc(100% - var(--rc2-safe-gutter) * 2));
   margin: 2.4rem auto 0;
-  padding: clamp(1.25rem, 3vw, 2.4rem);
+  padding: clamp(1.35rem, 3vw, 2.5rem);
   background:
     radial-gradient(circle at 100% 0%, rgba(217,154,39,0.08), transparent 32%),
-    linear-gradient(180deg, rgba(255,253,247,0.96), rgba(246,241,232,0.88));
+    linear-gradient(180deg, rgba(255,253,247,0.97), rgba(246,241,232,0.90));
   border: 1px solid rgba(98,106,56,0.18);
   border-top: 5px solid var(--rc2-green);
   box-shadow: var(--rc2-shadow);
@@ -711,6 +606,7 @@ main.content {
   padding-bottom: 0.45rem;
   border-bottom: 1px solid rgba(98,106,56,0.18);
   color: var(--rc2-red);
+  font-family: 'Montserrat', Arial, sans-serif;
   font-size: clamp(1.25rem, 3vw, 2.1rem);
   font-weight: 900;
   line-height: 1.05;
@@ -718,9 +614,13 @@ main.content {
   text-transform: uppercase;
 }
 
+.rc2-text {
+  max-width: 980px;
+}
+
 .rc2-lead,
 .lead {
-  margin: 0 0 1.25rem 0 !important;
+  margin: 0 0 1.15rem 0 !important;
   padding-left: 1rem;
   border-left: 5px solid var(--rc2-ochre);
   color: #191711 !important;
@@ -733,59 +633,11 @@ main.content {
 .content-card p {
   color: var(--rc2-ink);
   font-size: 0.98rem;
-  line-height: 1.72;
-}
-
-.rc2-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 1rem;
-}
-
-.rc2-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 1rem;
-}
-
-.rc2-card,
-.info-box {
-  position: relative;
-  min-width: 0;
-  padding: clamp(1rem, 2vw, 1.35rem);
-  border-radius: 20px;
-  background: rgba(255,253,247,0.84);
-  border: 1px solid var(--rc2-line);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.065);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-}
-
-.rc2-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(169,54,50,0.30);
-  box-shadow: 0 14px 26px rgba(0,0,0,0.10);
-}
-
-.rc2-card h3 {
-  margin: 0 0 0.7rem 0;
-  color: var(--rc2-green-dark);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.11em;
-  line-height: 1.25;
-  text-transform: uppercase;
-}
-
-.rc2-card p {
-  margin: 0;
-  color: var(--rc2-muted);
-  font-size: 0.92rem;
-  line-height: 1.6;
+  line-height: 1.75;
 }
 
 /* =========================================================
-   CAROUSEL
+   IMAGE CAROUSEL
    ========================================================= */
 .rc2-carousel-shell {
   width: min(var(--rc2-wide-max), calc(100% - var(--rc2-safe-gutter) * 2));
@@ -802,24 +654,74 @@ main.content {
   gap: 1rem;
   width: max-content;
   padding: 1rem;
-  animation: rc2-marquee 54s linear infinite;
+  animation: rc2-marquee 56s linear infinite;
 }
 
 .rc2-carousel-shell:hover .rc2-carousel-track {
   animation-play-state: paused;
 }
 
-.rc2-carousel-img {
+.rc2-carousel-item {
+  position: relative;
+  flex: 0 0 auto;
   width: clamp(260px, 28vw, 450px);
-  height: 240px;
-  object-fit: cover;
+  height: 250px;
+  margin: 0;
+  overflow: hidden;
   border-radius: 20px;
+  background: var(--rc2-green-dark);
   box-shadow: 0 12px 24px rgba(0,0,0,0.13);
-  transition: transform 0.3s ease;
 }
 
-.rc2-carousel-img:hover {
-  transform: scale(1.035);
+.rc2-carousel-item img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.rc2-carousel-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.68) 100%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.rc2-carousel-item figcaption {
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.75rem;
+  z-index: 2;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.42);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.rc2-carousel-item:hover img,
+.rc2-carousel-item:focus-within img {
+  transform: scale(1.045);
+  filter: saturate(1.04) contrast(1.06);
+}
+
+.rc2-carousel-item:hover::after,
+.rc2-carousel-item:focus-within::after,
+.rc2-carousel-item:hover figcaption,
+.rc2-carousel-item:focus-within figcaption {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @keyframes rc2-marquee {
@@ -887,12 +789,6 @@ main.content {
 
 .popup-v { color: #312719; }
 
-.map-note {
-  margin-top: 0.9rem;
-  color: var(--rc2-muted);
-  font-size: 0.88rem;
-}
-
 .map-warning {
   padding: 1rem;
   border-radius: 18px;
@@ -902,7 +798,7 @@ main.content {
 }
 
 /* =========================================================
-   ANIMAÇÕES
+   ANIMATION
    ========================================================= */
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -911,7 +807,7 @@ main.content {
 
 .reveal-ready {
   opacity: 0;
-  transform: translateY(42px);
+  transform: translateY(38px);
   transition: opacity 0.72s ease, transform 0.72s cubic-bezier(.2,.7,.2,1);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
@@ -923,34 +819,25 @@ main.content {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal-ready {
+  .reveal-ready,
+  .rc2-carousel-track {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+    animation: none !important;
   }
 }
 
 /* =========================================================
-   RESPONSIVO
+   RESPONSIVE
    ========================================================= */
-@media (max-width: 1180px) {
-  .rc2-page-hero-inner {
-    grid-template-columns: 1fr;
-  }
-
+@media (max-height: 760px) and (min-width: 900px) {
   .rc2-page-hero h1 {
-    width: min(900px, 100%);
-    max-width: 900px;
-    font-size: clamp(3.6rem, 10vw, 7.4rem);
+    font-size: clamp(3.2rem, 7.2vw, 6.8rem);
   }
 
-  .rc2-title-rule {
-    width: min(900px, 100%);
-  }
-
-  .rc2-hero-logo-card {
-    justify-self: start;
-    max-width: 420px;
+  .rc2-page-hero p {
+    font-size: clamp(1.05rem, 1.85vw, 1.6rem);
   }
 }
 
@@ -962,28 +849,20 @@ main.content {
 
 @media (max-width: 760px) {
   .rc2-page-hero {
-    min-height: auto;
+    min-height: calc(100svh - 76px);
   }
 
   .rc2-page-hero h1 {
-    font-size: clamp(3.1rem, 16vw, 5.6rem);
-  }
-
-  .rc2-title-line {
-    white-space: normal;
-  }
-
-  .rc2-title-line:nth-child(2) {
-    margin-left: 0;
+    font-size: clamp(3rem, 15vw, 5.4rem);
   }
 
   .rc2-carousel-shell {
     border-radius: 20px;
   }
 
-  .rc2-carousel-img {
+  .rc2-carousel-item {
     width: 82vw;
-    height: 210px;
+    height: 220px;
   }
 
   .rc2-section-title {
@@ -1009,103 +888,128 @@ iframe {
   max-width: 100% !important;
 }
 </style>
-<section class="rc2-page-hero page-columns page-full" id="sites-hero" aria-label="RedeC2 sites hero">
-  <div class="rc2-page-hero-inner page-columns page-full">
+<section class="rc2-page-hero" id="sites-hero" aria-label="RedeC2 field sites">
+  <div class="rc2-page-hero-inner">
+    <div class="rc2-title-rule" aria-hidden="true"></div>
 
-    <div>
-      <div class="rc2-kicker">Permanent plots · Caatinga + Cerrado</div>
+    <h1>
+      Sites
+      <span>&amp; gradients</span>
+    </h1>
 
-      <h1>
-        <span class="rc2-title-line">Sites</span>
-        <span class="rc2-title-line">&amp; gradients</span>
-      </h1>
+    <p>
+      Field sites and environmental gradients connecting Caatinga and Cerrado
+      vegetation across Rede C2.
+    </p>
+  </div>
+</section>
+<section class="rc2-section" id="overview">
+  <div class="rc2-section-title"><h2 class="anchored">Spatial structure</h2></div>
 
-      <div class="rc2-title-rule" aria-hidden="true"></div>
+  <div class="rc2-text">
+    <p class="rc2-lead">
+      Rede C2 field sites represent local monitoring efforts distributed across
+      seasonally dry ecosystems, linking permanent plots to vegetation type,
+      landscape context, soils and climate.
+    </p>
 
-      <p>
-        Explore Rede C2 field sites and the environmental gradients connecting
-        dry forests, savannas, soils and seasonality.
-      </p>
-
-      <div class="rc2-keywords" aria-label="Site keywords">
-        <span class="rc2-keyword rc2-keyword--red">Caatinga</span>
-        <span class="rc2-keyword rc2-keyword--green">Cerrado</span>
-        <span class="rc2-keyword rc2-keyword--ochre">Permanent plots</span>
-        <span class="rc2-keyword rc2-keyword--cream">Interactive map</span>
-      </div>
-    </div>
-
-    <aside class="rc2-hero-logo-card" aria-label="RedeC2 sites identity">
-      <img src="../figures/logoc2.png" alt="RedeC2 logo">
-      <div class="rc2-hero-logo-card-divider"></div>
-      <p>Spatial structure, plot metadata and environmental context.</p>
-    </aside>
-
+    <p>
+      The spatial organization of the network supports comparisons among
+      Caatinga and Cerrado sites and helps interpret how plant communities vary
+      across environmental gradients and through repeated censuses.
+    </p>
   </div>
 </section>
 <div class="rc2-carousel-shell" aria-label="Rede C2 site image carousel">
   <div class="rc2-carousel-track">
-    <img src="../figures/canudos_dc.jpg" class="rc2-carousel-img" alt="Canudos" loading="lazy" decoding="async">
-    <img src="../figures/gruta_brejoes_dc.jpg" class="rc2-carousel-img" alt="Gruta dos Brejões" loading="lazy" decoding="async">
-    <img src="../figures/s_francisco_dc.jpg" class="rc2-carousel-img" alt="São Francisco" loading="lazy" decoding="async">
-    <img src="../figures/agua_limpa.jpg" class="rc2-carousel-img" alt="Água Limpa" loading="lazy" decoding="async">
-    <img src="../figures/itirapina.jpg" class="rc2-carousel-img" alt="Itirapina" loading="lazy" decoding="async">
-    <img src="../figures/agua_limpa_1.jpg" class="rc2-carousel-img" alt="Água Limpa landscape" loading="lazy" decoding="async">
 
-    <img src="../figures/canudos_dc.jpg" class="rc2-carousel-img" alt="Canudos" loading="lazy" decoding="async">
-    <img src="../figures/gruta_brejoes_dc.jpg" class="rc2-carousel-img" alt="Gruta dos Brejões" loading="lazy" decoding="async">
-    <img src="../figures/s_francisco_dc.jpg" class="rc2-carousel-img" alt="São Francisco" loading="lazy" decoding="async">
-    <img src="../figures/agua_limpa.jpg" class="rc2-carousel-img" alt="Água Limpa" loading="lazy" decoding="async">
-    <img src="../figures/itirapina.jpg" class="rc2-carousel-img" alt="Itirapina" loading="lazy" decoding="async">
-    <img src="../figures/agua_limpa_1.jpg" class="rc2-carousel-img" alt="Água Limpa landscape" loading="lazy" decoding="async">
+    <figure class="rc2-carousel-item figure" title="Canudos">
+      <img src="../figures/canudos_dc.jpg" alt="Canudos" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Canudos</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="Gruta dos Brejões">
+      <img src="../figures/gruta_brejoes_dc.jpg" alt="Gruta dos Brejões" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Gruta dos Brejões</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="São Francisco">
+      <img src="../figures/s_francisco_dc.jpg" alt="São Francisco" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>São Francisco</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="Água Limpa">
+      <img src="../figures/agua_limpa.jpg" alt="Água Limpa" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Água Limpa</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="Itirapina">
+      <img src="../figures/itirapina.jpg" alt="Itirapina" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Itirapina</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="Água Limpa">
+      <img src="../figures/agua_limpa_1.jpg" alt="Água Limpa" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Água Limpa</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="Canudos">
+      <img src="../figures/canudos_dc.jpg" alt="Canudos" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Canudos</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="Gruta dos Brejões">
+      <img src="../figures/gruta_brejoes_dc.jpg" alt="Gruta dos Brejões" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Gruta dos Brejões</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="São Francisco">
+      <img src="../figures/s_francisco_dc.jpg" alt="São Francisco" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>São Francisco</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="Água Limpa">
+      <img src="../figures/agua_limpa.jpg" alt="Água Limpa" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Água Limpa</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="Itirapina">
+      <img src="../figures/itirapina.jpg" alt="Itirapina" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Itirapina</figcaption>
+    </figure>
+
+    <figure class="rc2-carousel-item figure" title="Água Limpa">
+      <img src="../figures/agua_limpa_1.jpg" alt="Água Limpa" loading="lazy" decoding="async" class="figure-img">
+      <figcaption>Água Limpa</figcaption>
+    </figure>
+
   </div>
 </div>
 <section class="rc2-section" id="mapa">
   <div class="rc2-section-title"><h2 class="anchored">Interactive map</h2></div>
 
   <p class="rc2-lead">
-    Use the map to inspect Rede C2 permanent plots, vegetation classification,
-    plot area, census number and climatic or institutional metadata available
-    in the project table.
+    The map presents Rede C2 permanent plots with vegetation classification,
+    plot area, census information and climatic or institutional metadata
+    available in the project table.
   </p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-14facf8fa99c0838e7fd" style="width:100%;height:720px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-14facf8fa99c0838e7fd">{"x":{"options":{"minZoom":2,"maxZoom":22,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,"Light",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Satellite",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenTopoMap",null,"Topo",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[-12.725351,-14.96501667,-9.971357019999999,-14.22475,-11.014017,-11.020733,-10.787033,-10.785317,-14.425,-9.048028,-13.00158333,-13.06086,-11.492583,-11.495333,-7.00665,-7.02263,-10.743838,-8.864850000000001,-8.861733333,-5.146778,-5.141444,-5.117083,-7.970083,-10.95071,-11.09936,-8.550000000000001,-8.48,-8.48,-15.12,-15.14,-15.1,-19.35,-19.37,-19.37,-4.138015425,-4.1338549,-4.145622589,-18.63,-22.226978,-22.213359,-22.179011],[-40.71064504,-43.91636667,-39.00576,-42.53016667,-41.439167,-41.4106,-42.81935,-42.7757,-44.15722,-40.31975,-42.70681667,-42.51736,-41.33125,-41.346333,-37.39599,-37.40344,-39.246098,-42.70188333,-42.67625,-40.928194,-40.914861,-40.87319,-38.384917,-38.809541,-38.69572,-37.24,-37.34,-37.34,-44.24,-44.29,-44.23,-43.61,-43.6,-43.62,-41.71904868,-41.68391425,-41.7053441,-44.44,-47.88235,-47.896304,-47.871203],7,null,"Plots",{"interactive":true,"className":"","stroke":true,"color":"#FFFDF7","weight":2,"opacity":0.5,"fill":true,"fillColor":["#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#626A38","#A93632","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38"],"fillOpacity":0.92},null,null,["<div class=\"popup-card\"><div class=\"popup-title\">BVT-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">721<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Domingos Cardoso;Tomas F Domingues;Jon Lloyd;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CJU-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">836<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Domingos Cardoso;Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CND-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">513<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Domingos Cardoso;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CTI-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">903<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Rubens Manoel dos Santos;Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">GBR-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">545<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Tomas F Domingues;Jon Lloyd;Domingos Cardoso;Luciano Paganucci de Queiroz<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">GBR-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">555<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Tomas F Domingues;Jon Lloyd;Domingos Cardoso;Luciano Paganucci de Queiroz;Peter Moonlight<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">IBD-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">629<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Tomas F Domingues;Jon Lloyd;Domingos Cardoso;Luciano Paganucci de Queiroz;Débora Christina Zuanny;Peter Moonlight<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">IBD-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">634<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Domingos Cardoso;Luciano Paganucci de Queiroz;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">JUV-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">874<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Tomas F Domingues;Jon Lloyd;Rubens Manoel dos Santos;Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">LGE-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">588<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Tiina Särkinen;Magna Soelma Beserra de Moura;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">MCS-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">791<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Rubens Manoel dos Santos;Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">MCS-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">711<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Rubens Manoel dos Santos;Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">MOR-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">616<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Oliver Phillips;Tiina Särkinen;Domingos Cardoso;Toby Pennington;Priscyla Rodrigues;Luciano Paganucci de Queiroz;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">MOR-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">599<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Toby Pennington;Tiina Särkinen;Oliver Phillips;Domingos Cardoso;Priscyla Rodrigues;Luciano Paganucci de Queiroz;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PAT-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">781<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Toby Pennington;Mário Marcos do Espírito Santo;Jarcilene de Almeida-Cortez;Jhonathan Oliveira Silva<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PAT-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">790<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Toby Pennington;Mário Marcos do Espírito Santo;Jarcilene de Almeida-Cortez;Jhonathan Oliveira Silva<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">QJG-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">407<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SCP-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">774<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Rubens Manoel dos Santos;Priscyla Rodrigues;Mário Marcos do Espírito Santo;Jhonathan Oliveira Silva;Magna Soelma Beserra de Moura<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SCP-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">759<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Priscyla Rodrigues;Rubens Manoel dos Santos;Mário Marcos do Espírito Santo;Jhonathan Oliveira Silva;Magna Soelma Beserra de Moura<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SDA-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">974<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Tiina Särkinen;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SDA-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">942<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Tiina Särkinen;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SDA-03<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">769<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SET-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">735<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Tiina Särkinen;Rodolfo Marcondes Silva Souza;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">TCU-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">643<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Domingos Cardoso;Débora Christina Zuanny;Peter Moonlight<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">TCU-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">795<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Domingos Cardoso;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">BAU-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.98 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Renato Soares Vanderlei;Kyle G. Dexter<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">BAU-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Kyle G. Dexter;Renato Soares Vanderlei<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">BAU-03<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Renato Soares Vanderlei;Kyle G. Dexter<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PNP-03<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PNP-04<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PNP-05<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CIP-21<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Danilo Rafael Mesquita Neves;Ana Paula Mota Fonseca;Yuri Fernandes Gouvea<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CIP-22<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Danilo Rafael Mesquita Neves;Yuri Fernandes Gouvea;Ana Paula Mota Fonseca<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CIP-23<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Danilo Rafael Mesquita Neves;Ana Paula Mota Fonseca;Yuri Fernandes Gouvea<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PSC-01<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1426<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PSC-02<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1387<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PSC-03<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1406<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CRV-01<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">ITP-01<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1363<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Patricia Morellato;Renata Françoso;Camila Laís Farrapo<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">ITP-02<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1371<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Patricia Morellato;Renata Françoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">ITP-03<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1385<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Patricia Morellato;Renata Françoso<\/span><\/div><\/div>"],null,["BVT-01 · Caatinga","CJU-01 · Caatinga","CND-01 · Caatinga","CTI-01 · Caatinga","GBR-01 · Caatinga","GBR-02 · Caatinga","IBD-01 · Caatinga","IBD-02 · Caatinga","JUV-01 · Caatinga","LGE-01 · Caatinga","MCS-01 · Caatinga","MCS-02 · Caatinga","MOR-01 · Caatinga","MOR-02 · Caatinga","PAT-01 · Caatinga","PAT-02 · Caatinga","QJG-01 · Caatinga","SCP-01 · Caatinga","SCP-02 · Caatinga","SDA-01 · Caatinga","SDA-02 · Caatinga","SDA-03 · Caatinga","SET-01 · Caatinga","TCU-01 · Caatinga","TCU-02 · Caatinga","BAU-02 · Caatinga","BAU-01 · Caatinga","BAU-03 · Caatinga","PNP-03 · Caatinga","PNP-04 · Cerrado","PNP-05 · Caatinga","CIP-21 · Cerrado","CIP-22 · Cerrado","CIP-23 · Cerrado","PSC-01 · Cerrado","PSC-02 · Cerrado","PSC-03 · Cerrado","CRV-01 · Cerrado","ITP-01 · Cerrado","ITP-02 · Cerrado","ITP-03 · Cerrado"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLayersControl","args":[["Light","Satellite","Topo"],"Plots",{"collapsed":true,"autoZIndex":true,"position":"bottomleft"}]},{"method":"addLegend","args":[{"colors":["#A93632","#626A38"],"labels":["Caatinga","Cerrado"],"na_color":null,"na_label":"NA","opacity":0.9,"position":"bottomright","type":"factor","title":"Vegetation","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[-22.226978,-4.1338549],"lng":[-47.896304,-37.24]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5f44440f5e71f9fcd648" style="width:100%;height:720px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5f44440f5e71f9fcd648">{"x":{"options":{"minZoom":2,"maxZoom":22,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,"Light",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Satellite",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenTopoMap",null,"Topo",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[-12.725351,-14.96501667,-9.971357019999999,-14.22475,-11.014017,-11.020733,-10.787033,-10.785317,-14.425,-9.048028,-13.00158333,-13.06086,-11.492583,-11.495333,-7.00665,-7.02263,-10.743838,-8.864850000000001,-8.861733333,-5.146778,-5.141444,-5.117083,-7.970083,-10.95071,-11.09936,-8.550000000000001,-8.48,-8.48,-15.12,-15.14,-15.1,-19.35,-19.37,-19.37,-4.138015425,-4.1338549,-4.145622589,-18.63,-22.226978,-22.213359,-22.179011],[-40.71064504,-43.91636667,-39.00576,-42.53016667,-41.439167,-41.4106,-42.81935,-42.7757,-44.15722,-40.31975,-42.70681667,-42.51736,-41.33125,-41.346333,-37.39599,-37.40344,-39.246098,-42.70188333,-42.67625,-40.928194,-40.914861,-40.87319,-38.384917,-38.809541,-38.69572,-37.24,-37.34,-37.34,-44.24,-44.29,-44.23,-43.61,-43.6,-43.62,-41.71904868,-41.68391425,-41.7053441,-44.44,-47.88235,-47.896304,-47.871203],7,null,"Plots",{"interactive":true,"className":"","stroke":true,"color":"#FFFDF7","weight":2,"opacity":0.5,"fill":true,"fillColor":["#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#A93632","#626A38","#A93632","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38","#626A38"],"fillOpacity":0.92},null,null,["<div class=\"popup-card\"><div class=\"popup-title\">BVT-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">721<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Domingos Cardoso;Tomas F Domingues;Jon Lloyd;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CJU-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">836<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Domingos Cardoso;Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CND-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">513<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Domingos Cardoso;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CTI-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">903<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Rubens Manoel dos Santos;Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">GBR-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">545<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Tomas F Domingues;Jon Lloyd;Domingos Cardoso;Luciano Paganucci de Queiroz<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">GBR-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">555<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Tomas F Domingues;Jon Lloyd;Domingos Cardoso;Luciano Paganucci de Queiroz;Peter Moonlight<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">IBD-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">629<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Tomas F Domingues;Jon Lloyd;Domingos Cardoso;Luciano Paganucci de Queiroz;Débora Christina Zuanny;Peter Moonlight<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">IBD-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">634<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Domingos Cardoso;Luciano Paganucci de Queiroz;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">JUV-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">874<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Tomas F Domingues;Jon Lloyd;Rubens Manoel dos Santos;Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">LGE-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">588<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Tiina Särkinen;Magna Soelma Beserra de Moura;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">MCS-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">791<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Rubens Manoel dos Santos;Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">MCS-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">711<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Rubens Manoel dos Santos;Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">MOR-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">616<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Oliver Phillips;Tiina Särkinen;Domingos Cardoso;Toby Pennington;Priscyla Rodrigues;Luciano Paganucci de Queiroz;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">MOR-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">599<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Toby Pennington;Tiina Särkinen;Oliver Phillips;Domingos Cardoso;Priscyla Rodrigues;Luciano Paganucci de Queiroz;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PAT-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">781<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Toby Pennington;Mário Marcos do Espírito Santo;Jarcilene de Almeida-Cortez;Jhonathan Oliveira Silva<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PAT-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">790<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Toby Pennington;Mário Marcos do Espírito Santo;Jarcilene de Almeida-Cortez;Jhonathan Oliveira Silva<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">QJG-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">407<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Domingos Cardoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SCP-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">774<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Rubens Manoel dos Santos;Priscyla Rodrigues;Mário Marcos do Espírito Santo;Jhonathan Oliveira Silva;Magna Soelma Beserra de Moura<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SCP-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">759<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Priscyla Rodrigues;Rubens Manoel dos Santos;Mário Marcos do Espírito Santo;Jhonathan Oliveira Silva;Magna Soelma Beserra de Moura<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SDA-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">974<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Tiina Särkinen;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SDA-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">942<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Tiina Särkinen;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SDA-03<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">769<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">SET-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">735<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Tiina Särkinen;Rodolfo Marcondes Silva Souza;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">TCU-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">643<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Domingos Cardoso;Débora Christina Zuanny;Peter Moonlight<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">TCU-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">795<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Domingos Cardoso;Peter Moonlight;Débora Christina Zuanny<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">BAU-02<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.98 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Renato Soares Vanderlei;Kyle G. Dexter<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">BAU-01<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Kyle G. Dexter;Renato Soares Vanderlei<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">BAU-03<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Renato Soares Vanderlei;Kyle G. Dexter<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PNP-03<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PNP-04<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PNP-05<\/div><div class=\"popup-sub\">Caatinga<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CIP-21<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Danilo Rafael Mesquita Neves;Ana Paula Mota Fonseca;Yuri Fernandes Gouvea<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CIP-22<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Danilo Rafael Mesquita Neves;Yuri Fernandes Gouvea;Ana Paula Mota Fonseca<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CIP-23<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Danilo Rafael Mesquita Neves;Ana Paula Mota Fonseca;Yuri Fernandes Gouvea<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PSC-01<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1426<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PSC-02<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1387<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">PSC-03<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">0.5 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">2<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1406<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Jon Lloyd;Tomas F Domingues;Italo Coutinho<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">CRV-01<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">NA<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Rubens Manoel dos Santos<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">ITP-01<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1363<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Patricia Morellato;Renata Françoso;Camila Laís Farrapo<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">ITP-02<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1371<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Patricia Morellato;Renata Françoso<\/span><\/div><\/div>","<div class=\"popup-card\"><div class=\"popup-title\">ITP-03<\/div><div class=\"popup-sub\">Cerrado<\/div><div class=\"popup-row\"><span class=\"popup-k\">Area<\/span><span class=\"popup-v\">1 ha<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">Census<\/span><span class=\"popup-v\">1<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">BIO12<\/span><span class=\"popup-v\">1385<\/span><\/div><div class=\"popup-row\"><span class=\"popup-k\">PI<\/span><span class=\"popup-v\">Patricia Morellato;Renata Françoso<\/span><\/div><\/div>"],null,["BVT-01 · Caatinga","CJU-01 · Caatinga","CND-01 · Caatinga","CTI-01 · Caatinga","GBR-01 · Caatinga","GBR-02 · Caatinga","IBD-01 · Caatinga","IBD-02 · Caatinga","JUV-01 · Caatinga","LGE-01 · Caatinga","MCS-01 · Caatinga","MCS-02 · Caatinga","MOR-01 · Caatinga","MOR-02 · Caatinga","PAT-01 · Caatinga","PAT-02 · Caatinga","QJG-01 · Caatinga","SCP-01 · Caatinga","SCP-02 · Caatinga","SDA-01 · Caatinga","SDA-02 · Caatinga","SDA-03 · Caatinga","SET-01 · Caatinga","TCU-01 · Caatinga","TCU-02 · Caatinga","BAU-02 · Caatinga","BAU-01 · Caatinga","BAU-03 · Caatinga","PNP-03 · Caatinga","PNP-04 · Cerrado","PNP-05 · Caatinga","CIP-21 · Cerrado","CIP-22 · Cerrado","CIP-23 · Cerrado","PSC-01 · Cerrado","PSC-02 · Cerrado","PSC-03 · Cerrado","CRV-01 · Cerrado","ITP-01 · Cerrado","ITP-02 · Cerrado","ITP-03 · Cerrado"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLayersControl","args":[["Light","Satellite","Topo"],"Plots",{"collapsed":true,"autoZIndex":true,"position":"bottomleft"}]},{"method":"addLegend","args":[{"colors":["#A93632","#626A38"],"labels":["Caatinga","Cerrado"],"na_color":null,"na_label":"NA","opacity":0.9,"position":"bottomright","type":"factor","title":"Vegetation","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[-22.226978,-4.1338549],"lng":[-47.896304,-37.24]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-  <p class="map-note">
-    Tip: keep the image carousel light by using optimized WebP/JPG versions
-    and only load high-resolution images when necessary.
-  </p>
 </section>
 <section class="rc2-section" id="gradients">
-  <div class="rc2-section-title"><h2 class="anchored">How to read the network</h2></div>
+  <div class="rc2-section-title"><h2 class="anchored">Environmental context</h2></div>
 
-  <div class="rc2-grid-3">
-    <article class="rc2-card">
-      <h3 class="anchored">Spatial coverage</h3>
-      <p>
-        Sites are distributed across formations and regions that capture
-        ecological turnover in dry ecosystems.
-      </p>
-    </article>
-
-    <article class="rc2-card">
-      <h3 class="anchored">Environmental gradients</h3>
-      <p>
-        Climate, soil, vegetation structure and landscape context should be
-        interpreted jointly with plot-level data.
-      </p>
-    </article>
-
-    <article class="rc2-card">
-      <h3 class="anchored">Long-term comparability</h3>
-      <p>
-        Repeated censuses make it possible to connect local dynamics with
-        broad-scale ecological patterns.
-      </p>
-    </article>
+  <div class="rc2-text">
+    <p>
+      Site-level information can be interpreted together with climate, soil,
+      vegetation structure and landscape descriptors. Repeated censuses connect
+      local dynamics with broader ecological patterns across dry forests and
+      savannas.
+    </p>
   </div>
 </section>
 <script>

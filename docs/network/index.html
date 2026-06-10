@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Protocols – Rede C2</title>
+<title>Network – Rede C2</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -305,13 +305,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content page-columns page-full column-page" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Protocols</h1>
-<p class="subtitle lead">Field methods, manuals and compatible monitoring workflows for Rede C2 and partner networks</p>
+<h1 class="title">Network</h1>
+<p class="subtitle lead">Collaborative framework for permanent plots, protocols and ecological synthesis</p>
 </div>
 
 
@@ -328,7 +328,6 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!-- Rede C2: protocols page — hero limpo, sem sobreposição, alinhado à home -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
@@ -348,9 +347,8 @@ ul.task-list li input[type="checkbox"] {
   --rc2-shadow:     0 16px 34px rgba(0,0,0,0.12);
 
   --rc2-safe-gutter: clamp(0.75rem, 2.6vw, 2.25rem);
-  --rc2-content-max: 1260px;
-  --rc2-wide-max:    1480px;
-  --rc2-xl-max:      1560px;
+  --rc2-content-max: 1180px;
+  --rc2-wide-max:    1360px;
 }
 
 *, *::before, *::after {
@@ -361,15 +359,22 @@ html,
 body {
   width: 100% !important;
   max-width: 100% !important;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   scroll-behavior: smooth;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden !important;
+  }
 }
 
 body {
   margin: 0 !important;
   background:
     linear-gradient(rgba(246,241,232,0.90), rgba(246,241,232,0.86)),
-    url("../figures/c2_bg.jpg");
+    url("../figures/itirapina_.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -397,8 +402,20 @@ main.content,
 .page-columns,
 .page-columns .content {
   min-width: 0 !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
+  max-width: none !important;
+  overflow-x: visible !important;
+}
+
+#quarto-content,
+#quarto-document-content,
+main,
+main.content,
+.page-columns,
+.page-columns .content {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 main.content {
@@ -412,7 +429,6 @@ main.content {
   display: none !important;
 }
 
-/* Navbar */
 .navbar {
   box-shadow: 0 2px 18px rgba(0,0,0,0.10);
   backdrop-filter: blur(10px);
@@ -431,27 +447,36 @@ main.content {
 }
 
 /* =========================================================
-   HERO — LIMPO E SEM SOBREPOSIÇÃO
+   HERO · tela cheia, limpo, alinhado ao Overview
    ========================================================= */
 .rc2-page-hero {
   position: relative;
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  min-height: clamp(620px, 88vh, 860px);
+  left: 50%;
+  right: 50%;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  min-height: calc(100svh - 88px);
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
   display: grid;
   align-items: center;
   overflow: hidden;
   isolation: isolate;
   color: #fff;
   background:
-    radial-gradient(circle at 82% 14%, rgba(217,154,39,0.38), transparent 28%),
-    radial-gradient(circle at 18% 82%, rgba(169,54,50,0.26), transparent 36%),
-    linear-gradient(108deg, rgba(23,23,23,0.84) 0%, rgba(46,59,36,0.82) 42%, rgba(110,31,29,0.72) 100%),
-    url("../figures/c2_bg.jpg");
+    linear-gradient(108deg, rgba(23,23,23,0.58) 0%, rgba(46,59,36,0.38) 48%, rgba(110,31,29,0.25) 100%),
+    url("../figures/itirapina_.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.page-columns .content > .rc2-page-hero,
+#quarto-document-content > .rc2-page-hero,
+main.content > .rc2-page-hero {
+  grid-column: screen-start / screen-end !important;
 }
 
 .rc2-page-hero::before {
@@ -462,212 +487,72 @@ main.content {
   background:
     linear-gradient(
       180deg,
-      rgba(0,0,0,0.40) 0%,
-      rgba(0,0,0,0.10) 46%,
-      rgba(0,0,0,0.56) 100%
-    ),
-    repeating-linear-gradient(
-      135deg,
-      rgba(255,255,255,0.055) 0 1px,
-      transparent 1px 16px
+      rgba(0,0,0,0.20) 0%,
+      rgba(0,0,0,0.05) 48%,
+      rgba(0,0,0,0.34) 100%
     );
   pointer-events: none;
-}
-
-.rc2-page-hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    var(--rc2-ochre) 0%,
-    var(--rc2-red) 50%,
-    var(--rc2-green) 100%
-  );
 }
 
 .rc2-page-hero-inner {
   position: relative;
   z-index: 2;
-  width: min(1360px, calc(100% - var(--rc2-safe-gutter) * 2));
+  width: min(1120px, calc(100% - var(--rc2-safe-gutter) * 2));
   margin: 0 auto;
-  padding: clamp(4.8rem, 8vw, 7.3rem) 0 clamp(3rem, 5vw, 4.5rem);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.28fr);
-  gap: clamp(2rem, 4.5vw, 4.5rem);
-  align-items: center;
-}
-
-.rc2-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.36rem 0.82rem;
-  border-radius: 999px;
-  background: rgba(246,241,232,0.12);
-  border: 1px solid rgba(246,241,232,0.24);
-  color: var(--rc2-ochre);
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(0.62rem, 0.9vw, 0.76rem);
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  animation: fadeSlideUp 0.7s ease both;
-}
-
-.rc2-kicker::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--rc2-ochre);
-  box-shadow: 0 0 0 3px rgba(217,154,39,0.28);
-}
-
-.rc2-page-hero h1 {
-  margin: 0.7rem 0 0;
-  max-width: 900px;
-  color: #fff;
-  font-size: clamp(3.8rem, 8.5vw, 8.2rem);
-  line-height: 0.80;
-  font-weight: 900;
-  letter-spacing: -0.10em;
-  text-transform: uppercase;
-  text-shadow: 0 10px 42px rgba(0,0,0,0.54);
-  animation: fadeSlideUp 0.75s 0.1s ease both;
-}
-
-.rc2-title-line {
-  display: block;
-}
-
-.rc2-title-line:nth-child(2) {
-  margin-left: clamp(1.4rem, 6vw, 5.4rem);
+  padding: clamp(2.4rem, 6vh, 4.5rem) 0;
 }
 
 .rc2-title-rule {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 1.05rem 0 1.25rem;
-  animation: fadeSlideUp 0.75s 0.2s ease both;
+  width: min(300px, 46vw);
+  height: 5px;
+  margin: 0 0 clamp(1rem, 2vw, 1.35rem);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--rc2-ochre), rgba(246,241,232,0.24));
+  animation: fadeSlideUp 0.75s 0.08s ease both;
 }
 
-.rc2-title-rule::before {
-  content: "";
-  flex: 0 0 clamp(36px, 5vw, 72px);
-  height: 3px;
-  background: var(--rc2-ochre);
-  border-radius: 2px;
+.rc2-page-hero h1 {
+  margin: 0;
+  max-width: 980px;
+  color: #fff;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(3.6rem, 8.4vw, 8.2rem);
+  line-height: 0.88;
+  font-weight: 900;
+  letter-spacing: -0.085em;
+  text-transform: uppercase;
+  text-shadow: 0 12px 36px rgba(0,0,0,0.50);
+  animation: fadeSlideUp 0.75s 0.16s ease both;
 }
 
-.rc2-title-rule::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(255,255,255,0.20);
+.rc2-page-hero h1 span {
+  display: block;
+  color: var(--rc2-ochre);
 }
 
 .rc2-page-hero p {
-  max-width: 760px;
-  margin: 0;
-  color: rgba(255,253,247,0.94);
+  max-width: 860px;
+  margin: clamp(1rem, 2vw, 1.25rem) 0 0;
+  color: rgba(255,253,247,0.97);
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(1.05rem, 1.9vw, 1.34rem);
-  line-height: 1.58;
-  text-shadow: 0 3px 18px rgba(0,0,0,0.42);
-  animation: fadeSlideUp 0.75s 0.28s ease both;
-}
-
-/* Palavras-chave slim */
-.rc2-keywords {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin: 1.2rem 0 0;
-  animation: fadeSlideUp 0.75s 0.36s ease both;
-}
-
-.rc2-keyword {
-  display: inline-flex;
-  align-items: center;
-  min-height: 36px;
-  padding: 0.36rem 0.78rem;
-  border-radius: 999px;
-  background: rgba(23,23,23,0.46);
-  border: 1px solid rgba(246,241,232,0.26);
-  color: rgba(255,253,247,0.93);
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(0.62rem, 0.78vw, 0.72rem);
-  font-weight: 800;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
-}
-
-.rc2-keyword--red   { border-left: 4px solid var(--rc2-red); }
-.rc2-keyword--green { border-left: 4px solid var(--rc2-green-soft); }
-.rc2-keyword--ochre { border-left: 4px solid var(--rc2-ochre); }
-.rc2-keyword--cream { border-left: 4px solid var(--rc2-cream); }
-
-/* Card lateral menor e discreto */
-.rc2-hero-logo-card {
-  align-self: center;
-  justify-self: end;
-  width: min(270px, 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  padding: clamp(1rem, 1.8vw, 1.45rem);
-  border-radius: 28px;
-  background: rgba(255,253,247,0.08);
-  border: 1px solid rgba(246,241,232,0.18);
-  box-shadow:
-    0 22px 50px rgba(0,0,0,0.20),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  animation: fadeSlideUp 0.75s 0.18s ease both;
-}
-
-.rc2-hero-logo-card img {
-  width: clamp(88px, 8vw, 132px);
-  filter: drop-shadow(0 12px 26px rgba(0,0,0,0.36));
-}
-
-.rc2-hero-logo-card-divider {
-  height: 1px;
-  background: rgba(246,241,232,0.15);
-}
-
-.rc2-hero-logo-card p {
-  margin: 0;
-  color: rgba(255,253,247,0.78);
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(0.84rem, 1.1vw, 0.96rem);
-  line-height: 1.5;
+  font-size: clamp(1.18rem, 2.15vw, 1.9rem);
+  line-height: 1.25;
+  font-weight: 700;
+  text-shadow: 0 4px 18px rgba(0,0,0,0.48);
+  animation: fadeSlideUp 0.75s 0.24s ease both;
 }
 
 /* =========================================================
-   SEÇÕES PADRÃO
+   SEÇÕES
    ========================================================= */
 .rc2-section,
 .content-card {
   width: min(var(--rc2-content-max), calc(100% - var(--rc2-safe-gutter) * 2));
   margin: 2.4rem auto 0;
-  padding: clamp(1.25rem, 3vw, 2.4rem);
+  padding: clamp(1.35rem, 3vw, 2.5rem);
   background:
     radial-gradient(circle at 100% 0%, rgba(217,154,39,0.08), transparent 32%),
-    linear-gradient(180deg, rgba(255,253,247,0.96), rgba(246,241,232,0.88));
+    linear-gradient(180deg, rgba(255,253,247,0.97), rgba(246,241,232,0.90));
   border: 1px solid rgba(98,106,56,0.18);
   border-top: 5px solid var(--rc2-green);
   box-shadow: var(--rc2-shadow);
@@ -706,9 +591,13 @@ main.content {
   text-transform: uppercase;
 }
 
+.rc2-text {
+  max-width: 980px;
+}
+
 .rc2-lead,
 .lead {
-  margin: 0 0 1.25rem 0 !important;
+  margin: 0 0 1.15rem 0 !important;
   padding-left: 1rem;
   border-left: 5px solid var(--rc2-ochre);
   color: #191711 !important;
@@ -721,88 +610,70 @@ main.content {
 .content-card p {
   color: var(--rc2-ink);
   font-size: 0.98rem;
-  line-height: 1.72;
+  line-height: 1.75;
 }
 
-/* Grids e cards */
-.rc2-grid-2 {
+.rc2-compact-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 1rem;
+  gap: 0.7rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-.rc2-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 1rem;
-}
-
-.rc2-card,
-.proto-card {
+.rc2-compact-list li {
   position: relative;
-  min-width: 0;
-  padding: clamp(1rem, 2vw, 1.35rem);
-  border-radius: 20px;
-  background: rgba(255,253,247,0.84);
-  border: 1px solid var(--rc2-line);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.065);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-}
-
-.rc2-card:hover,
-.proto-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(169,54,50,0.30);
-  box-shadow: 0 14px 26px rgba(0,0,0,0.10);
-}
-
-.rc2-card h3,
-.proto-card h3 {
-  margin: 0 0 0.7rem 0;
-  color: var(--rc2-green-dark);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.11em;
-  line-height: 1.25;
-  text-transform: uppercase;
-}
-
-.rc2-card p,
-.proto-card p {
-  margin: 0;
+  padding-left: 1.35rem;
   color: var(--rc2-muted);
-  font-size: 0.92rem;
-  line-height: 1.6;
+  font-size: 0.96rem;
+  line-height: 1.65;
 }
 
-/* Protocol-specific */
-.protocol-index {
+.rc2-compact-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--rc2-ochre);
+}
+
+.rc2-link-block {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  gap: 0.75rem;
-  margin-top: 1.2rem;
+  gap: 1.2rem;
 }
 
-.protocol-index a {
-  text-decoration: none;
+.rc2-reference {
+  padding: 0 0 1.2rem;
+  border-bottom: 1px solid rgba(98,106,56,0.18);
 }
 
-.proto-subtitle {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.66rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #7A5A18;
-  margin-bottom: 0.6rem;
-  font-weight: 800;
+.rc2-reference:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.rc2-reference h3 {
+  margin: 0 0 0.35rem 0;
+  color: var(--rc2-green-dark);
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.28rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+
+.rc2-reference p {
+  margin: 0 0 0.65rem 0;
+  color: var(--rc2-muted);
 }
 
 .pill-links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  margin-top: 0.85rem;
+  margin-top: 0.65rem;
 }
 
 .pill-links a {
@@ -821,95 +692,33 @@ main.content {
   color: var(--rc2-red);
 }
 
-.rc2-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin: 1.1rem 0;
+.rc2-module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 1rem;
 }
 
-.rc2-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.32rem 0.72rem;
-  border-radius: 999px;
-  background: rgba(246,241,232,0.84);
-  border: 1.5px solid rgba(98,106,56,0.28);
+.rc2-module {
+  padding: 1rem 0 0;
+  border-top: 3px solid rgba(217,154,39,0.56);
+}
+
+.rc2-module h3 {
+  margin: 0 0 0.45rem;
   color: var(--rc2-green-dark);
   font-family: 'Space Mono', monospace;
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.07em;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  font-weight: 900;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
 }
 
-.rc2-pill--red {
-  color: var(--rc2-red);
-  border-color: rgba(169,54,50,0.32);
-  background: rgba(169,54,50,0.08);
-}
-
-.rc2-pill--green {
-  color: var(--rc2-green-dark);
-  border-color: rgba(98,106,56,0.32);
-  background: rgba(98,106,56,0.09);
-}
-
-.rc2-pill--ochre {
-  color: #7A5A18;
-  border-color: rgba(217,154,39,0.42);
-  background: rgba(217,154,39,0.10);
-}
-
-/* Workflow */
-.method-river {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  overflow: hidden;
-  border-radius: 24px;
-  border: 1px solid var(--rc2-line);
-  box-shadow: 0 14px 28px rgba(0,0,0,0.10);
-}
-
-.method-step {
-  min-height: 250px;
-  padding: 1.25rem;
-  background: rgba(255,253,247,0.84);
-  border-right: 1px solid var(--rc2-line);
-}
-
-.method-step:last-child {
-  border-right: 0;
-}
-
-.method-number {
-  display: inline-grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  background: var(--rc2-red);
-  color: #fff;
-  font-family: 'Space Mono', monospace;
-  font-weight: 900;
-  margin-bottom: 1rem;
-}
-
-.method-step h3 {
-  margin: 0 0 0.7rem 0;
-  color: var(--rc2-green-dark);
-  font-size: 1.12rem;
-  line-height: 1.15;
-  font-weight: 900;
-  letter-spacing: -0.035em;
-}
-
-.method-step p {
+.rc2-module p {
   margin: 0 !important;
   color: var(--rc2-muted) !important;
-  font-size: 0.9rem !important;
-  line-height: 1.55 !important;
+  font-size: 0.92rem !important;
+  line-height: 1.62 !important;
 }
 
 /* Animações */
@@ -920,7 +729,7 @@ main.content {
 
 .reveal-ready {
   opacity: 0;
-  transform: translateY(42px);
+  transform: translateY(38px);
   transition: opacity 0.72s ease, transform 0.72s cubic-bezier(.2,.7,.2,1);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
@@ -939,27 +748,13 @@ main.content {
   }
 }
 
-/* Responsivo */
-@media (max-width: 1180px) {
-  .rc2-page-hero-inner {
-    grid-template-columns: 1fr;
+@media (max-height: 760px) and (min-width: 900px) {
+  .rc2-page-hero h1 {
+    font-size: clamp(3.2rem, 7.2vw, 6.8rem);
   }
 
-  .rc2-hero-logo-card {
-    justify-self: start;
-    max-width: 420px;
-  }
-
-  .method-river {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .method-step:nth-child(2) {
-    border-right: 0;
-  }
-
-  .method-step {
-    border-bottom: 1px solid var(--rc2-line);
+  .rc2-page-hero p {
+    font-size: clamp(1.05rem, 1.85vw, 1.6rem);
   }
 }
 
@@ -971,23 +766,11 @@ main.content {
 
 @media (max-width: 700px) {
   .rc2-page-hero {
-    min-height: auto;
+    min-height: calc(100svh - 76px);
   }
 
   .rc2-page-hero h1 {
-    font-size: clamp(3.2rem, 16vw, 5.8rem);
-  }
-
-  .rc2-title-line:nth-child(2) {
-    margin-left: 0;
-  }
-
-  .method-river {
-    grid-template-columns: 1fr;
-  }
-
-  .method-step {
-    border-right: 0;
+    font-size: clamp(3rem, 15vw, 5.4rem);
   }
 
   .rc2-section-title {
@@ -1006,115 +789,76 @@ main.content {
     border-radius: 22px;
   }
 }
-
-.html-widget,
-.leaflet,
-.leaflet-container,
-iframe {
-  width: 100% !important;
-  max-width: 100% !important;
-}
 </style>
-<section class="rc2-page-hero page-columns page-full" id="protocols-hero" aria-label="RedeC2 protocols hero">
+<section class="rc2-page-hero" id="network-hero" aria-label="Collaborative framework">
+  <div class="rc2-page-hero-inner">
+    <div class="rc2-title-rule" aria-hidden="true"></div>
 
-  <div class="rc2-page-hero-inner page-columns page-full">
+    <h1>
+      Collaborative
+      <span>framework</span>
+    </h1>
 
-    <div>
-      <div class="rc2-kicker">Field methods · Data standards · Partner manuals</div>
-
-      <h1>
-        <span class="rc2-title-line">Protocols</span>
-        <span class="rc2-title-line">for C2</span>
-      </h1>
-
-      <div class="rc2-title-rule" aria-hidden="true"></div>
-
-      <p>
-        Standardized methods keep field data comparable across sites, teams
-        and years.
-      </p>
-
-      <div class="rc2-keywords" aria-label="Protocol keywords">
-        <span class="rc2-keyword rc2-keyword--red">Caatinga</span>
-        <span class="rc2-keyword rc2-keyword--green">Cerrado</span>
-        <span class="rc2-keyword rc2-keyword--ochre">Permanent plots</span>
-        <span class="rc2-keyword rc2-keyword--cream">Data standards</span>
-      </div>
-    </div>
-
-    <aside class="rc2-hero-logo-card" aria-label="RedeC2 protocol identity">
-      <img src="../figures/logoc2.png" alt="RedeC2 logo">
-      <div class="rc2-hero-logo-card-divider"></div>
-      <p>Field methods, harmonized tables and partner manuals.</p>
-    </aside>
-
-  </div>
-
-</section>
-<section class="rc2-section page-columns page-full" id="overview">
-  <div class="rc2-section-title"><h2 class="anchored">Protocol logic</h2></div>
-
-  <div class="rc2-grid-2 page-columns page-full">
-    <div>
-      <p class="rc2-lead">
-        Rede C2 works with permanent plots in dry ecosystems and connects
-        with broader monitoring initiatives.
-      </p>
-
-      <p>
-        This page gathers core protocol references that can support plot
-        establishment, remeasurement, field standardization, data harmonization
-        and cross-network comparability.
-      </p>
-    </div>
-
-    <aside class="rc2-card">
-      <h3 class="anchored">Recommended anchor</h3>
-      <p>
-        The DRYFLOR field manual is especially relevant because it offers a
-        standardized workflow for permanent plots in seasonally dry tropical
-        forests, including plot layout, tagging, remeasurement and woody stem
-        monitoring.
-      </p>
-
-      <div class="pill-links">
-        <a href="https://doi.org/10.5521/forestplots.net/2020_4c" target="_blank" rel="noopener">DRYFLOR DOI</a>
-      </div>
-    </aside>
-  </div>
-
-  <div class="protocol-index" aria-label="Protocol shortcuts">
-    <a class="rc2-card" href="#plot-establishment-and-remeasurement">
-      <h3 class="anchored">Plots</h3>
-      <p>Layout, tagging and remeasurement.</p>
-    </a>
-
-    <a class="rc2-card" href="#woody-stems-census">
-      <h3 class="anchored">Woody stems</h3>
-      <p>Diameter, recruits and mortality.</p>
-    </a>
-
-    <a class="rc2-card" href="#herb-layer-and-regeneration">
-      <h3 class="anchored">Herbs</h3>
-      <p>Regeneration and herb layer modules.</p>
-    </a>
-
-    <a class="rc2-card" href="#soils-traits-and-disturbance">
-      <h3 class="anchored">Modules</h3>
-      <p>Soils, traits and disturbance.</p>
-    </a>
+    <p>
+      Integrating permanent plots, field protocols and ecological synthesis across
+      Caatinga and Cerrado.
+    </p>
   </div>
 </section>
-<section class="rc2-section rc2-section--wide" id="references">
-  <div class="rc2-section-title"><h2 class="anchored">Core protocol references</h2></div>
+<section class="rc2-section" id="framework">
+  <div class="rc2-section-title"><h2 class="anchored">Scientific coordination</h2></div>
 
-  <div class="rc2-grid-3">
-    <article class="proto-card">
-      <h3 class="anchored">Rede C2</h3>
-      <div class="proto-subtitle">Network base</div>
+  <div class="rc2-text">
+    <p class="rc2-lead">
+      Rede C2 articulates research groups, permanent plots and methodological
+      references for the long-term study of vegetation dynamics in Brazil's
+      seasonally dry ecosystems.
+    </p>
+
+    <p>
+      The network brings together field sites in Caatinga and Cerrado, combining
+      local ecological knowledge with shared monitoring principles. Its structure
+      supports comparable observations of plant communities, including vegetation
+      structure, floristic composition, recruitment, mortality, regeneration and
+      environmental context.
+    </p>
+
+    <p>
+      Scientific coordination within Rede C2 is organized around interoperability:
+      field decisions, plot metadata, taxonomic information, functional traits and
+      environmental layers are documented so that data produced by different teams
+      can be interpreted jointly across regions and through time.
+    </p>
+  </div>
+</section>
+<section class="rc2-section" id="integration">
+  <div class="rc2-section-title"><h2 class="anchored">Integration principles</h2></div>
+
+  <div class="rc2-text">
+    <p>
+      The network is structured to support both local monitoring and broader
+      ecological synthesis. Each participating group preserves the specificity of
+      its field site while contributing to a shared analytical framework for dry
+      forest and savanna systems.
+    </p>
+
+    <ul class="rc2-compact-list">
+      <li><strong>Field continuity:</strong> permanent plots and repeated censuses provide the empirical basis for detecting changes in vegetation structure and composition.</li>
+      <li><strong>Methodological compatibility:</strong> protocol references guide plot establishment, remeasurement, stem records, regeneration modules and complementary environmental observations.</li>
+      <li><strong>Data harmonization:</strong> standardized tables and controlled vocabularies make it easier to combine plot metadata, species records, demographic events and environmental descriptors.</li>
+      <li><strong>Ecological synthesis:</strong> comparable datasets support analyses of vegetation dynamics, resilience, restoration potential and spatial turnover across Caatinga and Cerrado sites.</li>
+    </ul>
+  </div>
+</section>
+<section class="rc2-section rc2-section--wide" id="methodological-references">
+  <div class="rc2-section-title"><h2 class="anchored">Methodological references</h2></div>
+
+  <div class="rc2-link-block">
+    <article class="rc2-reference">
+      <h3 class="anchored">Rede C2 field standards</h3>
       <p>
-        Space for Rede C2’s own protocols, field sheets and coding standards
-        for plot installation, recensus, disturbance records, traits and soils.
+        Internal standards for plot installation, recensus, disturbance records,
+        traits, soils, field sheets and coding decisions.
       </p>
       <div class="pill-links">
         <a href="#plot-establishment-and-remeasurement">Plot protocol</a>
@@ -1123,13 +867,12 @@ iframe {
       </div>
     </article>
 
-    <article class="proto-card">
+    <article class="rc2-reference">
       <h3 class="anchored">DRYFLOR field manual</h3>
-      <div class="proto-subtitle">Dry forest permanent plots</div>
       <p>
-        A key manual for establishing and remeasuring permanent plots in
-        seasonally dry tropical forests. Useful for woody stems, tagging rules
-        and long-term comparability.
+        Reference manual for establishing and remeasuring permanent plots in
+        seasonally dry tropical forests, with guidance for plot layout, tagging,
+        woody stems and long-term comparability.
       </p>
       <div class="pill-links">
         <a href="https://www.dryflor.info/publications/protocols" target="_blank" rel="noopener">Protocols page</a>
@@ -1138,12 +881,11 @@ iframe {
       </div>
     </article>
 
-    <article class="proto-card">
+    <article class="rc2-reference">
       <h3 class="anchored">ForestPlots.net</h3>
-      <div class="proto-subtitle">Field resources</div>
       <p>
-        Field resources, publications and practical material that support
-        tropical plot monitoring and interoperability across networks.
+        Field resources, publications and practical material supporting tropical
+        plot monitoring and interoperability across research networks.
       </p>
       <div class="pill-links">
         <a href="https://forestplots.net/pt/utilizando-o-forestplots/no-campo" target="_blank" rel="noopener">No campo</a>
@@ -1151,12 +893,11 @@ iframe {
       </div>
     </article>
 
-    <article class="proto-card">
+    <article class="rc2-reference">
       <h3 class="anchored">SECO</h3>
-      <div class="proto-subtitle">Dry tropics compatibility</div>
       <p>
-        Protocol pages and modules aligned with DryFlor, ForestPlots and
-        related networks for dry-tropics monitoring.
+        Protocol pages and scientific resources connected to dry-tropics monitoring,
+        compatible modules and cross-network methodological alignment.
       </p>
       <div class="pill-links">
         <a href="https://blogs.ed.ac.uk/seco-project/science/protocols/" target="_blank" rel="noopener">Protocols</a>
@@ -1164,100 +905,52 @@ iframe {
       </div>
     </article>
 
-    <article class="proto-card">
+    <article class="rc2-reference">
       <h3 class="anchored">SEOSAW</h3>
-      <div class="proto-subtitle">Linked woodland modules</div>
       <p>
-        Interoperable protocols and datasheets for woodland monitoring, useful
-        as a reference for compatible modules and workflow design.
+        Manuals and datasheets for woodland monitoring that can inform compatible
+        modules, data structures and workflow design.
       </p>
       <div class="pill-links">
         <a href="https://seosaw.github.io/manuals.html" target="_blank" rel="noopener">Manuals</a>
       </div>
     </article>
-
-    <article class="proto-card">
-      <h3 class="anchored">Citation anchor</h3>
-      <div class="proto-subtitle">Portuguese DRYFLOR manual</div>
-      <p>
-        Use the DOI as a stable citation anchor when referring to the Portuguese
-        DRYFLOR field manual in Rede C2 methods and protocol references.
-      </p>
-      <div class="pill-links">
-        <a href="https://doi.org/10.5521/forestplots.net/2020_4c" target="_blank" rel="noopener">DOI</a>
-      </div>
-    </article>
   </div>
 </section>
 <section class="rc2-section" id="workflow">
-  <div class="rc2-section-title"><h2 class="anchored">Suggested Rede C2 workflow</h2></div>
+  <div class="rc2-section-title"><h2 class="anchored">Monitoring workflow</h2></div>
 
-  <div class="method-river">
-    <article class="method-step" id="plot-establishment-and-remeasurement">
-      <span class="method-number">01</span>
-      <h3 class="anchored">Plot establishment and remeasurement</h3>
+  <div class="rc2-module-grid">
+    <article class="rc2-module" id="plot-establishment-and-remeasurement">
+      <h3 class="anchored">01 · Plot establishment and remeasurement</h3>
       <p>
         Plot geometry, subplot layout, coordinates, tagging, recensus intervals
         and replacement rules.
       </p>
     </article>
 
-    <article class="method-step" id="woody-stems-census">
-      <span class="method-number">02</span>
-      <h3 class="anchored">Woody stems census</h3>
+    <article class="rc2-module" id="woody-stems-census">
+      <h3 class="anchored">02 · Woody stems census</h3>
       <p>
         Diameter standards, multiple stems, damage codes, recruits, mortality
         and field note structure.
       </p>
     </article>
 
-    <article class="method-step" id="herb-layer-and-regeneration">
-      <span class="method-number">03</span>
-      <h3 class="anchored">Herb layer and regeneration</h3>
+    <article class="rc2-module" id="herb-layer-and-regeneration">
+      <h3 class="anchored">03 · Herb layer and regeneration</h3>
       <p>
         Modules for herbs, seedlings and regeneration tracking compatible with
         dry-forest and savanna workflows.
       </p>
     </article>
 
-    <article class="method-step" id="soils-traits-and-disturbance">
-      <span class="method-number">04</span>
-      <h3 class="anchored">Soils, traits and disturbance</h3>
+    <article class="rc2-module" id="soils-traits-and-disturbance">
+      <h3 class="anchored">04 · Soils, traits and disturbance</h3>
       <p>
-        Optional compatible modules inspired by partner networks to maximize
-        interoperability and ecological interpretation.
+        Compatible modules for soils, functional traits and disturbance records
+        strengthen ecological interpretation across sites.
       </p>
-    </article>
-  </div>
-</section>
-<section class="rc2-section" id="standards">
-  <div class="rc2-section-title"><h2 class="anchored">Datasheets and standards</h2></div>
-
-  <div class="rc2-grid-2">
-    <article class="rc2-card" id="datasheets-and-field-sheets">
-      <h3 class="anchored">Datasheets and field sheets</h3>
-      <p>
-        Minimum tables for recording plot metadata, stems, recruits, mortality,
-        disturbance notes and observer information.
-      </p>
-      <div class="rc2-pills">
-        <span class="rc2-pill rc2-pill--green">Plot metadata</span>
-        <span class="rc2-pill rc2-pill--red">Stems</span>
-        <span class="rc2-pill rc2-pill--ochre">Observers</span>
-      </div>
-    </article>
-
-    <article class="rc2-card" id="field-codes-and-data-standards">
-      <h3 class="anchored">Field codes and data standards</h3>
-      <p>
-        Controlled vocabularies for species status, stem condition, damage,
-        phenology, collection status and data-quality flags.
-      </p>
-      <div class="rc2-pills">
-        <span class="rc2-pill rc2-pill--green">Controlled vocabulary</span>
-        <span class="rc2-pill rc2-pill--red">Quality flags</span>
-        <span class="rc2-pill rc2-pill--ochre">Harmonization</span>
-      </div>
     </article>
   </div>
 </section>

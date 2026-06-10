@@ -998,10 +998,9 @@ iframe {
 
     <p>
       The network dialogues with initiatives such as
-      <a href="COLOCAR_LINK_CORRETO_SECO_AQUI" target="_blank" rel="noopener">SECO</a>,
-      <a href="COLOCAR_LINK_CORRETO_PHENOCHANGE_AQUI" target="_blank" rel="noopener">PhenoChange</a>,
-      <a href="COLOCAR_LINK_CORRETO_AFRITON_AQUI" target="_blank" rel="noopener">AfriTRON</a>,
-      <a href="COLOCAR_LINK_CORRETO_EPHENOLOGY_AQUI" target="_blank" rel="noopener">e-phenology</a> and <a href="COLOCAR_LINK_CORRETO_FAPESP_NORDESTE_AQUI" target="_blank" rel="noopener">FAPESP Nordeste</a>.
+      <a href="https://blogs.ed.ac.uk/seco-project/" target="_blank" rel="noopener">SECO</a>,
+      <a href="COLOCAR_LINK_CORRETO_PHENOCHANGE_AQUI" target="_blank" rel="noopener">PhenoChange</a> and
+      <a href="https://afritron.org/" target="_blank" rel="noopener">AfriTRON</a>.
       These connections help situate RedeC2 within a wider effort to integrate
       field ecology, vegetation monitoring, phenology, functional traits,
       carbon dynamics and environmental data across sites and regions.
