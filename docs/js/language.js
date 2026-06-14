@@ -1,4 +1,4 @@
-/* Rede C2 language switcher — no-fragment v5
+/* Rede C2 language switcher — no-fragment v12
  * Runtime de tradução EN/PT para site Quarto estático.
  * Traduz apenas textos completos encontrados no dicionário.
  * Não faz substituição por fragmentos soltos dentro de palavras/frases.
@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  window.RedeC2_TRANSLATION_RUNTIME_VERSION = "nofragment-v9-2026-06-10";
+  window.RedeC2_TRANSLATION_RUNTIME_VERSION = "nofragment-v12-2026-06-14";
 
   if (window.RedeC2_TRANSLATION_RUNTIME_ACTIVE) {
     return;
