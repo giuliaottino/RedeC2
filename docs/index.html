@@ -1933,6 +1933,86 @@ body {
   }
 }
 
+
+/* =========================================================
+   HOME · links ativos, cinco cartões e subtítulo em duas linhas
+   ========================================================= */
+.rc2-subtitle-break {
+  display: block;
+  margin-top: 0.55rem;
+}
+
+.rc2-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 205px), 1fr));
+  gap: 0.9rem;
+}
+
+.rc2-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.rc2-card-link::after {
+  content: "↗";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--rc2-red);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  opacity: 0.72;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.rc2-card-link:hover::after,
+.rc2-card-link:focus-visible::after {
+  transform: translate(2px, -2px);
+  opacity: 1;
+}
+
+.rc2-card-link:focus-visible {
+  outline: 3px solid rgba(217,154,39,0.72);
+  outline-offset: 4px;
+}
+
+.rc2-axis-kicker {
+  color: var(--rc2-cream) !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.rc2-axis-kicker::after {
+  content: "↗";
+  display: inline-block;
+  margin-left: 0.42rem;
+  transition: transform 0.18s ease;
+}
+
+.rc2-axis-kicker:hover::after,
+.rc2-axis-kicker:focus-visible::after {
+  transform: translate(2px, -2px);
+}
+
+.rc2-axis-kicker:focus-visible {
+  outline: 3px solid rgba(255,253,247,0.82);
+  outline-offset: 4px;
+}
+
+.partner-no-link {
+  color: var(--rc2-ink);
+  font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  .rc2-grid-5 {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 <section class="rc2-overview-fold page-columns page-full" id="inicio" aria-label="RedeC2 homepage overview">
   <div class="rc2-overview-media" aria-label="RedeC2 image banner">
@@ -1944,7 +2024,8 @@ body {
       <h2 class="rc2-overview-image-title anchored">The RedeC2 network</h2>
 
       <p class="rc2-overview-image-subtitle">
-        Rede C2 - Permanent plots for understanding vegetation dynamics across Brazil's seasonally dry ecosystems. We currently focus on the Caatinga and Cerrado.
+        Rede C2 - Permanent plots for understanding vegetation dynamics across Brazil's seasonally dry ecosystems.
+        <span class="rc2-subtitle-break">We currently focus on the Caatinga and Cerrado.</span>
       </p>
     </div>
 
@@ -2005,7 +2086,7 @@ body {
       </div>
 
       <div class="rc2-axis-panel">
-        <div class="rc2-axis-kicker">Sites</div>
+        <a class="rc2-axis-kicker" href="sites/" aria-label="Open sites page" title="Open sites page">Sites</a>
 
         <div class="rc2-axis-copy">
           <h3 class="anchored">Permanent plots across Caatinga and Cerrado</h3>
@@ -2025,7 +2106,7 @@ body {
       </div>
 
       <div class="rc2-axis-panel">
-        <div class="rc2-axis-kicker">Gradients</div>
+        <a class="rc2-axis-kicker" href="sites/" aria-label="Open sites page" title="Open sites page">Gradients</a>
 
         <div class="rc2-axis-copy">
           <h3 class="anchored">Environmental context across sites</h3>
@@ -2045,7 +2126,7 @@ body {
       </div>
 
       <div class="rc2-axis-panel">
-        <div class="rc2-axis-kicker">Synthesis</div>
+        <a class="rc2-axis-kicker" href="network/" aria-label="Open network page" title="Open network page">Synthesis</a>
 
         <div class="rc2-axis-copy">
           <h3 class="anchored">Comparable data for ecological research</h3>
@@ -2064,39 +2145,48 @@ body {
 <section class="rc2-section" id="workflows">
   <div class="rc2-section-title"><h2 class="anchored">How the network works</h2></div>
 
-  <div class="rc2-grid-4">
-    <article class="rc2-card">
-      <h3 class="anchored">01 · Permanent plots</h3>
+  <div class="rc2-grid-5">
+    <a class="rc2-card rc2-card-link" href="team/" aria-label="Open team page">
+      <h3 class="anchored">01 · People and institutions</h3>
+      <p>
+        Researchers, students, universities, research institutes and botanical
+        gardens sustain field monitoring, data curation and scientific
+        collaboration across RedeC2.
+      </p>
+    </a>
+
+    <a class="rc2-card rc2-card-link" href="sites/" aria-label="Open sites page">
+      <h3 class="anchored">02 · Permanent plots</h3>
       <p>
         Repeated vegetation measurements provide the empirical basis for
         comparing structure, composition, recruitment, mortality and change
         across sites.
       </p>
-    </article>
+    </a>
 
-    <article class="rc2-card">
-      <h3 class="anchored">02 · Floristics and traits</h3>
+    <a class="rc2-card rc2-card-link" href="network/" aria-label="Open network page">
+      <h3 class="anchored">03 · Floristics and traits</h3>
       <p>
         Species inventories, taxonomic standardization and functional trait
         records help connect biodiversity patterns to ecosystem functioning.
       </p>
-    </article>
+    </a>
 
-    <article class="rc2-card">
-      <h3 class="anchored">03 · Environmental context</h3>
+    <a class="rc2-card rc2-card-link" href="sites/" aria-label="Open sites page">
+      <h3 class="anchored">04 · Environmental context</h3>
       <p>
         Climate, soil and landscape layers are combined with field observations
         to understand the gradients shaping plant communities.
       </p>
-    </article>
+    </a>
 
-    <article class="rc2-card">
-      <h3 class="anchored">04 · Cross-site synthesis</h3>
+    <a class="rc2-card rc2-card-link" href="network/" aria-label="Open network page">
+      <h3 class="anchored">05 · Cross-site synthesis</h3>
       <p>
         Harmonized datasets and open workflows support broader analyses of
         vegetation dynamics across Brazil's dry ecosystems.
       </p>
-    </article>
+    </a>
   </div>
 </section>
 
@@ -2111,24 +2201,17 @@ body {
     </p>
 
     <p>
-      The network dialogues with initiatives such as
-      <a href="COLOCAR_LINK_CORRETO_SECO_AQUI" target="_blank" rel="noopener">SECO</a>,
-      <a href="COLOCAR_LINK_CORRETO_PHENOCHANGE_AQUI" target="_blank" rel="noopener">PhenoChange</a>,
-      <a href="COLOCAR_LINK_CORRETO_AFRITON_AQUI" target="_blank" rel="noopener">AfriTRON</a>,
-      <a href="COLOCAR_LINK_CORRETO_EPHENOLOGY_AQUI" target="_blank" rel="noopener">e-phenology</a>,
-      <a href="COLOCAR_LINK_CORRETO_FAPESP_NORDESTE_AQUI" target="_blank" rel="noopener">FAPESP Nordeste</a>
-      and
-      <a href="COLOCAR_LINK_CORRETO_CBIOCLIMA_AQUI" target="_blank" rel="noopener">CBioClima</a>.
-      These connections help situate RedeC2 within a wider effort to integrate
-      field ecology, vegetation monitoring, phenology, functional traits,
+      The network collaborates with initiatives and infrastructures including
+      <a href="https://blogs.ed.ac.uk/seco-project/" target="_blank" rel="noopener">SECO</a>,
+      <span class="partner-no-link">PhenoChange</span>,
+      <a href="https://seosaw.github.io/index.html" target="_blank" rel="noopener">SEOSAW</a>,
+      <a href="https://forestplots.net/" target="_blank" rel="noopener">ForestPlots.net</a>,
+      <a href="https://bv.fapesp.br/pt/auxilios/84594/combining-new-technologies-to-monitor-phenology-from-leaves-to-ecosystems/" target="_blank" rel="noopener">e-phenology</a>,
+      <a href="https://bv.fapesp.br/pt/auxilios/93282/nordeste-uma-nova-ciencia-para-um-importante-porem-negligenciado-bioma/" target="_blank" rel="noopener">FAPESP Nordeste</a>,
+      <a href="https://www.cbioclima.org/" target="_blank" rel="noopener">CBioClima</a>.
+      These connections place RedeC2 within a broader effort to integrate field
+      ecology, long-term vegetation monitoring, phenology, functional traits,
       carbon dynamics and environmental data across sites and regions.
-    </p>
-
-    <p>
-      Edit the partner links directly in this section of the file by replacing
-      the placeholders that start with <code>COLOCAR_LINK_CORRETO_...</code>.
-      The visible names are already linkable; only the <code>href</code>
-      addresses need to be updated with the final URLs.
     </p>
   </div>
 </section>

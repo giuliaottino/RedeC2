@@ -1,4 +1,4 @@
-/* Rede C2 language switcher — no-fragment v12
+/* Rede C2 language switcher — no-fragment v13
  * Runtime de tradução EN/PT para site Quarto estático.
  * Traduz apenas textos completos encontrados no dicionário.
  * Não faz substituição por fragmentos soltos dentro de palavras/frases.
@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  window.RedeC2_TRANSLATION_RUNTIME_VERSION = "nofragment-v12-2026-06-14";
+  window.RedeC2_TRANSLATION_RUNTIME_VERSION = "nofragment-v13-2026-06-14";
 
   if (window.RedeC2_TRANSLATION_RUNTIME_ACTIVE) {
     return;
@@ -35,6 +35,7 @@
     ".rc2-kicker", ".rc2-chip", ".rc2-pill", ".rc2-tag", ".tag", ".agency-pill",
     ".rc2-btn", ".proto-card h3", ".proto-card p", ".sites-box h3", ".sites-box p",
     ".rc2-card h3", ".rc2-card p", ".rc2-feature-panel h3", ".rc2-feature-panel p",
+    ".rc2-axis-kicker", ".rc2-axis-copy h3", ".rc2-axis-copy p",
     ".team-name", ".team-affiliation", ".inst-name",
     ".redec2-footer-title", ".redec2-footer-name span", ".redec2-footer-contact", ".redec2-footer-links"
   ].join(",");
