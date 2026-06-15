@@ -1,0 +1,100 @@
+REDEC2 CONTACT BACKEND — CLOUDFLARE PAGES + RESEND
+=====================================================
+
+Files included
+--------------
+index.qmd
+js/language.js
+js/translations.js
+functions/api/contact.js
+
+The form sends POST requests to:
+  /api/contact
+
+Cloudflare Pages maps functions/api/contact.js to that route.
+
+1. Create the Resend sender
+---------------------------
+- Create a Resend account.
+- Add and verify a sending domain or subdomain.
+- A subdomain such as mail.redec2.net is recommended to keep sending DNS
+  separate from other email services.
+- Create a Resend API key.
+
+Example sender after verification:
+  RedeC2 Website <contact@mail.redec2.net>
+
+Do not put the API key in GitHub or in any JavaScript delivered to browsers.
+
+2. Configure Cloudflare Pages
+-----------------------------
+Open:
+  Cloudflare Dashboard
+  Workers & Pages
+  Your RedeC2 Pages project
+  Settings
+  Variables and Secrets
+
+Add these values to the Production environment:
+
+RESEND_API_KEY
+  Type: encrypted secret
+  Value: the Resend API key
+
+CONTACT_FROM_EMAIL
+  Type: variable
+  Example:
+  RedeC2 Website <contact@mail.redec2.net>
+
+CONTACT_TO_EMAILS
+  Type: variable
+  Example:
+  c2redec2@gmail.com,redec2@googlegroups.com
+
+Confirm the exact Google Groups posting address before using the example.
+If the Google Group restricts senders, allow the verified sender address/domain
+or keep c2redec2@gmail.com as a guaranteed recipient.
+
+After adding the variables, redeploy the Pages project.
+
+3. Local development
+--------------------
+Create a file named .dev.vars in the project root. Do not commit it.
+
+Example:
+
+RESEND_API_KEY=re_xxxxxxxxx
+CONTACT_FROM_EMAIL=RedeC2 Website <contact@mail.redec2.net>
+CONTACT_TO_EMAILS=c2redec2@gmail.com,redec2@googlegroups.com
+
+Render the Quarto site:
+
+  quarto render
+
+Test Pages and the Function locally:
+
+  npx wrangler pages dev docs
+
+Open the local URL printed by Wrangler and submit the form.
+
+4. Production test
+------------------
+After deployment:
+- Open the published RedeC2 homepage.
+- Click Contact us.
+- Submit a real test message.
+- Confirm delivery to both recipients.
+- Confirm that replying to the email addresses the visitor who submitted the form.
+- Check Cloudflare Pages Function logs if delivery fails.
+
+5. Security already included
+----------------------------
+- API key remains server-side.
+- Same-origin request check.
+- Required-field and email validation.
+- Maximum field lengths.
+- Hidden honeypot field.
+- Minimum completion time.
+- HTML escaping before building the email.
+
+For stronger anti-spam protection, Cloudflare Turnstile can be added later.

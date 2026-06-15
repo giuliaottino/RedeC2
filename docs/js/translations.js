@@ -1,7 +1,7 @@
-/* Rede C2 i18n dictionary — no-fragment v13
+/* Rede C2 i18n dictionary — no-fragment v14
  * Source language: English.
  * Portuguese translations are exact-text mappings for the current Quarto pages.
- * Updated for the revised homepage index.qmd.
+ * Updated for the homepage institutions, team and contact form.
  * Save this file as UTF-8.
  */
 window.RedeC2Translations = {
@@ -201,7 +201,7 @@ window.RedeC2Translations = {
       "RedeC2 member at": "Membro da RedeC2 em",
       "Email": "E-mail",
       "Google Scholar": "Google Scholar",
-      "Website": "Website",
+      "Website": "Site",
       "Developed by": "Desenvolvido por",
       "Website developed by": "Website desenvolvido por",
       "Source code": "Código-fonte",
@@ -773,7 +773,26 @@ window.RedeC2Translations = {
       "These connections place RedeC2 within a broader effort to integrate field ecology, long-term vegetation monitoring, phenology, functional traits, carbon dynamics and environmental data across sites and regions.": "Essas conexões situam a RedeC2 em um esforço mais amplo para integrar ecologia de campo, monitoramento de longo prazo da vegetação, fenologia, atributos funcionais, dinâmica do carbono e dados ambientais entre sítios e regiões.",
       "Open sites page": "Abrir página de sítios",
       "Open network page": "Abrir página da rede",
-      "Open team page": "Abrir página da equipe"
+      "Open team page": "Abrir página da equipe",
+      "Institutions and people involved": "Instituições e pessoas envolvidas",
+      "RedeC2 is sustained by researchers, students and institutions that contribute to field monitoring, data curation, taxonomic work and cross-site ecological synthesis.": "A RedeC2 é sustentada por pesquisadoras, pesquisadores, estudantes e instituições que contribuem para o monitoramento de campo, a curadoria de dados, o trabalho taxonômico e a síntese ecológica entre sítios.",
+      "Meet the full team": "Conheça a equipe completa",
+      "Contact RedeC2": "Entre em contato com a RedeC2",
+      "Send a message to the RedeC2 coordination and network mailing group. The form opens on this page and your message is delivered by the site backend.": "Envie uma mensagem para a coordenação da RedeC2 e para o grupo de e-mails da rede. O formulário abre nesta página e a mensagem é encaminhada pelo sistema do site.",
+      "Contact us": "Entre em contato",
+      "Send RedeC2 a message": "Envie uma mensagem para a RedeC2",
+      "Complete the fields below. Replies will be sent directly to the email address you provide.": "Preencha os campos abaixo. As respostas serão enviadas diretamente para o endereço de e-mail informado.",
+      "Your name": "Seu nome",
+      "Email address": "Endereço de e-mail",
+      "Institution or organization": "Instituição ou organização",
+      "Subject": "Assunto",
+      "Your message": "Sua mensagem",
+      "Send message": "Enviar mensagem",
+      "By submitting this form, you agree that your contact details may be used only to respond to your message.": "Ao enviar este formulário, você concorda que seus dados de contato sejam utilizados somente para responder à sua mensagem.",
+      "Sending your message...": "Enviando sua mensagem...",
+      "Message sent successfully. Thank you for contacting RedeC2.": "Mensagem enviada com sucesso. Obrigada por entrar em contato com a RedeC2.",
+      "Please complete the required fields with a valid email address.": "Preencha os campos obrigatórios e informe um endereço de e-mail válido.",
+      "The message could not be sent. Please try again or email c2redec2@gmail.com.": "Não foi possível enviar a mensagem. Tente novamente ou escreva para c2redec2@gmail.com."
     }
   },
   "prefixes": {

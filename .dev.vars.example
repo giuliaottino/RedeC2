@@ -1,0 +1,6 @@
+# Copy to .dev.vars for local testing.
+# Never commit .dev.vars or a real API key.
+
+RESEND_API_KEY=re_xxxxxxxxx
+CONTACT_FROM_EMAIL=RedeC2 Website <contact@mail.redec2.net>
+CONTACT_TO_EMAILS=c2redec2@gmail.com,redec2@googlegroups.com
